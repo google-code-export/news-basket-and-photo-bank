@@ -1,0 +1,186 @@
+/*------------------------ konten --------------------------*/
+.main {
+	min-width: 87.9%;
+	max-width: 87.9%;
+	height: 100%;
+	float: right;
+	display: block;
+	position: relative;
+	box-shadow: -10px 0px 10px -5px rgba(200, 200, 200, 0.7);
+}
+
+.main h3.column-title {
+	color: white;
+	height: 20px;
+	padding: 5px 10px 7px;
+	background: none repeat scroll 0% 0% rgb(175, 0, 0);
+}
+
+/*------------------------ konten kiri --------------------------*/
+.main-left {
+	height: 100%;
+	float: left;
+    position: relative;
+	width: 40%;
+	margin: 10px 5px;
+	box-shadow: 0px 0px 10px -5px rgba(200, 200, 200, 0.7);
+	/*background-color: rgb(245, 245, 245);
+	background-image: -moz-linear-gradient(center top , rgb(249, 249, 249), rgb(245, 245, 245));*/
+	display: inline;
+}
+
+.main-left .sort-and-search {
+	height: 30px;
+	padding: 5px 5px;
+    background: none repeat scroll 0% 0% #EAF2D3;
+    /*border-bottom: 1px solid rgb(150, 150, 150);*/
+    overflow: hidden;
+}
+
+.main-left .sort {
+	padding: 5px 5px;
+    float: left;
+}
+
+.main-left .search {
+	margin-top: -2px;
+	padding: 5px 5px;
+    float: right;
+}
+
+.main-left .article-list {
+	max-height: 700px;
+	padding: 5px 5px;
+	word-wrap: break-word;
+    overflow: scroll;
+}
+
+.main-left .article-list div {
+	margin: -5px 0px;
+	padding: 0px 5px;
+	word-wrap: break-word;
+    overflow: hidden;
+	background: white;
+	cursor: pointer;
+	transition: background 0.5s;
+	-moz-transition: background 0.5s; /* Firefox 4 */
+	-webkit-transition: background 0.5s; /* Safari and Chrome */
+	-o-transition: background 0.5s; /* Opera */
+}
+
+.main-left .article-list div:hover{
+	background: none repeat scroll 0% 0% rgb(225, 225, 225);
+}
+
+/*------------------------ konten kanan --------------------------*/
+.main-right {
+	height: 100%;
+	float: right;
+    position: fixed;
+	right: 0px;
+	width: 51.4%;
+	margin: 10px 5px;
+	box-shadow: 0px 0px 10px -5px rgba(200, 200, 200, 0.7);
+	/*background-color: rgb(245, 245, 245);
+	background-image: -moz-linear-gradient(center top , rgb(249, 249, 249), rgb(245, 245, 245));*/
+	display: inline;
+}
+
+.main-right .article-menu-up {
+	height: 30px;
+	padding: 5px 5px;
+    background: none repeat scroll 0% 0% #EAF2D3;
+    /*border-bottom: 1px solid rgb(150, 150, 150);*/
+    overflow: hidden;
+}
+
+.main-right .article-menu-up-sub {
+	height: 20px;
+	padding: 5px 11px 7px;
+    background: none repeat scroll 0% 0% #EEF9D9;
+    /*border-bottom: 1px solid rgb(150, 150, 150);*/
+    overflow: hidden;
+}
+
+.main-right .article-menu-up-sub h4.left {
+	float: left;
+	font-weight: normal;
+	padding-bottom: 5px;
+}
+
+.main-right .article-menu-up-sub h4.right {
+	float: right;
+	font-weight: normal;
+	padding-bottom: 7px;
+}
+
+.main-right .article-menu-up button, .main-right .article-menu-up input[type="submit"]{
+	margin: 3px 5px;
+	float:right;
+}
+
+.main-right .article-menu-up h4 {
+	font-size: 1.1em;
+	margin: 3px 5px;
+}
+
+.main-right .article-menu-down-sub {
+	height: 20px;
+	padding: 5px 11px 7px;
+    background: none repeat scroll 0% 0% #EEF9D9;
+    /*border-bottom: 1px solid rgb(150, 150, 150);*/
+    overflow: hidden;
+}
+
+.main-right .article-body textarea{
+	width: 99.7%;
+	white-space: normal;
+	margin: 0px auto;
+}
+
+.main-right .article-menu-down-sub h4.left {
+	float: left;
+	font-weight: normal;
+	padding-bottom: 5px;
+}
+
+.main-right .article-menu-down-sub h4.right {
+	float: right;
+	font-weight: normal;
+	padding-bottom: 7px;
+}
+
+.main-right .article-menu-down {
+	height: 30px;
+	padding: 5px 5px;
+    background: none repeat scroll 0% 0% rgb(175, 0, 0);
+    /*border-bottom: 1px solid rgb(150, 150, 150);*/
+    overflow: hidden;
+}
+
+.main-right .article-menu-down button, .main-right .article-menu-down input[type="submit"]{
+	margin: 3px 5px;
+	float:right;
+}
+
+.main-right .article-editor {
+	width: 97.5%;
+	padding: 5px 5px;
+}
+
+.main-right .article-editor .article, .main-right .article-editor .article-body {
+	width: 100%;
+}
+
+.main-right textarea {
+	font-family: "Lucida Grande","Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;;
+    font-size: 12px;
+}
+
+.main-right input[type="text"] {
+	width: 101%;
+	padding: 0px 5px;
+	height: 30px;
+	font-size: 15px;
+    direction: ltr;
+}
