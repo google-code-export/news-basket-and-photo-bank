@@ -33,6 +33,7 @@ class Users_model extends Model {
         $this->db->select('*');
         $this->db->from($this->table); //tabel user
 		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
+		$this->db->order_by('date_created');
         $this->db->limit($limit, $offset);
         return $this->db->get()->result();
     }
@@ -42,6 +43,7 @@ class Users_model extends Model {
         $this->db->from($this->table); //tabel user
 		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
         $this->db->where('user_level', $key);
+        $this->db->order_by('date_created');
         $this->db->limit($limit, $offset);
         return $this->db->get()->result();
     }
@@ -51,6 +53,7 @@ class Users_model extends Model {
         $this->db->from($this->table); //tabel user
 		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
         $this->db->where('source.id_source', $key);
+        $this->db->order_by('date_created');
         $this->db->limit($limit, $offset);
         return $this->db->get()->result();
     }

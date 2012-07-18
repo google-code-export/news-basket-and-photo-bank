@@ -1,7 +1,7 @@
 <h2>Manage Category<button class="btn-add" style="float: right; height: 30px; margin-top: -2px;">+ Add New Category</button></h2>
-<div id="add-category" style="background-color:#EAF2D3;">
+<div id="add-category" class="add-form">
 	<form id="add-category-form" method="post" action="<?php echo $form_action; ?>">
-		<table id="category-form">
+		<table id="category-form" class="table-form">
 			<tr>
 				<td><label for="id-category">ID Category</label></td>
 				<td>:</td>
@@ -14,12 +14,17 @@
 				
 				<td class="label">	
 					<input type="submit" name="btn-add-category" value="Add" />
-					<button class="btn-cancel type="button">Cancel</button>
+					<button class="btn-cancel" type="button">Cancel</button>
 				</td>
 			</tr>
 			
 		</table>
 	</form>
+</div>
+<div id="edit-category" class="edit-form">
+	<?php
+		!empty($form_edit_category)? $this->load->view($form_edit_category) : '';
+	?>
 </div>
 <div id="category-table" class="table-menu">
 	<div class="search">
@@ -49,17 +54,22 @@
 			foreach ($category_table as $column) {
 				$deleteLink = anchor(
 					'admin/manage_category/deleteCategory/'.$column->id_category,
-					'Delete',
+					'<button>Delete</button>',
 					array('class'=>'delete', 'onclick'=>"return confirm('Are you sure want to delete this category?')")
+				);
+				$editLink = anchor(
+					'admin/manage_category/editCategory/'.$column->id_category,
+					'<button>Edit</button>',
+					array('class'=>'btn-edit-category')
 				);
 				
 				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
 						<td>$No</td>
-						<td id='id-user'>$column->id_category</td>
+						<td id='id-category'>$column->id_category</td>
 						<td>$column->category_name</td>
-						<td class='center'><button class='btn-edit-category'>Edit</button></td>
+						<td class='center'>$editLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>
 				";
