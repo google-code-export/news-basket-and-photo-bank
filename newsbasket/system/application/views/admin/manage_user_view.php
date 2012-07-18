@@ -3,7 +3,6 @@
 	<form id="add-user-form" method="post" action="<?php echo $form_action; ?>">
 		<table id="table-edit-user" class="table-form">
 			<tr>
-         sosjdfjasdfasd
 				<td><label for="username">Username</label></td>
 				<td>:</td>
 				<td><input type="text" id="username" name="username" required="required" autofocus="autofocus" /></td>
