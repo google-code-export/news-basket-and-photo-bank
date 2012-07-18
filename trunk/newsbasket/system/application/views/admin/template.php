@@ -106,34 +106,50 @@
 			}
 		}
 		
-		//FORM MENGEDIT DATA SISWA
-		function formEditSiswa(id){
+		//MENYIMPAN DATA USER
+		function saveUser(id) {
+			var dataForm = $("#form-edit").serialize();
 			$.ajax({
 				type	: "POST",
-				url		: "FormEditSiswa.php",
-				data	: "id_siswa="+id,
+				url		: "simpanSiswa.php",
+				data	: dataForm+"&id_siswa="+id,
 				success	: function(data){
-							$("#content").html(data);
-							$("title").text("Edit Data Siswa");
+							$("#pesan").html(data);
+							$("#pesan").hide();
+							$("#pesan").fadeIn();
+						},
+				error	: function(){
+							alert("Terjadi kesalahan saat proses data.");
+						}
+			});
+		
+		}
+		
+		//FORM MENGEDIT DATA SISWA
+		function editUser(id_user) {
+			$.ajax({
+				type	: "POST",
+				url		: "manage_user/editUser/"+id_user,
+				data	: "id_user="+id_user,
+				success	: function(data){
+							$("#edit-user").html(data);
+							$("title").text("Edit Data User");
 						},
 				error	: function(){
 							alert("Terjadi kesalahan saat proses data.");
 						}
 			});
 		}
-		
+		function formEditUser(id_user){
+			$("#edit-user").load("manage_user/editUser/"+id_user);
+		}
 		//SLIDER DIV ADD NEW USER
 		$(document).ready(function(){
 			$(".btn-add").click(function(){
 				$("#add-user").slideToggle("fast");
 				$("#add-category").slideToggle("fast");
 				$("#add-source").slideToggle("fast");
-			});
-		});
-		
-		$(document).ready(function(){
-			$(".btn-edit-user").click(function(){
-				$("#add-user").slideToggle("fast");
+				$("#add-author").slideToggle("fast");
 			});
 		});
 		
@@ -142,6 +158,7 @@
 				$("#add-user").slideToggle("fast");
 				$("#add-category").slideToggle("fast");
 				$("#add-source").slideToggle("fast");
+				$("#add-author").slideToggle("fast");
 			});
 		});
 </script>
@@ -150,7 +167,7 @@
 <body>
 	<?php $this->load->view('header'); ?>
 	<div class="navigation">
-		<?php $this->load->view('admin_navigation', $navigasi); ?>
+		<?php $this->load->view('admin_navigation'); ?>
 	</div>
 	<div id="main" class="main">
 		<?php $this->load->view($main_view); ?>

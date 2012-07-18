@@ -27,7 +27,7 @@ class Login extends Controller {
 			if ($this->Users_model->checkUser($username, $password) == TRUE)
 			{
 				$user_level = $this->Users_model->getLevel($username)->row()->user_level;
-                $data = array('id_user' => $username, 'login' => TRUE, 'user_level' => $user_level);
+                $data = array('username' => $username, 'login' => TRUE, 'user_level' => $user_level);
 				$this->session->set_userdata($data);
 				if ($user_level == 'administrator') {
 					redirect('admin/manage_user');

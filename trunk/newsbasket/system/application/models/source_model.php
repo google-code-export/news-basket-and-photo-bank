@@ -45,7 +45,7 @@ class Source_model extends Model {
 	function getSourceByID($id_source) {
 		$this->db->select('*');
 		$this->db->where('id_source', $id_source);
-		return $this->db->get($this->table)->result();
+		return $this->db->get($this->table);
 	}
     
 	function countAll() {

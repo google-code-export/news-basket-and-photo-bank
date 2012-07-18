@@ -1,16 +1,16 @@
 <h2>Manage User<button class="btn-add" style="float: right; height: 30px; margin-top: -2px;">+ Add New User</button></h2>
-<div id="add-user" style="background-color:#EAF2D3;">
-	<form id="add-user-form" method="post"  onsubmit="return validateForm()" action="<?php echo $form_action; ?>">
-		<table id="user-form">
+<div id="add-user" class="add-form">
+	<form id="add-user-form" method="post" action="<?php echo $form_action; ?>">
+		<table id="table-edit-user" class="table-form">
 			<tr>
 				<td><label for="username">Username</label></td>
 				<td>:</td>
 				<td><input type="text" id="username" name="username" required="required" autofocus="autofocus" /></td>
 				<td><span id="check-user" style="display: none;"></span></td>
 				
-				<td class="label"><label for="password">Password</label></td>
+				<td class="label"><label for="name">Full Name</label></td>
 				<td>:</td>
-				<td><input type="password" id="password" name="password" required="required" /></td>
+				<td><input type="text" id="name" name="name" required="required" /></td>
 				<td>&nbsp;</td>
 				
 				<td class="label"><label for="phone">Phone</label></td>
@@ -30,10 +30,10 @@
 					</select>
 				</td>
 			</tr>
-			<tr>
-				<td><label for="name">Full Name</label></td>
+			<tr>				
+				<td><label for="password">Password</label></td>
 				<td>:</td>
-				<td><input type="text" id="name" name="name" required="required" /></td>
+				<td><input type="password" id="password" name="password" required="required" /></td>
 				<td>&nbsp;</td>
 				
 				<td class="label"><label for="confirm-password">Retype Password</label></td>
@@ -75,6 +75,11 @@
 			
 		</table>
 	</form>
+</div>
+<div id="edit-user" class="edit-form">
+	<?php
+		!empty($form_edit_user)? $this->load->view($form_edit_user) : '';
+	?>
 </div>
 <div id="user-table" class="table-menu">
 	<div class="search">
@@ -129,23 +134,27 @@
 			foreach ($user_table as $column) {
 				$deleteLink = anchor(
 					'admin/manage_user/deleteUser/'.$column->id_user,
-					'Delete',
-					array('class'=>'delete', 'onclick'=>"return confirm('Are you sure want to delete this user?')")
+					'<button>Delete</button>',
+					array('class'=>'btn-delete', 'onclick'=>"return confirm('Are you sure want to delete this user?')")
+				);
+				$editLink = anchor(
+					'admin/manage_user/editUser/'.$column->id_user,
+					'<button>Edit</button>',
+					array('class'=>'btn-edit-user')
 				);
 				
-				$password = character_limiter($column->password, 3);
 				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
 						<td>$No</td>
 						<td id='id-user'>$column->id_user</td>
-						<td>$password</td>
+						<td>$column->password</td>
 						<td>$column->source_name</td>
 						<td>$column->name</td>
 						<td>$column->phone</td>
 						<td>$column->email</td>
 						<td>$column->user_level</td>
-						<td class='center'><button class='btn-edit-user'>Edit</button></td>
+						<td class='center'>$editLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>
 				";

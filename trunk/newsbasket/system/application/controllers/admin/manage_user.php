@@ -11,22 +11,23 @@ class Manage_user extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->loadUsers('all');
+			$this->loadUsers();
 		}
 		else {
 			redirect('login');
         }
 	}
 	
-	function loadUsers($key) {
+	function loadUsers() {
 		$data_user['page_title']	= 'Manage User | Admin News Basket';
 		$data_user['main_view'] 	= 'admin/manage_user_view';
 		$data_user['form_action']	= site_url('admin/manage_user/addUser');
-
+		$data_user['form_add_user'] = 'admin/form/add_user_form';
+		/*
 		$this->load->model('Category_model','',TRUE);
 		$category = $this->Category_model->getAllCategories();
 		$data_user['navigasi']['category'] = $category;
-		
+		*/
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
 		$data_user['navigasi']['publisher'] = $publisher;	
@@ -35,13 +36,13 @@ class Manage_user extends Controller {
 		$uri_segment 	= 4;
 		$offset 		= $this->uri->segment($uri_segment);
 		
-		// Load data dari tabel user
+		// Opsi load data dari tabel user 
 		$this->load->model('Users_model','',TRUE);
-		if ($key == 'all') { // tampilkan semua
+		//if ($key == 'all') { // tampilkan semua
 			$users  	= $this->Users_model->getAllUser($this->limit, $offset);
 			$num_rows 	= $this->Users_model->countAll();
 			$data_user['user_table'] = $users;
-		}
+		/*}
 		else if (is_numeric($key)) { // tampilkan dengan kriteria publisher
 			$users  	= $this->Users_model->getAllUserByPublisher($this->limit, $offset, $key);
 			$num_rows 	= $this->Users_model->countUserByPublisher($key);
@@ -52,8 +53,9 @@ class Manage_user extends Controller {
 			$num_rows 	= $this->Users_model->countUserByLevel($key);
 			$data_user['user_table'] = $users;
 		}
-		
-		
+		// Simpan table yang dilihat saat ini
+		$this->session->set_userdata('current_table', $key);
+		*/
 		// Membuat pagination			
 		$config['base_url']    		= site_url('admin/manage_user/loadUsers');
 		$config['total_row']		= $num_rows;
@@ -61,37 +63,7 @@ class Manage_user extends Controller {
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
 		$data_user['pagination']   	= $this->pagination->create_links();
-				
-		/* Set template tabel
-		$tmpl = array(
-			'table_open'			=> '<table id="zebra">',
-			'heading_cell_start'  	=> '<th>',
-			'heading_cell_end'    	=> '</th>',
-			'row_alt_start'   	 	=> '<tr class="odd">',
-			'row_alt_end'     	 	=> '</tr>'
-		 );
-		$this->table->set_template($tmpl);
-	
-		// Set heading untuk tabel
-		$this->table->set_empty("&nbsp;");
-		$this->table->set_heading('No', 'Username', 'Password', 'Publisher', 'Name', 'Phone', 'Email', 'Level', 'Action');
 		
-		$num = 1;
-		foreach ($users as $column)
-		{
-			$this->table->add_row(
-				$num, $column->id_user, $column->password, $this->convertIDSourcetoName($column->id_source),
-				$column->name, $column->phone, $column->email, $column->user_level,
-				"<button id='btn-edit'>Edit</button>",
-				"<button id='btn-delete'>Delete</button>"
-				//anchor('admin/manage_user/update/'.$column->idb,'Edit',array('class' => 'update')).'<p></p>'.
-				//anchor('admin/manage_user/delete/'.$column->idb,'Delete',array('class' => 'delete','onclick'=>"return confirm('Anda yakin akan menghapus berita ini?')"))
-		    );
-			$num++;
-		}*/
-		
-		$data_user['table'] = $this->table->generate();
-
 		$this->load->view('admin/template', $data_user);
 	}
 	
@@ -106,48 +78,131 @@ class Manage_user extends Controller {
 		//$this->form_validation->set_rules('user-level', 'User-level', 'required');
 		
 		$this->load->helper('security');
-		if ($this->form_validation->run() == TRUE && $this->session->userdata('user_level') == 'administrator') {
+		if ($this->form_validation->run() == TRUE && $this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
 			$new_user  = array(
 				'id_user'		=> $this->input->post('username'),
 				'id_source'		=> $this->input->post('publisher'),
-				'password'		=> dohash($this->input->post('password'), 'md5'),
+				'password'		=> dohash($this->input->post('password')),
 				'name'      	=> $this->input->post('name'),
 				'phone'       	=> $this->input->post('phone'),
 				'email'   		=> $this->input->post('email'),
-				'user_level' 	=> $this->input->post('user-level')
+				'user_level' 	=> $this->input->post('user-level'),
+				'date_created'	=> date('Y-m-d G:i:s')
 			);
 			// Proses simpan data absensi
 			$this->load->model('Users_model','',TRUE);
 			$this->Users_model->addUser($new_user);
 			
-			$this->session->set_flashdata('message_success', 'Add new user successfull!');
+			$message = 'Add new user '.$new_user['id_user'].' successfull!'; 
+			$this->session->set_flashdata('message_success', $message);
 			redirect('admin/manage_user');
 		}
 		
 		else {
-			$this->session->set_flashdata('message_failed', 'Add new user failed!');
+			$message = 'Add new user '.$new_user['id_user'].' failed!'; 
+			$this->session->set_flashdata('message_failed', $message);
 			redirect('admin/manage_user');
 		}
 	}
 	
-	function editUser() {
-		$this->load->model('Users_model','',TRUE);
-		$user = $this->Users_model->getUserByID($idb)->row();
+	function editUser($id_user) { 
+		$data_user['page_title']	 	= 'Edit User | Admin News Basket';
+		$data_user['main_view'] 	 	= 'admin/manage_user_view';
+		$data_user['form_action']	 	= site_url('admin/manage_user/addUser');
+		$data_user['form_action_edit']	= site_url('admin/manage_user/editUserProcess');
+		$data_user['form_edit_user'] 	= 'admin/form/edit_user_form';
 		
-		/*
-		$this->session->set_userdata('idb', $beritanya->idb);
-			
-		// Data untuk mengisi field2 form
-		$berita['default']['tanggal'] 	= date('d-m-Y', strtotime($beritanya->tanggal));
-		$berita['default']['judul'] 	= $beritanya->judul;
-		$berita['default']['artikel'] 	= $beritanya->artikel;
-		//$berita['default']['foto'] 	= $beritanya->foto;
-		$berita['default']['tag'] 		= $beritanya->tag;
-		$berita['default']['statusb'] 	= $beritanya->statusb;
-
-		if ($this->session->userdata('login') == TRUE) {
-			$this->load->view('admin/template', $berita);
+		/* untuk navigasi dan option form
+		$this->load->model('Category_model','',TRUE);
+		$category = $this->Category_model->getAllCategories();
+		$data_user['navigasi']['category'] = $category;
+		*/
+		// untuk option form
+		$this->load->model('Source_model','',TRUE);
+		$publisher = $this->Source_model->getAllPublisher();
+		$data_user['navigasi']['publisher'] = $publisher;
+		
+		// Offset
+		$uri_segment 	= 4;
+		$offset 		= $this->uri->segment($uri_segment);
+		
+		// Opsi load data dari tabel user 
+		//$key = $this->session->userdata('current_table');
+		$this->load->model('Users_model','',TRUE);	
+		//if ($key == 'all') { // tampilkan semua
+		$users  	= $this->Users_model->getAllUser($this->limit, $offset);
+		$num_rows 	= $this->Users_model->countAll();
+		$data_user['user_table'] = $users;
+		/*}
+		else if (is_numeric($key)) { // tampilkan dengan kriteria publisher
+			$users  	= $this->Users_model->getAllUserByPublisher($this->limit, $offset, $key);
+			$num_rows 	= $this->Users_model->countUserByPublisher($key);
+			$data_user['user_table'] = $users;
+		}
+		else { // tampilkan dengan kriteria level
+			$users  	= $this->Users_model->getAllUserByLevel($this->limit, $offset, $key);
+			$num_rows 	= $this->Users_model->countUserByLevel($key);
+			$data_user['user_table'] = $users;
 		}*/
+		// Simpan table yang dilihat saat ini
+		//$this->session->set_userdata('current_table', $key);
+		
+		// ambil data user dari ID nya
+		$user = $this->Users_model->getUserByID($id_user)->row();
+		
+		//simpan session username yang ingin di edit
+		$this->session->set_userdata('id_user', $user->id_user);
+			
+		$data_user['default']['name'] 		= $user->name;
+		$data_user['default']['password'] 	= $user->password;
+		$data_user['default']['phone'] 		= $user->phone;
+		$data_user['default']['email'] 		= $user->email;
+		$data_user['default']['level'] 		= $user->user_level;
+		$data_user['default']['publisher']	= $user->id_source;
+	
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_user);
+		}
+	}
+	
+	function editUserProcess() {
+		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
+			
+			// kondisi password
+			$new_password = $this->input->post('new-password');
+			if(!empty($new_password)) {
+				$password = $new_password;
+			}
+			else {
+				$password = $this->input->post('old-password');
+			}
+			
+			// Prepare data untuk disimpan di tabel
+			$user  = array(
+				'name'		=> $this->input->post('name'),
+				'id_source'	=> $this->input->post('publisher'),
+				'password'  => $password,
+				'email'     => $this->input->post('email'),
+				'phone'     => $this->input->post('phone'),
+				'user_level'=> $this->input->post('user-level')
+			);
+			
+			// Proses simpan data
+			$id_user = $this->session->userdata('id_user');
+			$this->load->model('Users_model','',TRUE);
+			$this->Users_model->updateUser($id_user, $user);
+			
+			$message = 'User '.$id_user.' has been updated!'; 
+			$this->session->set_flashdata('message_success', $message);
+			//$key = $this->session->userdata('current_table');
+			redirect('admin/manage_user');
+		}
+		else {
+			$message = 'Update user '.$id_user.' failed!'; 
+			$this->session->set_flashdata('message_failed', $message);
+			//$key = $this->session->userdata('current_table');
+			redirect('admin/manage_user');
+		}
 	}
 	
 	function deleteUser($id_user) {

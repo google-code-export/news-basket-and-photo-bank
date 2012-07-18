@@ -22,20 +22,13 @@ class Manage_category extends Controller {
 		$data_category['page_title']	= 'Manage Category | Admin News Basket';
 		$data_category['main_view'] 	= 'admin/manage_category_view';
 		$data_category['form_action']	= site_url('admin/manage_category/addCategory');
-
-		$this->load->model('Category_model','',TRUE);
-		$category = $this->Category_model->getAllCategories();
-		$data_category['navigasi']['category'] = $category;
-		
-		$this->load->model('Source_model','',TRUE);
-		$publisher = $this->Source_model->getAllPublisher();
-		$data_category['navigasi']['publisher'] = $publisher;	
 		
 		// Offset
 		$uri_segment 	= 4;
 		$offset 		= $this->uri->segment($uri_segment);
 		
 		// Load data dari tabel category
+		$this->load->model('Category_model','',TRUE);
 		$categories = $this->Category_model->getAllCategory($this->limit, $offset);
 		$num_rows 	= $this->Category_model->countAll();
 		$data_category['category_table'] = $categories;
@@ -72,9 +65,58 @@ class Manage_category extends Controller {
 		}
 	}
 	
-	function editCategory() {
+	function editCategory($id_category) {
+		$data_category['page_title']	 		= 'Edit Category | Admin News Basket';
+		$data_category['main_view'] 	 		= 'admin/manage_category_view';
+		$data_category['form_action']	 		= site_url('admin/manage_category/addCategory');
+		$data_category['form_action_edit']		= site_url('admin/manage_category/editCategoryProcess');
+		$data_category['form_edit_category'] 	= 'admin/form/edit_category_form';
+		
+		// Offset
+		$uri_segment 	= 4;
+		$offset 		= $this->uri->segment($uri_segment);
+		
+		// Opsi load data dari tabel category 
 		$this->load->model('Category_model','',TRUE);
-		$category = $this->Categorys_model->getCategoryByID($idb)->row();
+		$categories = $this->Category_model->getAllCategory($this->limit, $offset);
+		$num_rows 	= $this->Category_model->countAll();
+		$data_category['category_table'] = $categories;
+		
+		// ambil data category dari ID nya
+		$category = $this->Category_model->getCategoryByID($id_category)->row();
+		
+		//simpan session username yang ingin di edit
+		$this->session->set_userdata('id_category', $category->id_category);
+			
+		$data_category['default']['category_name'] 	= $category->category_name;
+	
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_category);
+		}
+	}
+	
+	function editCategoryProcess() {
+		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
+			
+			// Siapkan data untuk disimpan di tabel
+			$category  = array(
+				'category_name'	=> $this->input->post('category-name')
+			);
+			
+			// Proses simpan data
+			$id_category = $this->session->userdata('id_category');
+			$this->load->model('Category_model','',TRUE);
+			$this->Category_model->updateCategory($id_category, $category);
+			
+			$message = 'Category '.$id_category.' has been updated!'; 
+			$this->session->set_flashdata('message_success', $message);
+			redirect('admin/manage_category');
+		}
+		else {
+			$message = 'Update category '.$id_category.' failed!'; 
+			$this->session->set_flashdata('message_failed', $message);
+			redirect('admin/manage_category');
+		}
 	}
 	
 	function deleteCategory($id_category) {

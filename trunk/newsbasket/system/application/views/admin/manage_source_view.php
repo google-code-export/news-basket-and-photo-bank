@@ -1,7 +1,7 @@
 <h2>Manage Source<button class="btn-add" style="float: right; height: 30px; margin-top: -2px;">+ Add New Source</button></h2>
-<div id="add-source" style="background-color:#EAF2D3;">
+<div id="add-source" class="add-form">
 	<form id="add-source-form" method="post"  onsubmit="return validateForm()" action="<?php echo $form_action; ?>">
-		<table id="source-form">
+		<table id="source-form" class="table-form">
 			<tr>
 				<td><label for="id-source">ID Source</label></td>
 				<td>:</td>
@@ -23,12 +23,17 @@
 				
 				<td class="label">	
 					<input type="submit" name="btn-add-source" value="Add" />
-					<button class="btn-cancel type="button">Cancel</button>
+					<button class="btn-cancel" type="button">Cancel</button>
 				</td>
 			</tr>
 			
 		</table>
 	</form>
+</div>
+<div id="edit-user" class="edit-form">
+	<?php
+		!empty($form_edit_source)? $this->load->view($form_edit_source) : '';
+	?>
 </div>
 <div id="source-table" class="table-menu">
 	<div class="search">
@@ -42,9 +47,7 @@
 	$message_failed = $this->session->flashdata('message_failed');
 	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
 ?>
-		
 <div id="myTable" class="tablesorter">
-	<?php //echo ! empty($table) ? $table : ''; ?>
 	<table id="zebra">
 		<tr>
 			<th>No</th>
@@ -55,22 +58,26 @@
 		</tr>
 		<?php
 			$No = 1;
-			$this->load->helper('text');
 			foreach ($source_table as $column) {
 				$deleteLink = anchor(
 					'admin/manage_source/deleteSource/'.$column->id_source,
-					'Delete',
+					'<button>Delete</button>',
 					array('class'=>'delete', 'onclick'=>"return confirm('Are you sure want to delete this source?')")
+				);
+				$editLink = anchor(
+					'admin/manage_source/editSource/'.$column->id_source,
+					'<button>Edit</button>',
+					array('class'=>'btn-edit-source')
 				);
 				
 				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
 						<td>$No</td>
-						<td id='id-user'>$column->id_source</td>
+						<td id='id-source'>$column->id_source</td>
 						<td>$column->source_name</td>
 						<td>$column->source_type</td>
-						<td class='center'><button class='btn-edit-source'>Edit</button></td>
+						<td class='center'>$editLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>
 				";
