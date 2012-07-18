@@ -82,15 +82,22 @@
 	width:100%;
 }
 
-#add-user, #add-category, #add-source {
+.add-form {
 	width: 100%;
 	display: none;
-	border-bottom: solid 2px red;
+	background-color: #90E281;
+	border-bottom: solid 1px rgb(150, 0, 0);
 }
 
-#add-user #user-form, #add-category #category-form, #add-source #source-form {
+.table-form {
 	margin: 0px auto;
 	padding: 10px 0px;
+}
+
+.edit-form {
+	width: 100%;
+	background-color: #90E281;
+	border-bottom: solid 1px rgb(150, 0, 0);
 }
 
 td.label{
@@ -140,7 +147,7 @@ p.success {
 	text-align: center;
 	color: white;
 	padding: 5px 0px;
-	background: none repeat scroll 0% 0% #A7C942;
+	background: none repeat scroll 0% 0% rgb(6, 54, 204);
 }
 
 p.failed {
@@ -150,7 +157,7 @@ p.failed {
 	text-align: center;
 	color: white;
 	padding: 5px 0px;
-	background: none repeat scroll 0% 0% #FF0000;
+	background: none repeat scroll 0% 0% #000000;
 }
 
 .image-load  {
