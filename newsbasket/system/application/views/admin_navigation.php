@@ -6,7 +6,7 @@
 	</ul>
 </div>
 <div class="user-menu">
-	<h3 class="menu" onclick="location.href='http://google.com';">Articles</h3>
+	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manage_article');?>'">Articles</h3>
 	<ul>
 		<!--<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Row Article</a></li>
 		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Edited</a></li>

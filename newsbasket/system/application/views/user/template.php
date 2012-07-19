@@ -58,12 +58,22 @@
 </head>
 
 <body>
-	<?php $this->load->view('header'); ?>
-	<?php $this->load->view('user_navigation'); ?>
-	<div class="main">
-		<?php $this->load->view($main_view); ?>
+	<div class="header-bar">
+		<?php $this->load->view('header', $username); ?>
 	</div>
-	<?php $this->load->view('footer'); ?>
+	<div class="container">
+		<div class="navigation">
+			<div class="navigation-inner">
+				<?php $this->load->view('user_navigation'); ?>
+			</div>
+		</div>
+		<div id="main" class="main">
+			<?php $this->load->view($main_view); ?>
+		</div>
+		<div class="footer-bar">
+			<?php $this->load->view('footer'); ?>
+		</div>
+	</div>
 </body>
 
 </html>

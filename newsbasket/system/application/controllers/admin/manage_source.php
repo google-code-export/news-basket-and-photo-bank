@@ -23,6 +23,10 @@ class Manage_source extends Controller {
 		$data_source['main_view'] 	= 'admin/manage_source_view';
 		$data_source['form_action']	= site_url('admin/manage_source/addSource');
 
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_source['username'] = $username;
+		
 		// Offset
 		$uri_segment 	= 4;
 		$offset 		= $this->uri->segment($uri_segment);
@@ -71,6 +75,10 @@ class Manage_source extends Controller {
 		$data_source['form_action']	 		= site_url('admin/manage_source/addSource');
 		$data_source['form_action_edit']	= site_url('admin/manage_source/editSourceProcess');
 		$data_source['form_edit_source'] 	= 'admin/form/edit_source_form';
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_source['username'] = $username;
 		
 		// Offset
 		$uri_segment 	= 4;

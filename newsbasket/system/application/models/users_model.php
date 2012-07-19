@@ -29,11 +29,12 @@ class Users_model extends Model {
 		return $this->db->get($this->table);
 	}
 	
-	function getAllUser($limit, $offset) {
+	function getAllUser($limit, $offset, $username) {
         $this->db->select('*');
         $this->db->from($this->table); //tabel user
 		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
-		$this->db->order_by('date_created');
+		$this->db->where_not_in('id_user', $username);
+		$this->db->order_by('date_created', 'desc');
         $this->db->limit($limit, $offset);
         return $this->db->get()->result();
     }

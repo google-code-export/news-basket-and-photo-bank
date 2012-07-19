@@ -23,11 +23,7 @@ class Manage_user extends Controller {
 		$data_user['main_view'] 	= 'admin/manage_user_view';
 		$data_user['form_action']	= site_url('admin/manage_user/addUser');
 		$data_user['form_add_user'] = 'admin/form/add_user_form';
-		/*
-		$this->load->model('Category_model','',TRUE);
-		$category = $this->Category_model->getAllCategories();
-		$data_user['navigasi']['category'] = $category;
-		*/
+
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
 		$data_user['navigasi']['publisher'] = $publisher;	
@@ -36,26 +32,16 @@ class Manage_user extends Controller {
 		$uri_segment 	= 4;
 		$offset 		= $this->uri->segment($uri_segment);
 		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_user['username'] = $username;
+		
 		// Opsi load data dari tabel user 
 		$this->load->model('Users_model','',TRUE);
-		//if ($key == 'all') { // tampilkan semua
-			$users  	= $this->Users_model->getAllUser($this->limit, $offset);
-			$num_rows 	= $this->Users_model->countAll();
-			$data_user['user_table'] = $users;
-		/*}
-		else if (is_numeric($key)) { // tampilkan dengan kriteria publisher
-			$users  	= $this->Users_model->getAllUserByPublisher($this->limit, $offset, $key);
-			$num_rows 	= $this->Users_model->countUserByPublisher($key);
-			$data_user['user_table'] = $users;
-		}
-		else { // tampilkan dengan kriteria level
-			$users  	= $this->Users_model->getAllUserByLevel($this->limit, $offset, $key);
-			$num_rows 	= $this->Users_model->countUserByLevel($key);
-			$data_user['user_table'] = $users;
-		}
-		// Simpan table yang dilihat saat ini
-		$this->session->set_userdata('current_table', $key);
-		*/
+		$users  	= $this->Users_model->getAllUser($this->limit, $offset, $username);
+		$num_rows 	= $this->Users_model->countAll();
+		$data_user['user_table'] = $users;
+	
 		// Membuat pagination			
 		$config['base_url']    		= site_url('admin/manage_user/loadUsers');
 		$config['total_row']		= $num_rows;
@@ -70,12 +56,10 @@ class Manage_user extends Controller {
 	function addUser() {
 		// Set validation rules
 		$this->form_validation->set_rules('username', 'Username', 'required');		
-		//$this->form_validation->set_rules('publisher', 'Publisher', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('phone', 'Phone', 'required|numeric');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-		//$this->form_validation->set_rules('user-level', 'User-level', 'required');
 		
 		$this->load->helper('security');
 		if ($this->form_validation->run() == TRUE && $this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
@@ -112,40 +96,24 @@ class Manage_user extends Controller {
 		$data_user['form_action_edit']	= site_url('admin/manage_user/editUserProcess');
 		$data_user['form_edit_user'] 	= 'admin/form/edit_user_form';
 		
-		/* untuk navigasi dan option form
-		$this->load->model('Category_model','',TRUE);
-		$category = $this->Category_model->getAllCategories();
-		$data_user['navigasi']['category'] = $category;
-		*/
 		// untuk option form
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
-		$data_user['navigasi']['publisher'] = $publisher;
+		$data_user['publisher'] = $publisher;
 		
 		// Offset
 		$uri_segment 	= 4;
 		$offset 		= $this->uri->segment($uri_segment);
 		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_user['username'] = $username;
+		
 		// Opsi load data dari tabel user 
-		//$key = $this->session->userdata('current_table');
-		$this->load->model('Users_model','',TRUE);	
-		//if ($key == 'all') { // tampilkan semua
-		$users  	= $this->Users_model->getAllUser($this->limit, $offset);
+		$this->load->model('Users_model','',TRUE);
+		$users  	= $this->Users_model->getAllUser($this->limit, $offset, $username);
 		$num_rows 	= $this->Users_model->countAll();
 		$data_user['user_table'] = $users;
-		/*}
-		else if (is_numeric($key)) { // tampilkan dengan kriteria publisher
-			$users  	= $this->Users_model->getAllUserByPublisher($this->limit, $offset, $key);
-			$num_rows 	= $this->Users_model->countUserByPublisher($key);
-			$data_user['user_table'] = $users;
-		}
-		else { // tampilkan dengan kriteria level
-			$users  	= $this->Users_model->getAllUserByLevel($this->limit, $offset, $key);
-			$num_rows 	= $this->Users_model->countUserByLevel($key);
-			$data_user['user_table'] = $users;
-		}*/
-		// Simpan table yang dilihat saat ini
-		//$this->session->set_userdata('current_table', $key);
 		
 		// ambil data user dari ID nya
 		$user = $this->Users_model->getUserByID($id_user)->row();

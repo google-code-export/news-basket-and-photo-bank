@@ -26,7 +26,11 @@ class Manage_author extends Controller {
 		
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
-		$data_author['navigasi']['publisher'] = $publisher;	
+		$data_author['publisher'] = $publisher;	
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_author['username'] = $username;
 		
 		// Offset
 		$uri_segment 	= 4;
@@ -95,7 +99,7 @@ class Manage_author extends Controller {
 		// untuk option form
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
-		$data_author['navigasi']['publisher'] = $publisher;
+		$data_author['publisher'] = $publisher;
 		
 		// Offset
 		$uri_segment 	= 4;
