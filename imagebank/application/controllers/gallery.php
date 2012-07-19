@@ -29,6 +29,8 @@ class Gallery extends Controller {
 		$this->load->view('detail_gambar',$data);
 		
 	}
+	
+	
 		
 	
 	
