@@ -21,7 +21,7 @@
 			<td>
 				<select id="publisher" name="publisher">
 				<?php
-				foreach ($navigasi['publisher'] as $column) {
+				foreach ($publisher as $column) {
 					if ($column->id_source == $default['publisher']) {
 						echo "<option value='$column->id_source' SELECTED>$column->source_name</option>";
 					}

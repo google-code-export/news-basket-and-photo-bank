@@ -92,16 +92,15 @@ input[type="email"], input[type="number"], input[type="password"], input[type="t
 }
 
 /*------------------------ atas ------------------------------*/
-.header-bar {
+.header-bar-login {
     height: 70px;
     background: none repeat scroll 0% 0% rgb(175, 0, 0);
-    /*border-bottom: 1px solid rgb(150, 150, 150);*/
 	box-shadow: 0px 4px 10px -1px rgba(200, 200, 200, 0.7);
     overflow: hidden;
 }
 
 /*----------------------- tengah -----------------------------*/
-.main {
+.main-login {
     width: auto;
     max-width: 1100px;
     min-width: 780px;

@@ -165,14 +165,22 @@
 </head>
 
 <body>
-	<?php $this->load->view('header'); ?>
-	<div class="navigation">
-		<?php $this->load->view('admin_navigation'); ?>
+	<div class="header-bar">
+		<?php $this->load->view('header', $username); ?>
 	</div>
-	<div id="main" class="main">
-		<?php $this->load->view($main_view); ?>
+	<div class="container">
+		<div class="navigation">
+			<div class="navigation-inner">
+				<?php $this->load->view('admin_navigation'); ?>
+			</div>
+		</div>
+		<div id="main" class="main">
+			<?php $this->load->view($main_view); ?>
+		</div>
+		<div class="footer-bar">
+			<?php $this->load->view('footer'); ?>
+		</div>
 	</div>
-	<?php $this->load->view('footer'); ?>
 </body>
 
 </html>

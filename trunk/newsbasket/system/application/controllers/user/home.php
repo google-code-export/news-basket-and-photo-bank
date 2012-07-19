@@ -9,9 +9,24 @@ class Home extends Controller {
 	
 	function index()
 	{
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') != 'administrator') {
+			$this->loadHome();
+		}
+		else {
+			redirect('login');
+        }
+	}
+	
+	function loadHome() {
 		$data_home['main_view'] = 'user/home_view';
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_home['username'] = $username;
+		
 		$this->load->view('user/template', $data_home);
 	}
+	
 }
 
 /* End of file home.php */

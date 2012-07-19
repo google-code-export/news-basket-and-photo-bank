@@ -11,9 +11,17 @@
 </head>
 
 <body>
-	<?php $this->load->view('header'); ?>
-	<?php $this->load->view($main_content); ?>
-	<?php $this->load->view('footer'); ?>
+	<div class="header-bar-login">
+		<?php $this->load->view('header_login'); ?>
+	</div>
+	<div class="container">
+		<div id="main" class="main-login">
+			<?php $this->load->view($main_content); ?>
+		</div>
+		<div class="footer-bar">
+			<?php $this->load->view('footer'); ?>
+		</div>
+	</div>
 </body>
 
 </html>

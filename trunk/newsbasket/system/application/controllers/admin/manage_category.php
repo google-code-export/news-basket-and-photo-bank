@@ -23,6 +23,10 @@ class Manage_category extends Controller {
 		$data_category['main_view'] 	= 'admin/manage_category_view';
 		$data_category['form_action']	= site_url('admin/manage_category/addCategory');
 		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_category['username'] = $username;
+		
 		// Offset
 		$uri_segment 	= 4;
 		$offset 		= $this->uri->segment($uri_segment);
@@ -71,6 +75,10 @@ class Manage_category extends Controller {
 		$data_category['form_action']	 		= site_url('admin/manage_category/addCategory');
 		$data_category['form_action_edit']		= site_url('admin/manage_category/editCategoryProcess');
 		$data_category['form_edit_category'] 	= 'admin/form/edit_category_form';
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_category['username'] = $username;
 		
 		// Offset
 		$uri_segment 	= 4;

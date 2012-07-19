@@ -26,7 +26,11 @@ class Manage_article extends Controller {
 		
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
-		$data_article['navigasi']['publisher'] = $publisher;	
+		$data_article['publisher'] = $publisher;	
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_article['username'] = $username;
 		
 		// Offset
 		$uri_segment 	= 4;
@@ -47,6 +51,30 @@ class Manage_article extends Controller {
 		
 		$this->load->view('admin/template', $data_article);
 	}
+	/*
+	function detailArticle($id_article) {
+		$data_article['page_title']	 = 'Detail Article | Admin News Basket';
+		$data_article['main_view'] 	 = 'admin/manage_article_view';
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_author['username'] = $username;
+		
+		// ambil data article dari ID nya
+		$this->load->model('Article_model','',TRUE);
+		$article = $this->Article_model->getArticleByID($id_article)->row();
+		
+		//simpan session id-article yang ingin di edit
+		$this->session->set_userdata('id_article', $article->id_article);
+			
+		$data_article['article']['id_article'] 		= $article->name;
+		$data_article['article']['author'] 			= $article->password;
+		$data_article['article']['created_on'] 		= $article->phone;
+		$data_article['article']['headline'] 		= $article->email;
+		$data_article['article']['body_article']	= $article->id_source
+		
+		$this->load->view('admin/detail/article_detail_view', $data_article);
+	}*/
 	/*
 	function addArticle() {
 		$this->load->helper('security');
@@ -79,14 +107,14 @@ class Manage_article extends Controller {
 	function editArticle($id_article) { 
 		$data_article['page_title']	 		= 'Edit Article | Admin News Basket';
 		$data_article['main_view'] 	 		= 'admin/manage_article_view';
-		$data_article['form_action']	 		= site_url('admin/manage_article/addArticle');
+		$data_article['form_action']	 	= site_url('admin/manage_article/addArticle');
 		$data_article['form_action_edit']	= site_url('admin/manage_article/editArticleProcess');
 		$data_article['form_edit_article'] 	= 'admin/form/edit_article_form';
 		
 		// untuk option form
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
-		$data_article['navigasi']['publisher'] = $publisher;
+		$data_article['publisher'] = $publisher;
 		
 		// Offset
 		$uri_segment 	= 4;
