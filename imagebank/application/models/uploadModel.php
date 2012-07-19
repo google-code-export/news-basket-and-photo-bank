@@ -98,5 +98,15 @@
 		
 		
     }
+	function getAllCategory() {
+		$data = array();
+	
+		$this->db->select('*');
+		$this->db->from('category');
+
+		 return $this->db->get()->result();
+
+	
+	}
 }
 ?>

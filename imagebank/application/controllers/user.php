@@ -15,8 +15,12 @@
 	}
 	
 	function upload(){
-		$this->load->model('uploadModel');
-		$this->load->view('uploadform');
+		$this->load->model('uploadModel','',TRUE);
+
+		$data['category']=$this->uploadModel->getAllCategory();
+		$this->load->view('uploadform', $data);
+		
+		
 	}
 	function picupload(){
 		
@@ -50,6 +54,10 @@
 		
 	}
 	
+	function getCategory(){
+		
+		
+	}
 	
  }   
     
