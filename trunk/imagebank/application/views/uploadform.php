@@ -13,7 +13,7 @@
 	<?php 
 	foreach ($category as $row ) {
 		
-	echo " <input type='checkbox' name= '$row->category' value='$row->id_category'/>$row->category<br/>";
+	echo " <input type='checkbox' name= 'kat[]' value='$row->id_category'/>$row->category<br/>";
 	
 	}	
 	 ?>

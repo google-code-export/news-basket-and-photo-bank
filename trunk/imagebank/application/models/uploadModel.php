@@ -90,7 +90,7 @@
             //Insert Info Into Database
             $this->db->insert('images',$row);
 			
-			
+			return $this->db->insert_id();
 
         }
 		

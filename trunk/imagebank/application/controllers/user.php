@@ -44,18 +44,36 @@
 				}
 				else{
 					$uploads = array($this->upload->data());
-					$this->uploadModel->process_pic($uploads,$this->input->post('title'),$this->input->post('caption'));
+					$id_gambar=$this->uploadModel->process_pic($uploads,$this->input->post('title'),$this->input->post('caption'));
 					
 				}
 			}
 		}
+		
+		foreach($_POST['kat'] as $k){
+			$data = array('id_images' => $id_gambar, 'id_category'=> $k);
+			$this->db->insert('imagescategory', $data);
+		}
+
 		$data['succes'] ='Thank you,FIle Uploaded';
 		$this->load->view('upload_succes', $data);
 		
 	}
 	
-	function getCategory(){
+	function editCaption(){
+		$this->load->helper('form');
+		$now = date('Y-m-d H:i:s');
 		
+		$image_data = array(
+			'title'		=>$this->input->post('title'),
+			'caption'	=>$this->input->post('caption'),
+			'updated_at' => $now,
+			
+		);
+		
+		$this->image_model->update($image_data, $image_id);
+		redirect('gallery');
+		$this->load->view('edit_image');
 		
 	}
 	
