@@ -2,9 +2,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Untitled Page</title>
+<title>Home Admin</title>
 <meta name="generator" content="WYSIWYG Web Builder 8 - http://www.wysiwygwebbuilder.com">
 <meta charset="utf-8" />
+<?php 
+foreach($css_files as $file): ?>
+	<link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+<?php endforeach; ?>
+<?php foreach($js_files as $file): ?>
+	<script src="<?php echo $file; ?>"></script>
+<?php endforeach; ?>
 
 
 <style type='text/css'>
@@ -313,19 +320,19 @@ $(document).ready(function()
 <body>
 <div id="container">
 <div id="wb_Shape2" style="position:absolute;left:0px;top:102px;width:204px;height:547px;z-index:0;">
-<img src="<?php base_url().'images/img0007.gif'; ?>" id="Shape2" alt=""></div>
+<img src="images/img0007.gif'" id="Shape2" alt=""></div>
 <div id="wb_Shape1" style="position:absolute;left:1px;top:190px;width:204px;height:24px;z-index:1;">
-<img src="<?php base_url().'images/img0008.png'; ?>" id="Shape1" alt=""></div>
+<img src="images/img0008.png" id="Shape1" alt=""></div>
 <div id="wb_Shape3" style="position:absolute;left:1px;top:299px;width:204px;height:24px;z-index:2;">
-<img src="<?php base_url().'images/img0009.png'; ?>" id="Shape3" alt=""></div>
+<img src="images/img0009.png" id="Shape3" alt=""></div>
 <div id="wb_Image1" style="position:absolute;left:6px;top:4px;width:197px;height:68px;z-index:3;">
-<img src="<?php base_url().'images/logoimagebank.png'; ?>" id="Image1" alt="" border="0" style="width:197px;height:68px;"></div>
+<img src="images/logoimagebank " id="Image1" alt="" border="0" style="width:197px;height:68px;"></div>
 <div id="wb_Shape4" style="position:absolute;left:215px;top:227px;width:796px;height:425px;z-index:4;">
-<img src="<?php base_url().'images/img0010.gif'; ?>" id="Shape4" alt=""></div>
+<img src="images/img0010.gif" id="Shape4" alt=""></div>
 <div id="wb_Shape5" style="position:absolute;left:214px;top:17px;width:796px;height:203px;z-index:5;">
-<img src="<?php base_url().'images/img0011.gif'; ?>" id="Shape5" alt=""></div>
+<img src="images/img0011.gif'" id="Shape5" alt=""></div>
 <div id="wb_Shape6" style="position:absolute;left:227px;top:28px;width:775px;height:157px;z-index:6;">
-<img src="<?php base_url().'images/img0015.gif'; ?>" id="Shape6" alt=""></div>
+<img src="images/img0015.gif" id="Shape6" alt=""></div>
 <button id="AdvancedButton1" type="button" name="" value="" style="position:absolute;left:571px;top:190px;width:84px;height:24px;z-index:7;"><div style="text-align:center"><span style="color:#000000;font-family:Arial;font-size:13px">New Folder</span></div></button>
 <button id="AdvancedButton2" type="button" name="" value="" style="position:absolute;left:658px;top:190px;width:84px;height:24px;z-index:8;"><div style="text-align:center"><span style="color:#000000;font-family:Arial;font-size:13px">Delete</span></div></button>
 <div id="wb_Text1" style="position:absolute;left:29px;top:303px;width:142px;height:16px;text-align:center;z-index:9;">
@@ -350,16 +357,16 @@ $(document).ready(function()
 <span style="color:#FFFFFF;font-family:Arial;font-size:13px;"><strong>Folder</strong></span></div>
 <div id="wb_BulletedList2" style="position:absolute;left:5px;top:221px;width:158px;height:40px;z-index:13;">
 <div>
-   <div class="bullet" style="height:20px;"><img src="<?php base_url().images/foldermini1.png; ?>" style="width:20px;height:20px;" alt=""></div>
+   <div class="bullet" style="height:20px;"><img src="images/foldermini1.png" style="width:20px;height:20px;" alt=""></div>
    <div class="item" style="height:20px;text-align:left;"><span style="color:#000000;font-family:'Trebuchet MS';font-size:13px;">Browse</span></div>
 </div>
 <div style="clear:both">
-   <div class="bullet" style="height:20px;"><img src="<?php base_url().images/foldermini1.png; ?>" style="width:20px;height:20px;" alt=""></div>
+   <div class="bullet" style="height:20px;"><img src="images/foldermini1.png" style="width:20px;height:20px;" alt=""></div>
    <div class="item" style="height:20px;text-align:left;"><span style="color:#000000;font-family:'Trebuchet MS';font-size:13px;">My Image</span></div>
 </div>
 </div>
 <div id="wb_Shape7" style="position:absolute;left:0px;top:85px;width:204px;height:24px;z-index:14;">
-<img src="<?php base_url().images/img0016.png; ?>" id="Shape7" alt=""></div>
+<img src="images/img0016.png" id="Shape7" alt=""></div>
 <div id="wb_LoginName2" style="position:absolute;left:4px;top:117px;width:166px;height:23px;z-index:15;">
 <span id="LoginName2">Welcome <?php
 if (isset($_SESSION['username']))
@@ -387,16 +394,16 @@ else
 <option>Education</option>
 </select>
 <div id="wb_Image2" style="position:absolute;left:978px;top:190px;width:25px;height:25px;z-index:19;">
-<img src="<?php base_url().images/img0052.png; ?>" id="Image2" alt="" border="0" style="width:25px;height:25px;"></div>
+<img src="images/img0052.png" id="Image2" alt="" border="0" style="width:25px;height:25px;"></div>
 <button id="AdvancedButton3" type="button" name="" value="" style="position:absolute;left:327px;top:190px;width:84px;height:24px;z-index:20;"><div style="text-align:center"><span style="color:#000000;font-family:Arial;font-size:13px">Upload</span></div></button>
 <button id="AdvancedButton4" type="button" name="" value="" style="position:absolute;left:413px;top:190px;width:84px;height:24px;z-index:21;"><div style="text-align:center"><span style="color:#000000;font-family:Arial;font-size:13px">Download</span></div></button>
 <div id="wb_BulletedList3" style="position:absolute;left:6px;top:329px;width:168px;height:40px;z-index:22;">
 <div>
-   <div class="bullet" style="height:20px;"><img src="<?php base_url().images/user.png; ?>" style="width:16px;height:16px;" alt=""></div>
+   <div class="bullet" style="height:20px;"><img src="images/user.png" style="width:16px;height:16px;" alt=""></div>
    <div class="item" style="height:20px;text-align:left;"><span style="color:#000000;font-family:'Trebuchet MS';font-size:13px;">Manage User</span></div>
 </div>
 <div style="clear:both">
-   <div class="bullet" style="height:20px;"><img src="<?php base_url().images/user.png; ?>" style="width:16px;height:16px;" alt=""></div>
+   <div class="bullet" style="height:20px;"><img src="images/user.png" style="width:16px;height:16px;" alt=""></div>
    <div class="item" style="height:20px;text-align:left;"><span style="color:#000000;font-family:'Trebuchet MS';font-size:13px;">Manage Category</span></div>
 </div>
 </div>

@@ -28,6 +28,7 @@ a:hover
 </head>
 <body>
 	<div>
+		
 		<a href='<?php echo site_url('index.php/main/category')?>'>Categories</a> |
 		<a href='<?php echo site_url('index.php/main/group')?>'>Group</a> |
 		<a href='<?php echo site_url('index.php/main/user')?>'>Users</a> |

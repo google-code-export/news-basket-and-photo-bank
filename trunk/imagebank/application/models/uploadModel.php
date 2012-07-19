@@ -24,16 +24,19 @@
 				
 			
     	}
-		function process_pic()
+		function process_pic($uploads,$title,$caption)
     {   
         //Connect to database
         $this->load->database();
 
         //Get File Data Info
         $uploads = array($this->upload->data());
-
+		$row =array();
+		$row['title'] = $title;
+		$row['caption']= $caption;
+		//$this->db->insert('images',$row) ;
         $this->load->library('image_lib');
-
+		
         //Move Files To User Folder
         foreach($uploads as $key[] => $value)
         {
@@ -49,11 +52,11 @@
             $config['create_thumb'] = TRUE;
             $config['thumb_marker'] = '_tn';
             $config['master_dim'] = 'width';
-            $config['quality'] = 75;
+            $config['quality'] = 100;
             $config['maintain_ratio'] = TRUE;
-            $config['width'] = 175;
-            $config['height'] = 175;
-            $config['new_image'] = '/pictures/'.$newimagename;
+            $config['width'] = 200;
+            $config['height'] = 200;
+            $config['new_image'] = 'images/galeri/thumbs/'.$newimagename;
 
             //$this->image_lib->clear();
             $this->image_lib->initialize($config);
@@ -72,20 +75,22 @@
             $timestamp = time();
 			$filepath =$value['file_path'];
 			$filetype = $value['image_type'];
-			$title = $value['title'];
-
-            //Add Pic Info To Database
-            $this->db->set('image_name', $imagename);
-            $this->db->set('thumbnail', $thumbnail);
-            $this->db->set('filesize', $filesize);
-            $this->db->set('image_width', $width);
-            $this->db->set('image_height', $height);
-           $this->db->set('timestamp', $timestamp);
-			$this->db->set('path', $filepath);
-			$this->db->set('type',$filetype);
-			$this->db->set('title',$title);
+			
+			 $now = date('Y-m-d H:i:s');
+			$row['image_name'] = $imagename;
+			$row['thumbnail']= $thumbnail;
+			$row['filesize']= $filesize;
+			$row['image_width'] = $width;
+			$row['image_height']= $height;
+			$row['timestamp']= $timestamp;
+			$row['path'] =$filepath;
+			$row['filetype']= $filetype;
+			$row['update_at'] = $now;
+            
             //Insert Info Into Database
-            $this->db->insert('images');
+            $this->db->insert('images',$row);
+			
+			
 
         }
 		
