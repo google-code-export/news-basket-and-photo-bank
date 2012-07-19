@@ -5,17 +5,7 @@
 	        @import url("../../css/table.css");
 
 
-            /* Demo styles */
-            html,body{background:#222;margin:0;}
-            body{border-top:4px solid #000;}
-            .content{color:#777;font:12px/1.4 "helvetica neue",arial,sans-serif;width:620px;margin:20px auto;}
-            h1{font-size:12px;font-weight:normal;color:#ddd;margin:0;}
-            p{margin:0 0 20px}
-            a {color:#22BCB9;text-decoration:none;}
-            .cred{margin-top:20px;font-size:11px;}
 
-            /* This rule is read by Galleria to define the gallery height: */
-            #galleria{height:320px}
 
         .metadata {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -27,17 +17,17 @@
 	background-color: #000000;
 	margin: 5;
 }
+            .image {
+	height: 400x;
+	width: 700px;
+}
             </style>
 <meta charset="UTF-8">
-	<link rel="stylesheet" href="../../css/colorbox.css"/>
-	<script src="../../js/galleria-1.2.7.js"></script>
-	<script src="../../js/galleria-1.2.7.min.js"></script>
-	<script src="../../js/jquery-1.7.2.js"></script>
+	<link rel="stylesheet" href="../css/colorbox.css"/>
 	
 			
 		)
-	</script>
-	 <script src="../../plugins/history/galleria.history.min.js"></script>
+
 	<style>
 
             /* Demo styles */
@@ -54,23 +44,18 @@
 	height:700px
 }
 
-    #sidebar {
-	font-family: Georgia, "Times New Roman", Times, serif;
-	position: absolute;
-	height: 200px;
-	width: 100px;
-}
+ 
     #action {
 }
     .action {
 	font-family: "Courier New", Courier, monospace;
 	height: 40px;
-	width: 700px;
+	width: 450px;
 	top: 30px;
 	margin-top: 30px;
 	margin-right: 10px;
 	margin-bottom: auto;
-	margin-left: 39px;
+	margin-left: 100px;
 }
     </style>
 	
@@ -78,44 +63,31 @@
 
 <body>
 <div class="content">
-<h1>&nbsp;</h1>
+
 		<div id="galleria">
         <div id="image" >
-        <div align="center">
-        <div id="apDiv1">
+        
+       
+        
 		<?php
 			foreach ($images as $row) {
 				$image = base_url()."images/galeri/".$row->image_name;
 				
-				echo " <a href='$image' ><img src='$image' title=$row->thumbnail></a>";		
-			/*	echo "
-					
-					<img src='$image' />
-					<h1>$row->image_name</h1>
-					<p>$row->title</br>
-						$row->caption</br>
-						$row->filesize kilobyte</br>
-						$row->filetype</br>
-						
-					</p>
-				";*/	
-				
+				echo " <a href='$image' ><img src='$image' width='700px'   title=$row->thumbnail></a>";		
+
 			} 
-		 ?></div>
+		 ?>
 
         </div>
-		 
-		  </div>
-           <div class="action" id="action" align="center">
+		 <div class="action" id="action" align="center">
              <table width="81%" border="0">
                <tr>
-                 <td width="30%"><img src="../../images/download.png" width="16" height="16" alt="download"><a href="download.php">download</a></td>
+                 <td width="30%"><img src="../../images/download.png" width="16" height="16" alt="download"><a href="../application/views/download.php">download</a></td>
                  <td width="34%"><img src="../../images/edit.png" width="16" height="16" alt="edit">edit properties</td>
-                 <td width="36%">&nbsp;</td>
+                 
                </tr>
              </table>
            </div>
-		 
            <div class="metadata" id="metadata">
           <div align="center">
             <table width="100%" border="1" align="center" cellpadding="0" cellspacing="1" class="maintable ">
@@ -156,6 +128,10 @@
           </div>
 		
 	</div>
+		  </div>
+           
+		 
+           
          
     </div>
 <p>&nbsp; </p>
