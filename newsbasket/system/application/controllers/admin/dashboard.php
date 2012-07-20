@@ -7,7 +7,10 @@ class Dashboard extends Controller {
 	}
 	
 	function index() {
-		$this->load->view('admin/dashboard');
+		$admin['page_title'] = 'Dashboard | Admin Newsbasket';
+		$admin['username']   = $this->session->userdata['username'];
+		$admin['main_view']  = 'admin/dashboard';
+		$this->load->view('admin/template', $admin);
 	}
 	
 }

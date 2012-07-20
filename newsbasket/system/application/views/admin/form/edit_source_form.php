@@ -25,7 +25,7 @@
 			</td>	
 			
 			<td class="label">	
-				<input type="submit" name="btn-edit-source" value="Edit" />
+				<input type="submit" name="btn-edit-source" value="Save" />
 				<button class="btn-cancel-edit" onclick="location.href='<?php echo site_url('admin/manage_source');?>'" type="button">Cancel</button>
 			</td>
 		</tr>

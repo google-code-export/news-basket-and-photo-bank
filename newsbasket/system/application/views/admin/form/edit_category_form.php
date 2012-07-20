@@ -6,7 +6,7 @@
 			<td><input type="text" id="category-name" name="category-name" required="required" autofocus="autofocus" value="<?php echo $default['category_name']; ?>"/></td>	
 			
 			<td class="label">	
-				<input type="submit" name="btn-edit-category" value="Edit" />
+				<input type="submit" name="btn-edit-category" value="Save" />
 				<button class="btn-cancel-edit" onclick="location.href='<?php echo site_url('admin/manage_category');?>'" type="button">Cancel</button>
 			</td>
 		</tr>

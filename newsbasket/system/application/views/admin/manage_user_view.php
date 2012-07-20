@@ -120,9 +120,8 @@
 		<tr>
 			<th>No</th>
 			<th>Username</th>
-			<th>Password</th>
 			<th>Publisher</th>
-			<th>Name</th>
+			<th>Full Name</th>
 			<th>Phone</th>
 			<th>Email</th>
 			<th>Level</th>
@@ -148,7 +147,6 @@
 					<tr class=$class_tr>
 						<td>$No</td>
 						<td id='id-user'>$column->id_user</td>
-						<td>$column->password</td>
 						<td>$column->source_name</td>
 						<td>$column->name</td>
 						<td>$column->phone</td>
