@@ -14,17 +14,12 @@
 					<td><input type="text" id="name" name="name" required="required" /></td>
 					<td>&nbsp;</td>
 					
-					<td class="label"><label for="phone">Phone</label></td>
-					<td>:</td>
-					<td><input type="text" id="phone" name="phone" required="required" /></td>
-					<td><span id="check-numeric" style="display: none;"></span></td>
-					
 					<td class="label"><label for="publisher">Publisher</label></td>
 					<td>:</td>
 					<td>
 						<select id="publisher" name="publisher">
 						<?php
-						foreach ($navigasi['publisher'] as $column) {
+						foreach ($publisher as $column) {
 							echo "
 							<option value='$column->id_source'>$column->source_name</option>
 							";
@@ -34,20 +29,15 @@
 					</td>
 				</tr>
 				<tr>
-					<td><label for="password">Password</label></td>
-					<td>:</td>
-					<td><input type="password" id="password" name="password" required="required" /></td>
-					<td>&nbsp;</td>
-
-					<td class="label"><label for="confirm-password">Retype Password</label></td>
-					<td>:</td>
-					<td><input type="password" id="confirm-password" name="confirm-password" required="required" /></td>
-					<td><span id="check-password" style="display: none;"></span></td>
-					
 					<td class="label"><label for="email">Email</label></td>
 					<td>:</td>
 					<td><input type="email" id="email" name="email" required="required" /></td>
 					<td>&nbsp;</td>
+					
+					<td class="label"><label for="phone">Phone</label></td>
+					<td>:</td>
+					<td><input type="text" id="phone" name="phone" required="required" /></td>
+					<td><span id="check-numeric" style="display: none;"></span></td>
 					
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
@@ -103,7 +93,6 @@
 			<tr>
 				<th>No</th>
 				<th>ID Author</th>
-				<th>Password</th>
 				<th>Publisher</th>
 				<th>Name</th>
 				<th>Phone</th>
@@ -130,7 +119,6 @@
 						<tr class=$class_tr>
 							<td>$No</td>
 							<td id='id-author'>$column->id_author</td>
-							<td>$column->password</td>
 							<td>$column->source_name</td>
 							<td>$column->name</td>
 							<td>$column->phone</td>

@@ -1,7 +1,7 @@
 <div class="dashboard">
 	<h3 class="menu">Dashboard</h3>
 	<ul>
-		<li><a href="http://csandre.wordpress.com/category/belajar/">Home</a></li>
+		<li><a href="<?php echo site_url('admin/dashboard');?>">Home</a></li>
 		<li><a href="<?php echo site_url('login/logoutProcess');?>">Logout</a></li>
 	</ul>
 </div>

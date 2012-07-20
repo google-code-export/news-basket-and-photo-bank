@@ -19,10 +19,9 @@ class Manage_article extends Controller {
 	}
 	
 	function loadArticle() {
-		$data_article['page_title']			= 'Manage Article | Admin News Basket';
-		$data_article['main_view'] 			= 'admin/manage_article_view';
-		$data_article['form_action']		= site_url('admin/manage_article/addArticle');
-		$data_article['form_add_article'] 	= 'admin/form/add_article_form';
+		$data_article['page_title']		= 'Manage Article | Admin News Basket';
+		$data_article['main_view'] 		= 'admin/manage_article_view';
+		$data_article['form_action']	= site_url('admin/manage_article/addArticle');
 		
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
@@ -47,18 +46,18 @@ class Manage_article extends Controller {
 		$config['per_page']     	= $this->limit;
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
-		$data_article['pagination']   	= $this->pagination->create_links();
+		$data_article['pagination'] = $this->pagination->create_links();
 		
 		$this->load->view('admin/template', $data_article);
 	}
-	/*
+	
 	function detailArticle($id_article) {
-		$data_article['page_title']	 = 'Detail Article | Admin News Basket';
-		$data_article['main_view'] 	 = 'admin/manage_article_view';
+		$data_article['page_title']	 	= 'Detail Article | Admin News Basket';
+		$data_article['main_view'] 	 	= 'admin/detail/article_detail_view';
 		
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
-		$data_author['username'] = $username;
+		$data_article['username'] = $username;
 		
 		// ambil data article dari ID nya
 		$this->load->model('Article_model','',TRUE);
@@ -67,14 +66,21 @@ class Manage_article extends Controller {
 		//simpan session id-article yang ingin di edit
 		$this->session->set_userdata('id_article', $article->id_article);
 			
-		$data_article['article']['id_article'] 		= $article->name;
-		$data_article['article']['author'] 			= $article->password;
-		$data_article['article']['created_on'] 		= $article->phone;
-		$data_article['article']['headline'] 		= $article->email;
-		$data_article['article']['body_article']	= $article->id_source
+		$data_article['article']['id_article'] 		= $article->id_article;
+		$data_article['article']['author'] 			= $article->author;
+		$data_article['article']['created_on'] 		= $article->created_on;
+		$data_article['article']['lead_article']	= $article->lead_article;
+		$data_article['article']['headline'] 		= $article->headline;
+		$data_article['article']['body_article']	= $article->body_article;
+		$data_article['article']['flag']			= $article->flag;
 		
-		$this->load->view('admin/detail/article_detail_view', $data_article);
-	}*/
+		// ambil versi artikel
+		$data_article['article']['list_version'] = $this->Article_model->getArticleVersion($id_article);
+		
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_article);
+		}
+	}
 	/*
 	function addArticle() {
 		$this->load->helper('security');

@@ -30,7 +30,7 @@ class Login extends Controller {
                 $data = array('username' => $username, 'login' => TRUE, 'user_level' => $user_level);
 				$this->session->set_userdata($data);
 				if ($user_level == 'administrator') {
-					redirect('admin/manage_user');
+					redirect('admin/dashboard');
 				}
 				else {
 					redirect('user/home');

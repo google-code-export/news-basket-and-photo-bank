@@ -75,7 +75,7 @@
 			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
 			<td>&nbsp;</td><td>&nbsp;</td>
 			<td align="right">
-				<input type="submit" name="btn-edit-user" value="Edit" />
+				<input type="submit" name="btn-edit-user" value="Save" />
 				<!--<button id="btn-add-user" type="button" onclick="">Add</button>-->
 				<button class="btn-cancel-edit" onclick="location.href='<?php echo site_url('admin/manage_user');?>'" type="button">Cancel</button>
 			</td>

@@ -62,12 +62,11 @@ class Manage_author extends Controller {
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		//$this->form_validation->set_rules('author-level', 'Author-level', 'required');
 		*/
-		$this->load->helper('security');
+		
 		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
 			$new_author  = array(
 				'id_author'		=> $this->input->post('id-author'),
 				'id_source'		=> $this->input->post('publisher'),
-				'password'		=> dohash($this->input->post('password')),
 				'name'      	=> $this->input->post('name'),
 				'phone'       	=> $this->input->post('phone'),
 				'email'   		=> $this->input->post('email'),
@@ -96,6 +95,10 @@ class Manage_author extends Controller {
 		$data_author['form_action_edit']	= site_url('admin/manage_author/editAuthorProcess');
 		$data_author['form_edit_author'] 	= 'admin/form/edit_author_form';
 		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_author['username'] = $username;
+		
 		// untuk option form
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
@@ -117,7 +120,6 @@ class Manage_author extends Controller {
 		$this->session->set_userdata('id_author', $author->id_author);
 			
 		$data_author['default']['name'] 		= $author->name;
-		$data_author['default']['password'] 	= $author->password;
 		$data_author['default']['phone'] 		= $author->phone;
 		$data_author['default']['email'] 		= $author->email;
 		$data_author['default']['publisher']	= $author->id_source;
@@ -130,20 +132,10 @@ class Manage_author extends Controller {
 	function editAuthorProcess() {
 		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
 			
-			// kondisi password
-			$new_password = $this->input->post('new-password');
-			if(!empty($new_password)) {
-				$password = $new_password;
-			}
-			else {
-				$password = $this->input->post('old-password');
-			}
-			
 			// Prepare data untuk disimpan di tabel
 			$author  = array(
 				'name'		=> $this->input->post('name'),
 				'id_source'	=> $this->input->post('publisher'),
-				'password'  => $password,
 				'email'     => $this->input->post('email'),
 				'phone'     => $this->input->post('phone')
 			);

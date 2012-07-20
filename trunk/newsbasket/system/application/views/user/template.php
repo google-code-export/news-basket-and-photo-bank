@@ -7,8 +7,29 @@
     <meta name="description" content="Login News Basket" />
     <meta name="author" content="BeritaSatu" />
 	
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url().'css/template.css';?>" />
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url().'css/user.css';?>" />
+	<style type="text/css">@import url("<?php echo base_url().'css/template.css'; ?>");</style>
+	<style type="text/css">@import url("<?php echo base_url().'css/user.css'; ?>");</style>
+	
+</head>
+<?php flush();?>
+<body>
+	<div class="header-bar">
+		<?php $this->load->view('header_user', $username); ?>
+	</div>
+	<div class="container">
+		<div class="navigation">
+			<div class="navigation-inner">
+				<?php $this->load->view('user_navigation'); ?>
+			</div>
+		</div>
+		<div id="main" class="main">
+			<?php $this->load->view($main_view); ?>
+		</div>
+		<div class="footer-bar">
+			<?php $this->load->view('footer'); ?>
+		</div>
+	</div>
+	
 	<script type="text/javascript" src="../library/tinymcpuk-0.3/tiny_mce.js"></script>
 	<script type="text/javascript">
 		tinyMCE.init({
@@ -55,25 +76,6 @@
 			window.open(connector, "tinymcpuk", "modal,width=600,height=400");
 		}
 	</script>
-</head>
-
-<body>
-	<div class="header-bar">
-		<?php $this->load->view('header', $username); ?>
-	</div>
-	<div class="container">
-		<div class="navigation">
-			<div class="navigation-inner">
-				<?php $this->load->view('user_navigation'); ?>
-			</div>
-		</div>
-		<div id="main" class="main">
-			<?php $this->load->view($main_view); ?>
-		</div>
-		<div class="footer-bar">
-			<?php $this->load->view('footer'); ?>
-		</div>
-	</div>
 </body>
 
 </html>

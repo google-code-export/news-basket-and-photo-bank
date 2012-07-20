@@ -94,7 +94,8 @@ class Manage_source extends Controller {
 		
 		//simpan session id source yang ingin di edit
 		$this->session->set_userdata('id_source', $source->id_source);
-			
+		
+		//siapkan data untuk form
 		$data_source['default']['source_name'] 	= $source->source_name;
 		$data_source['default']['source_type'] 	= $source->source_type;
 	

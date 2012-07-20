@@ -46,7 +46,17 @@ class Article_model extends Model {
     {
         $this->db->select('*');
 		$this->db->where('id_article', $id_article);
+		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
 		return $this->db->get($this->table);
+    }
+	
+	function getArticleVersion($id_article)
+    {
+        $this->db->select('*');
+		$this->db->where('article.id_article', $id_article);
+		$this->db->join('article_version', 'article_version.id_article = article.id_article'); //join sama tabel version
+		$this->db->order_by('edited_on');
+		return $this->db->get($this->table)->result();
     }
 	
 	function addArticle($new_article){

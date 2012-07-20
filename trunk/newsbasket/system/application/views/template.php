@@ -7,9 +7,9 @@
     <meta name="description" content="Login News Basket" />
     <meta name="author" content="BeritaSatu" />
 	
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url().'css/login.css';?>" />
+	<style type="text/css">@import url("<?php echo base_url().'css/login.css'; ?>");</style>
 </head>
-
+<?php flush();?>
 <body>
 	<div class="header-bar-login">
 		<?php $this->load->view('header_login'); ?>
