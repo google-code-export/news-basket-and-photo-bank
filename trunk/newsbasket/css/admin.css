@@ -100,8 +100,65 @@
 
 td.label{
 	padding-left: 30px;
+	white-space: wrap;
 }
 
+td.bold{
+	width: 100px;
+	font-weight: bold;
+}
+
+
+/*------------------ detail ---------------*/
+.detail {
+	font-size: 12px;
+	padding: 10px;
+	line-height: 15px;
+	height: 100%;
+}
+
+.detail-left {
+	position: absolute;
+	width: 450px;
+}
+
+.detail-right {
+	position: absolute;
+	float: left;
+	right: 15px;
+	left: 475px;
+	max-height: 500px;
+	padding: 0px 5px 0px;
+}
+
+p.flip {
+	width: 100%;
+	padding: 5px;
+	font-size: 14px;
+	text-align: center;
+	border-bottom: solid 1px #c3c3c3;
+}
+
+p.flip1, p.flip2, p.flip3, p.flip4, p.flip5 {
+	cursor: pointer;
+	width: 100%;
+	font-size: 14px;
+	padding: 5px;
+	border-bottom: solid 1px #c3c3c3;
+}
+
+div.panel1, div.panel2, div.panel3, div.panel4, div.panel5 {
+	display: none;
+	font-size: 12px;
+}
+
+span.right {
+	float: right;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+/*------------------ tabel ----------------*/
 #zebra
 {
 	width:100%;
@@ -138,6 +195,7 @@ button.center {
 	margin-left: 15px;
 }
 
+/*------------------- flash message ---------------*/
 p.success {
 	font-size:1.2em;
 	font-weight: bold;
@@ -158,6 +216,7 @@ p.failed {
 	background: none repeat scroll 0% 0% #000000;
 }
 
+/*------------------- ajax message --------------------*/
 .image-load  {
 	color: rgba(255, 255, 255, 0.0);
 	width:100%;
