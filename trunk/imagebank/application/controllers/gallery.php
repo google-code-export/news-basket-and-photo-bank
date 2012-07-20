@@ -30,10 +30,28 @@ class Gallery extends Controller {
 		
 	}
 	
+		function updateImage($id=null){
+			
+			if($_POST==NULL){
+				$this->load->model('gallery_model');
+				$data['images'] = $this->gallery_model->selectImage($id);
+				$this->load->view('edit_image',$data);
+				
+			}else {
+				$this->load->model('gallery_model');
+				$this->gallery_model->updateImage($id);
+				redirect('gallery');
+			}
+			
+			
+			
+		}
 	
+	function download ($id){
 		
-	
-	
+		
+		
+	}
 	
 	
 	

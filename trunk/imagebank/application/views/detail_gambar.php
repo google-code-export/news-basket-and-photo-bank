@@ -82,8 +82,8 @@
 		 <div class="action" id="action" align="center">
              <table width="81%" border="0">
                <tr>
-                 <td width="30%"><img src="../../images/download.png" width="16" height="16" alt="download"><a href="../application/views/download.php">download</a></td>
-                 <td width="34%"><img src="../../images/edit.png" width="16" height="16" alt="edit">edit properties</td>
+                 <td width="30%"><img src="../../images/download.png" width="16" height="16" alt="download"><a href="<?php echo site_url('gallery/download/$row->id_images');?>">download</a></td>
+                 <td width="34%"><img src="../../images/edit.png" width="16" height="16" alt="edit"><a href="<?php echo site_url("gallery/updateImage/$row->id_images"); ?>"> edit properties</td>
                  
                </tr>
              </table>
