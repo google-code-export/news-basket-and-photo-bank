@@ -46,6 +46,7 @@ class Admin extends Controller {
 	{
 		$crud = new grocery_CRUD();
 		$crud->set_table('category');
+		$crud->set_theme('datatables');
 		$crud->display_as('short_desc','Short Description');
 		$crud->display_as('long_desc','Long Description');
 		$output =$crud->render();
@@ -55,6 +56,7 @@ class Admin extends Controller {
 	public function manageGroup(){
 		$crud= new grocery_CRUD();
 		$crud->set_table('groups');
+		$crud->set_theme('datatables');
 		$output =$crud->render();
 		$this->_example_output($output);
 	}
