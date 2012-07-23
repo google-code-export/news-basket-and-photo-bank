@@ -13,18 +13,25 @@ class Admin extends Controller {
  
     }
  
-    public function index()
-    {
-        echo "<h1>Welcome to the world of Codeigniter</h1>";//Just an example to ensure that we get into the function
-                die();
-    }
+    
+    
+        function index() {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->loadArticle();
+		}
+		else {
+			redirect('login');
+        }
+	}
+    
  
 	
     public function manageUser()
     {
+    	$data_article['page_title']		= 'Manage Users| Admin ';
     	$crud = new grocery_CRUD();
         $crud->set_table('users');
-		$crud->set_theme('flexigrid');
+		$crud->set_theme('datatables');
 		$crud->columns('username','email','tingkat','id_group');
 		$crud->display_as('id_group','kelompok');
 		$crud->display_as('tingkat','level');
@@ -36,7 +43,7 @@ class Admin extends Controller {
 		$crud->set_relation('id_group','groups','kelompok' );
         $output = $crud->render();
          
-	   $this->load->view('template.php',$output);
+	   $this->load->view('template',$output);
 	   
 	  
 	      
