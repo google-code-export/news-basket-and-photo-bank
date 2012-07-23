@@ -18,17 +18,13 @@ class Admin extends Controller {
         echo "<h1>Welcome to the world of Codeigniter</h1>";//Just an example to ensure that we get into the function
                 die();
     }
-  function _example_output($output = null)
  
-    {
-        $this->load->view('example.php',$output);    
-    }
 	
     public function manageUser()
     {
     	$crud = new grocery_CRUD();
         $crud->set_table('users');
-		$crud->set_theme('datatables');
+		$crud->set_theme('flexigrid');
 		$crud->columns('username','email','tingkat','id_group');
 		$crud->display_as('id_group','kelompok');
 		$crud->display_as('tingkat','level');
@@ -39,7 +35,12 @@ class Admin extends Controller {
 
 		$crud->set_relation('id_group','groups','kelompok' );
         $output = $crud->render();
-        $this->_example_output($output);        
+            // $this->load->view('header.php');
+   	   //$this->load->view('example',$output);
+	   $this->load->view('template.php');
+	   //$this->load->view('admin_navigation');
+	  // $this->load->view('footer.php');
+	      
     }
 	
 	public function manageCategory()
@@ -61,7 +62,25 @@ class Admin extends Controller {
 		$this->_example_output($output);
 	}
  
-   
+   protected function get_layout()
+{
+  $js_files = $this->get_js_files();
+  $css_files =  $this->get_css_files();
+  $tvs = $this->get_tvs();
+
+  if($this->unset_jquery)
+   unset($js_files['763b4d272e158bdb8ed5a12a1824c94f494954bd']);
+
+  if($this->echo_and_die === false)
+  {
+   return (object)array('output' => $this->views_as_string, 'js_files' => $js_files, 'css_files' => $css_files, 'tv' => $tvs);
+  }
+  elseif($this->echo_and_die === true)
+  {
+   echo $this->views_as_string;
+   die();
+  }
+}
 	
 }
  

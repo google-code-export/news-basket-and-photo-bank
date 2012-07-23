@@ -51,11 +51,11 @@
             $config['source_image'] = $value['full_path'];
             $config['create_thumb'] = TRUE;
             $config['thumb_marker'] = '_tn';
-            $config['master_dim'] = 'width';
-            $config['quality'] = 100;
+            $config['master_dim'] = 'height';
+            $config['quality'] = 160;
             $config['maintain_ratio'] = TRUE;
-            $config['width'] = 200;
-            $config['height'] = 200;
+            $config['width'] = 160;
+            $config['height'] = 75;
             $config['new_image'] = 'images/galeri/thumbs/'.$newimagename;
 
             //$this->image_lib->clear();
