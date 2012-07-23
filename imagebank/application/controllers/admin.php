@@ -35,11 +35,10 @@ class Admin extends Controller {
 
 		$crud->set_relation('id_group','groups','kelompok' );
         $output = $crud->render();
-            // $this->load->view('header.php');
-   	   //$this->load->view('example',$output);
-	   $this->load->view('template.php');
-	   //$this->load->view('admin_navigation');
-	  // $this->load->view('footer.php');
+         
+	   $this->load->view('template.php',$output);
+	   
+	  
 	      
     }
 	
@@ -51,7 +50,9 @@ class Admin extends Controller {
 		$crud->display_as('short_desc','Short Description');
 		$crud->display_as('long_desc','Long Description');
 		$output =$crud->render();
-		$this->_example_output($output);
+
+		 $this->load->view('template.php',$output);
+	   
 	}
 	
 	public function manageGroup(){
@@ -59,8 +60,8 @@ class Admin extends Controller {
 		$crud->set_table('groups');
 		$crud->set_theme('datatables');
 		$output =$crud->render();
-		$this->_example_output($output);
-	}
+		 $this->load->view('template.php',$output);
+		 }
  
    protected function get_layout()
 {
