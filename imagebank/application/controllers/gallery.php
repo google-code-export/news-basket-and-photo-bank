@@ -19,7 +19,7 @@ class Gallery extends Controller {
 		
 		$id = $this->uri->segment(3);
 		$data['images'] = $this->Gallery_model->tampil_foto();
-		$this->load->view('index_gambar',$data);
+		$this->load->view('gallery',$data);
 	}	
 	
 	function detail_foto($id)
@@ -47,12 +47,22 @@ class Gallery extends Controller {
 			
 		}
 	
-	function download ($id){
+	function download ($id=null){
+		$this->load->model('gallery_model');
+		$data['images'] =  $this->gallery_model->download($id);
+		$this->load->helper('download');
+		foreach ($data['images'] as $row ) {
+			$img = file_get_contents(base_url().'/images/galeri/'.$row->image_name);
+			$name = $row->image_name;
+			force_download($name, $img);
+		}
+		redirect('gallery');
 		
+	}
 		
 		
 	}
 	
 	
 	
-}
+

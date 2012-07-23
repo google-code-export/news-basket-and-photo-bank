@@ -36,6 +36,11 @@ class Gallery_model extends Model {
 		return $this->db->get_where('images',array('id_images'=>$id))->row();
 		
 	}
+	
+	function download($id){
+		return $this->db->get_where('images',array('id_images'=>$id))->result();
+		
+	}
 }
 
 
