@@ -71,7 +71,7 @@
 						<td>$column->source_name</td>
 						<td>$column->author</td>
 						<td>$column->created_on</td>
-						<td>$column->flag</td>
+						<td>$column->article_flag</td>
 						<td class='center'>$detailLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>

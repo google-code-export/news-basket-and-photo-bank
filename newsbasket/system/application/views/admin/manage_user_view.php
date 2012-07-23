@@ -125,7 +125,7 @@
 			<th>Phone</th>
 			<th>Email</th>
 			<th>Level</th>
-			<th class="center" colspan="2">Action</th>
+			<th class="center" colspan="3">Action</th>
 		</tr>
 		<?php
 			$No = 1;
@@ -141,6 +141,11 @@
 					'<button>Edit</button>',
 					array('class'=>'btn-edit-user')
 				);
+				$detailLink = anchor(
+					'admin/manage_user/detailUser/'.$column->id_user,
+					'<button>Detail</button>',
+					array('class'=>'btn-detail-user')
+				);
 				
 				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
@@ -152,6 +157,7 @@
 						<td>$column->phone</td>
 						<td>$column->email</td>
 						<td>$column->user_level</td>
+						<td class='center'>$detailLink</td>
 						<td class='center'>$editLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>
