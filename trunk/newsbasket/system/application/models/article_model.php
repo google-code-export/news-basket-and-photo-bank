@@ -45,9 +45,19 @@ class Article_model extends Model {
 	function getArticleByID($id_article)
     {
         $this->db->select('*');
-		$this->db->where('id_article', $id_article);
+		$this->db->where('article.id_article', $id_article);
 		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
 		return $this->db->get($this->table);
+    }
+	
+	function getUserArticleByIDArticle($id_article, $flag)
+    {
+        $this->db->distinct('id_user');
+		$this->db->where('id_article', $id_article);
+		$this->db->where('users_article.flag', $flag);
+		$this->db->from('users_article');
+		$this->db->join('users', 'users_article.id_user = users.id_user'); //join sama tabel user_article
+		return $this->db->get()->result();
     }
 	
 	function getArticleVersion($id_article)

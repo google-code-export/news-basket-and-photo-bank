@@ -53,6 +53,42 @@ class Manage_user extends Controller {
 		$this->load->view('admin/template', $data_user);
 	}
 	
+	function detailUser($id_user) {
+		$data_user['page_title']	= 'Detail User | Admin News Basket';
+		$data_user['main_view'] 	= 'admin/detail/user_detail_view';
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_user['username'] = $username;
+		
+		// ambil data user dari ID nya
+		$this->load->model('Users_model','',TRUE);
+		$user = $this->Users_model->getUserByID($id_user)->row();
+		
+		//simpan session id-user yang ingin di edit
+		$this->session->set_userdata('id_user', $user->id_user);
+			
+		// user profile
+		$data_user['user']['id_user'] 		= $user->id_user;
+		$data_user['user']['publisher'] 	= $user->source_name;
+		$data_user['user']['name'] 			= $user->name;
+		$data_user['user']['phone']			= $user->phone;
+		$data_user['user']['email'] 		= $user->email;
+		$data_user['user']['user_level']	= $user->user_level;
+		
+		// activity log
+		$data_user['user']['activity_log']  = $this->Users_model->getUserArticleByIDUser($id_user);
+		
+		// user statistic
+		$data_user['user']['created'] = $this->Users_model->countStatistic($id_user,'row_article');
+		$data_user['user']['edited'] = $this->Users_model->countStatistic($id_user,'edited');
+		$data_user['user']['published'] = $this->Users_model->countStatistic($id_user,'published');
+		
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_user);
+		}
+	}
+	
 	function addUser() {
 		// Set validation rules
 		$this->form_validation->set_rules('username', 'Username', 'required');		

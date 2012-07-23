@@ -67,15 +67,22 @@ class Manage_article extends Controller {
 		$this->session->set_userdata('id_article', $article->id_article);
 			
 		$data_article['article']['id_article'] 		= $article->id_article;
-		$data_article['article']['author'] 			= $article->author;
+		$data_article['article']['source'] 			= $article->source_name;
 		$data_article['article']['created_on'] 		= $article->created_on;
 		$data_article['article']['lead_article']	= $article->lead_article;
 		$data_article['article']['headline'] 		= $article->headline;
 		$data_article['article']['body_article']	= $article->body_article;
-		$data_article['article']['flag']			= $article->flag;
+		$data_article['article']['slug']			= $article->slug;
+		$data_article['article']['article_flag']	= $article->article_flag;
 		
 		// ambil versi artikel
 		$data_article['article']['list_version'] = $this->Article_model->getArticleVersion($id_article);
+		
+		// ambil data editor
+		$data_article['article']['editor'] = $this->Article_model->getUserArticleByIDArticle($id_article, 'edited');
+		
+		// ambil data author
+		$data_article['article']['author'] = $this->Article_model->getUserArticleByIDArticle($id_article, 'row_article');
 		
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_article);
