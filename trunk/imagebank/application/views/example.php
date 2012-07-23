@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 <?php 
+
 foreach($css_files as $file): ?>
 	<link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
 <?php endforeach; ?>
@@ -30,10 +31,14 @@ a:hover
 	<div>
 		
 		
-	</div>
-	<div style='height:20px;'></div>  
-    <div>
-		<?php echo $output; ?>
-    </div>
+<?php 
+                    if(isset($modules->report)) 
+                        foreach($modules->report as $module) 
+                            echo $module;
+    ?></div>
+    <div style='height:20px;'></div>  
+   <div class="for_CURD">
+<?php echo $output; ?> 
+</div>  
 </body>
 </html>
