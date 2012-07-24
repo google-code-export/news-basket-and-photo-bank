@@ -132,17 +132,17 @@
 			$this->load->helper('text');
 			foreach ($user_table as $column) {
 				$deleteLink = anchor(
-					'admin/manage_user/deleteUser/'.$column->id_user,
+					'admin/manage_user/delete_user/'.$column->id_user,
 					'<button>Delete</button>',
 					array('class'=>'btn-delete', 'onclick'=>"return confirm('Are you sure want to delete this user?')")
 				);
 				$editLink = anchor(
-					'admin/manage_user/editUser/'.$column->id_user,
+					'admin/manage_user/edit_user/'.$column->id_user,
 					'<button>Edit</button>',
 					array('class'=>'btn-edit-user')
 				);
 				$detailLink = anchor(
-					'admin/manage_user/detailUser/'.$column->id_user,
+					'admin/manage_user/detail_user/'.$column->id_user,
 					'<button>Detail</button>',
 					array('class'=>'btn-detail-user')
 				);
@@ -166,4 +166,9 @@
 			}
 		?>
 	</table>
+</div>
+<div id="pagination">
+	<?php
+		echo $pagination;
+	?>
 </div>

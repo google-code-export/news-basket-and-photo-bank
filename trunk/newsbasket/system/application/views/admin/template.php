@@ -30,9 +30,11 @@
 		</div>
 	</div>
 	
-	<script type="text/javascript" src="<?php echo base_url().'/library/jquery.js'; ?>"></script> 
+	<script type="text/javascript" src="<?php echo base_url().'/library/jquery-1.7.2.min.js'; ?>"></script> 
+	<script type="text/javascript" src="<?php echo base_url().'/library/jquery.fancybox-1.3.4.pack.js'; ?>"></script> 
 	<script type="text/javascript" src="<?php echo base_url().'/library/tablesorter/jquery.tablesorter.js'; ?>"></script>
-	<script  type="text/javascript" src="<?php echo base_url().'/library/myscript.js'; ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url().'/library/myscript.js'; ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url().'/library/FusionCharts.js';?>"></script>
 </body>
 
 </html>

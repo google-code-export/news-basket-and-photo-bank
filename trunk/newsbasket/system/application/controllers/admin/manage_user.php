@@ -3,25 +3,27 @@
 class Manage_user extends Controller {
 	
 	//limitasi tabel
-	var $limit = 10;
+	var $limit = 2;
 	
 	function Manage_user() {
-		parent::Controller();	
+		parent::Controller();
+		$this->load->helper(array('fusioncharts'));
+		$this->swfCharts  = base_url().'library/charts/' ;
 	}
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->loadUsers();
+			$this->load_users();
 		}
 		else {
 			redirect('login');
         }
 	}
 	
-	function loadUsers() {
+	function load_users($offset = 0) {
 		$data_user['page_title']	= 'Manage User | Admin News Basket';
 		$data_user['main_view'] 	= 'admin/manage_user_view';
-		$data_user['form_action']	= site_url('admin/manage_user/addUser');
+		$data_user['form_action']	= site_url('admin/manage_user/add_user');
 		$data_user['form_add_user'] = 'admin/form/add_user_form';
 
 		$this->load->model('Source_model','',TRUE);
@@ -39,21 +41,21 @@ class Manage_user extends Controller {
 		// Opsi load data dari tabel user 
 		$this->load->model('Users_model','',TRUE);
 		$users  	= $this->Users_model->getAllUser($this->limit, $offset, $username);
-		$num_rows 	= $this->Users_model->countAll();
+		$num_rows 	= $this->Users_model->countAll() - 1;
 		$data_user['user_table'] = $users;
 	
-		// Membuat pagination			
-		$config['base_url']    		= site_url('admin/manage_user/loadUsers');
-		$config['total_row']		= $num_rows;
-		$config['per_page']     	= $this->limit;
-		$config['uri_segment']  	= $uri_segment;
+		// Membuat pagination
+		$config['base_url']    		= site_url('admin/manage_user/load_users');
+		$config['total_row']		= 200;
+		$config['per_page']     	= 2;
+		//$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
 		$data_user['pagination']   	= $this->pagination->create_links();
 		
 		$this->load->view('admin/template', $data_user);
 	}
 	
-	function detailUser($id_user) {
+	function detail_user($id_user) {
 		$data_user['page_title']	= 'Detail User | Admin News Basket';
 		$data_user['main_view'] 	= 'admin/detail/user_detail_view';
 		
@@ -79,17 +81,19 @@ class Manage_user extends Controller {
 		// activity log
 		$data_user['user']['activity_log']  = $this->Users_model->getUserArticleByIDUser($id_user);
 		
-		// user statistic
-		$data_user['user']['created'] = $this->Users_model->countStatistic($id_user,'row_article');
-		$data_user['user']['edited'] = $this->Users_model->countStatistic($id_user,'edited');
+		/* user statistic
+		$data_user['user']['created']	= $this->Users_model->countStatistic($id_user,'row_article');
+		$data_user['user']['edited']	= $this->Users_model->countStatistic($id_user,'edited');
 		$data_user['user']['published'] = $this->Users_model->countStatistic($id_user,'published');
+		*/
+		$data_user['user']['statistic'] = $this->Users_model->countStatistic($id_user);
 		
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_user);
 		}
 	}
 	
-	function addUser() {
+	function add_user() {
 		// Set validation rules
 		$this->form_validation->set_rules('username', 'Username', 'required');		
 		$this->form_validation->set_rules('password', 'Password', 'required');
@@ -125,11 +129,11 @@ class Manage_user extends Controller {
 		}
 	}
 	
-	function editUser($id_user) { 
+	function edit_user($id_user) { 
 		$data_user['page_title']	 	= 'Edit User | Admin News Basket';
 		$data_user['main_view'] 	 	= 'admin/manage_user_view';
-		$data_user['form_action']	 	= site_url('admin/manage_user/addUser');
-		$data_user['form_action_edit']	= site_url('admin/manage_user/editUserProcess');
+		$data_user['form_action']	 	= site_url('admin/manage_user/add_user');
+		$data_user['form_action_edit']	= site_url('admin/manage_user/edit_user_process');
 		$data_user['form_edit_user'] 	= 'admin/form/edit_user_form';
 		
 		// untuk option form
@@ -151,6 +155,14 @@ class Manage_user extends Controller {
 		$num_rows 	= $this->Users_model->countAll();
 		$data_user['user_table'] = $users;
 		
+		// Membuat pagination
+		$config['base_url']    		= site_url('admin/manage_user/load_users');
+		$config['total_row']		= $num_rows;
+		$config['per_page']     	= $this->limit;
+		$config['uri_segment']  	= $uri_segment;
+		$this->pagination->initialize($config);
+		$data_user['pagination']   	= $this->pagination->create_links();
+		
 		// ambil data user dari ID nya
 		$user = $this->Users_model->getUserByID($id_user)->row();
 		
@@ -169,7 +181,7 @@ class Manage_user extends Controller {
 		}
 	}
 	
-	function editUserProcess() {
+	function edit_user_process() {
 		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
 			
 			// kondisi password
@@ -209,7 +221,7 @@ class Manage_user extends Controller {
 		}
 	}
 	
-	function deleteUser($id_user) {
+	function delete_user($id_user) {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->model('Users_model','',TRUE);
 			$this->Users_model->deleteUser($id_user);

@@ -5,28 +5,12 @@
 </div>
 <div id="article-table" class="table-menu">
 	<div class="search">
-		<form id="search-by" name="search_by" action="" method="post">
-			<input type="text" name="search_key" id="search-key" value="" required="required" />
+		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
+			Enter keywords : <input type="text" name="key" id="key" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>
 	</div>
 	<div class="paging">
-		<p><?php echo !empty($pagination) ? $pagination : ''; ?></p>
-		<!--<span class="disabled">
-			<a class="disabled" href=#><< Prev</a>
-		</span>
-		<span class="current">
-			<a href=#>1</a>
-		</span>
-		<span class="disabled">
-			<a class="disabled" href=#>2</a>
-		</span>
-		<span class="disabled">
-			<a class="disabled" href=#>3</a>
-		</span>
-		<span class="prevnext">
-			<a href="#">Next >></a>
-		</span>-->
 	</div>
 </div>
 <?php
@@ -58,7 +42,7 @@
 					array('class'=>'btn-delete', 'onclick'=>"return confirm('Are you sure want to delete this article?')")
 				);
 				$detailLink = anchor(
-					'admin/manage_article/detailArticle/'.$column->id_article,
+					'admin/manage_article/detail_article/'.$column->id_article,
 					'<button>Detail</button>',
 					array('class'=>'btn-detail-article')
 				);

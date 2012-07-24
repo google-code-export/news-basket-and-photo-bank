@@ -1,7 +1,9 @@
 <h2><a href="<?php echo site_url('admin/manage_article');?>" style="color: white;">Manage Article</a> > Article Detail</h2>
 <div class="detail">
 	<div id="property" class="detail-left">
-		<p class='flip'><strong>Last Version Article</strong></p>
+		<p class='flip'><strong>Last Version Article</strong>
+			<a id="edit-article" href="<?php echo site_url('admin/manage_article/edit_article').'/2';?>"><button style="float: right; margin-top: -4px;">Edit Article</button></a>
+		</p>
 		<table>
 			<tr class="alternate">
 				<td class="bold"><label for="headline">Headline</label></td>
@@ -13,7 +15,7 @@
 					<?php
 						foreach ($article['author'] as $column) {
 							$detailEditor = anchor(
-								'admin/manage_user/detailUser/'.$column->id_user,
+								'admin/manage_user/detail_user/'.$column->id_user,
 								$column->name,
 								array('class'=>'btn-detail-user')
 							);
@@ -28,7 +30,7 @@
 					<?php
 						foreach ($article['editor'] as $column) {
 							$detailEditor = anchor(
-								'admin/manage_user/detailUser/'.$column->id_user,
+								'admin/manage_user/detail_user/'.$column->id_user,
 								$column->name,
 								array('class'=>'btn-detail-user')
 							);
@@ -59,9 +61,17 @@
 				<td class="bold"><label for="body-article">Body Article</label></td>
 				<td class="label"><p id="body-article"><?php echo $article['body_article']?></p></td>
 			</tr>	
+			<tr><td class="bold">&nbsp;</td></tr>
+			
 			<tr>
 				<td class="bold"><label for="category">Category</label></td>
-				<td class="label"><p id="category"> </p></td>
+				<td class="label"><p id="category">
+					<?php
+						foreach ($article['category'] as $column) {
+							echo "$column->category_name ";
+						}
+					?>
+				</p></td>
 			</tr>	
 			<tr>
 				<td class="bold"><label for="tag">Tag</label></td>

@@ -104,12 +104,12 @@
 				$this->load->helper('text');
 				foreach ($author_table as $column) {
 					$deleteLink = anchor(
-						'admin/manage_author/deleteAuthor/'.$column->id_author,
+						'admin/manage_author/delete_author/'.$column->id_author,
 						'<button>Delete</button>',
 						array('class'=>'btn-delete', 'onclick'=>"return confirm('Are you sure want to delete this author?')")
 					);
 					$editLink = anchor(
-						'admin/manage_author/editAuthor/'.$column->id_author,
+						'admin/manage_author/edit_author/'.$column->id_author,
 						'<button>Edit</button>',
 						array('class'=>'btn-edit-author')
 					);

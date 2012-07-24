@@ -10,7 +10,6 @@ class Article_model extends Model {
 	}
 	
 	function getAllArticle($limit, $offset) {
-        $this->db->select('*');
         $this->db->from($this->table); //tabel article
 		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
 		$this->db->order_by('created_on');
@@ -19,7 +18,6 @@ class Article_model extends Model {
     }
 	
 	function getAllArticleBySource($limit, $offset, $key) {
-        $this->db->select('*');
         $this->db->from($this->table); //tabel article
 		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
         $this->db->where('source.id_source', $key);
@@ -42,16 +40,13 @@ class Article_model extends Model {
 		return $this->db->get($this->table)->num_rows();
     }
 	
-	function getArticleByID($id_article)
-    {
-        $this->db->select('*');
-		$this->db->where('article.id_article', $id_article);
+	function getArticleByID($id_article) {
+        $this->db->where('article.id_article', $id_article);
 		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
 		return $this->db->get($this->table);
     }
 	
-	function getUserArticleByIDArticle($id_article, $flag)
-    {
+	function getUserArticleByIDArticle($id_article, $flag) {
         $this->db->distinct('id_user');
 		$this->db->where('id_article', $id_article);
 		$this->db->where('users_article.flag', $flag);
@@ -60,13 +55,33 @@ class Article_model extends Model {
 		return $this->db->get()->result();
     }
 	
-	function getArticleVersion($id_article)
-    {
-        $this->db->select('*');
-		$this->db->where('article.id_article', $id_article);
+	function getArticleVersion($id_article) {
+        $this->db->where('article.id_article', $id_article);
 		$this->db->join('article_version', 'article_version.id_article = article.id_article'); //join sama tabel version
 		$this->db->order_by('edited_on');
 		return $this->db->get($this->table)->result();
+    }
+	
+	function getArticleCategory($id_article) {
+		$this->db->where('article_category.id_article', $id_article);
+		$this->db->from('article_category');
+		$this->db->join('category', 'category.id_category = article_category.id_category');
+		return $this->db->get()->result();
+	}
+	
+	function searchArticle($limit, $offset, $key) {
+        $this->db->from('article');
+        $this->db->like('headline', $key);
+        $this->db->or_like('body_article', $key);
+        $this->db->order_by('created_on', 'desc');
+        $this->db->limit($limit, $offset);
+        return $this->db->get()->result();
+    }
+    
+    function countSearch($key) {
+        $this->db->from('article');
+		$this->db->like('body_article', $key);
+        return $this->db->get()->num_rows();
     }
 	
 	function addArticle($new_article){

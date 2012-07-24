@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -31,15 +31,15 @@ class CI_Pagination {
 	var $per_page	 		= 10; // Max number of items you want shown per page
 	var $num_links			=  2; // Number of "digit" links to show before/after the currently viewed page
 	var $cur_page	 		=  0; // The current page being viewed
-	var $first_link   		= '&lsaquo; First';
+	var $first_link   		= '&lsaquo; Pertama';
 	var $next_link			= '&gt;';
 	var $prev_link			= '&lt;';
-	var $last_link			= 'Last &rsaquo;';
+	var $last_link			= 'Terakhir &rsaquo;';
 	var $uri_segment		= 3;
 	var $full_tag_open		= '';
 	var $full_tag_close		= '';
 	var $first_tag_open		= '';
-	var $first_tag_close	= '&nbsp;';
+	var $first_tag_close            = '&nbsp;';
 	var $last_tag_open		= '&nbsp;';
 	var $last_tag_close		= '';
 	var $cur_tag_open		= '&nbsp;<strong>';
@@ -50,8 +50,8 @@ class CI_Pagination {
 	var $prev_tag_close		= '';
 	var $num_tag_open		= '&nbsp;';
 	var $num_tag_close		= '';
-	var $page_query_string	= FALSE;
-	var $query_string_segment = 'per_page';
+	var $page_query_string          = FALSE;
+	var $query_string_segment       = 'per_page';
 
 	/**
 	 * Constructor
