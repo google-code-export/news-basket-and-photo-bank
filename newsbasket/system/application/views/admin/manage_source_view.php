@@ -3,11 +3,6 @@
 	<form id="add-source-form" method="post"  onsubmit="return validateForm()" action="<?php echo $form_action; ?>">
 		<table id="source-form" class="table-form">
 			<tr>
-				<td><label for="id-source">ID Source</label></td>
-				<td>:</td>
-				<td><input type="text" id="id-source" name="id-source" required="required" autofocus="autofocus" /></td>
-				<td><span id="check-source" style="display: none;"></span></td>
-				
 				<td class="label"><label for="source-name">Source Name</label></td>
 				<td>:</td>
 				<td><input type="text" id="source-name" name="source-name" required="required" /></td>	
@@ -50,7 +45,6 @@
 <div id="myTable" class="tablesorter">
 	<table id="zebra">
 		<tr>
-			<th>No</th>
 			<th>ID Source</th>
 			<th>Source Name</th>
 			<th>Source Type</th>
@@ -60,12 +54,12 @@
 			$No = 1;
 			foreach ($source_table as $column) {
 				$deleteLink = anchor(
-					'admin/manage_source/deleteSource/'.$column->id_source,
+					'admin/manage_source/delete_source/'.$column->id_source,
 					'<button>Delete</button>',
 					array('class'=>'delete', 'onclick'=>"return confirm('Are you sure want to delete this source?')")
 				);
 				$editLink = anchor(
-					'admin/manage_source/editSource/'.$column->id_source,
+					'admin/manage_source/edit_source/'.$column->id_source,
 					'<button>Edit</button>',
 					array('class'=>'btn-edit-source')
 				);
@@ -73,7 +67,6 @@
 				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
-						<td>$No</td>
 						<td id='id-source'>$column->id_source</td>
 						<td>$column->source_name</td>
 						<td>$column->source_type</td>
@@ -85,4 +78,9 @@
 			}
 		?>
 	</table>
+</div>
+<div id="pagination">
+	<?php
+		echo $pagination;
+	?>
 </div>

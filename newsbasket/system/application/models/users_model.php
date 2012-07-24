@@ -85,26 +85,19 @@ class Users_model extends Model {
     {
         $this->db->distinct('');
 		$this->db->where('users_article.id_user', $id_user);
-		$this->db->from('users_article');
-		$this->db->join('article', 'article.id_article = users_article.id_article'); //join sama tabel source
+		$this->db->from('users_article'); // table users_article
+		$this->db->join('article', 'article.id_article = users_article.id_article'); //join sama tabel article
 		$this->db->order_by('process_date', 'desc');
 		return $this->db->get()->result();
     }
-	/*
+	
 	function countStatistic($id_user) {
-		$this->db->query("
-			SELECT date(process_date), COUNT(id_users_article)
-			FROM users_article WHERE id_user='$id_user'
-			GROUP BY date(process_date), flag
-		");
-	}
-	*/
-	function countStatistic($id_user) {
-		$this->db->query("
-			SELECT date(process_date), COUNT(id_users_article)
+		$query = $this->db->query("
+			SELECT date(process_date) as date_process, COUNT(id_users_article) as statistic
 			FROM users_article WHERE id_user='$id_user'
 			GROUP BY date(process_date) LIMIT 10
 		");
+		return $query->result();
 	}
 	
 	function addUser($new_user){

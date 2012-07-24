@@ -53,12 +53,12 @@
 			$this->load->helper('text');
 			foreach ($category_table as $column) {
 				$deleteLink = anchor(
-					'admin/manage_category/deleteCategory/'.$column->id_category,
+					'admin/manage_category/delete_category/'.$column->id_category,
 					'<button>Delete</button>',
 					array('class'=>'delete', 'onclick'=>"return confirm('Are you sure want to delete this category?')")
 				);
 				$editLink = anchor(
-					'admin/manage_category/editCategory/'.$column->id_category,
+					'admin/manage_category/edit_category/'.$column->id_category,
 					'<button>Edit</button>',
 					array('class'=>'btn-edit-category')
 				);

@@ -11,17 +11,17 @@ class Manage_category extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->loadCategories();
+			$this->load_categories();
 		}
 		else {
 			redirect('login');
         }
 	}
 	
-	function loadCategories() {
+	function load_categories() {
 		$data_category['page_title']	= 'Manage Category | Admin News Basket';
 		$data_category['main_view'] 	= 'admin/manage_category_view';
-		$data_category['form_action']	= site_url('admin/manage_category/addCategory');
+		$data_category['form_action']	= site_url('admin/manage_category/add_category');
 		
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
@@ -39,7 +39,7 @@ class Manage_category extends Controller {
 		
 		
 		// Membuat pagination			
-		$config['base_url']    		= site_url('admin/manage_category/loadCategories');
+		$config['base_url']    		= site_url('admin/manage_category/load_categories');
 		$config['total_row']		= $num_rows;
 		$config['per_page']     	= $this->limit;
 		$config['uri_segment']  	= $uri_segment;
@@ -49,7 +49,7 @@ class Manage_category extends Controller {
 		$this->load->view('admin/template', $data_category);
 	}
 	
-	function addCategory() {
+	function add_category() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$new_category  = array(
 				'id_category'		=> $this->input->post('id-category'),
@@ -69,11 +69,11 @@ class Manage_category extends Controller {
 		}
 	}
 	
-	function editCategory($id_category) {
+	function edit_category($id_category) {
 		$data_category['page_title']	 		= 'Edit Category | Admin News Basket';
 		$data_category['main_view'] 	 		= 'admin/manage_category_view';
-		$data_category['form_action']	 		= site_url('admin/manage_category/addCategory');
-		$data_category['form_action_edit']		= site_url('admin/manage_category/editCategoryProcess');
+		$data_category['form_action']	 		= site_url('admin/manage_category/add_category');
+		$data_category['form_action_edit']		= site_url('admin/manage_category/edit_category_process');
 		$data_category['form_edit_category'] 	= 'admin/form/edit_category_form';
 		
 		// Siapa yang login
@@ -103,7 +103,7 @@ class Manage_category extends Controller {
 		}
 	}
 	
-	function editCategoryProcess() {
+	function edit_category_process() {
 		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
 			
 			// Siapkan data untuk disimpan di tabel
@@ -127,7 +127,7 @@ class Manage_category extends Controller {
 		}
 	}
 	
-	function deleteCategory($id_category) {
+	function delete_category($id_category) {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->model('Category_model','',TRUE);
 			$this->Category_model->deleteCategory($id_category);

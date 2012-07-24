@@ -11,17 +11,17 @@ class Manage_author extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->loadAuthor();
+			$this->load_author();
 		}
 		else {
 			redirect('login');
         }
 	}
 	
-	function loadAuthor() {
+	function load_author() {
 		$data_author['page_title']	= 'Manage Author | Admin News Basket';
 		$data_author['main_view'] 	= 'admin/manage_author_view';
-		$data_author['form_action']	= site_url('admin/manage_author/addAuthor');
+		$data_author['form_action']	= site_url('admin/manage_author/add_author');
 		$data_author['form_add_author'] = 'admin/form/add_author_form';
 		
 		$this->load->model('Source_model','',TRUE);
@@ -42,7 +42,7 @@ class Manage_author extends Controller {
 		$data_author['author_table'] = $authors;
 
 		// Membuat pagination			
-		$config['base_url']    		= site_url('admin/manage_author/loadAuthor');
+		$config['base_url']    		= site_url('admin/manage_author/load_author');
 		$config['total_row']		= $num_rows;
 		$config['per_page']     	= $this->limit;
 		$config['uri_segment']  	= $uri_segment;
@@ -52,7 +52,7 @@ class Manage_author extends Controller {
 		$this->load->view('admin/template', $data_author);
 	}
 	
-	function addAuthor() {
+	function add_author() {
 		/* Set validation rules
 		$this->form_validation->set_rules('id-author', 'Authorname', 'required');		
 		//$this->form_validation->set_rules('publisher', 'Publisher', 'required');
@@ -88,11 +88,11 @@ class Manage_author extends Controller {
 		}
 	}
 	
-	function editAuthor($id_author) { 
+	function edit_author($id_author) { 
 		$data_author['page_title']	 		= 'Edit Author | Admin News Basket';
 		$data_author['main_view'] 	 		= 'admin/manage_author_view';
-		$data_author['form_action']	 		= site_url('admin/manage_author/addAuthor');
-		$data_author['form_action_edit']	= site_url('admin/manage_author/editAuthorProcess');
+		$data_author['form_action']	 		= site_url('admin/manage_author/add_author');
+		$data_author['form_action_edit']	= site_url('admin/manage_author/edit_author_process');
 		$data_author['form_edit_author'] 	= 'admin/form/edit_author_form';
 		
 		// Siapa yang login
@@ -129,7 +129,7 @@ class Manage_author extends Controller {
 		}
 	}
 	
-	function editAuthorProcess() {
+	function edit_author_process() {
 		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
 			
 			// Prepare data untuk disimpan di tabel
@@ -158,7 +158,7 @@ class Manage_author extends Controller {
 		}
 	}
 	
-	function deleteAuthor($id_author) {
+	function delete_author($id_author) {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->model('Author_model','',TRUE);
 			$this->Author_model->deleteAuthor($id_author);

@@ -11,17 +11,17 @@ class Manage_source extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->loadSources();
+			$this->load_sources();
 		}
 		else {
 			redirect('login');
         }
 	}
 	
-	function loadSources() {
+	function load_sources() {
 		$data_source['page_title']	= 'Manage Source | Admin News Basket';
 		$data_source['main_view'] 	= 'admin/manage_source_view';
-		$data_source['form_action']	= site_url('admin/manage_source/addSource');
+		$data_source['form_action']	= site_url('admin/manage_source/add_source');
 
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
@@ -38,25 +38,27 @@ class Manage_source extends Controller {
 		$data_source['source_table'] = $sources;
 			
 		// Membuat pagination			
-		$config['base_url']    		= site_url('admin/manage_source/loadSources');
+		$config['base_url']    		= site_url('admin/manage_source/load_sources');
 		$config['total_row']		= $num_rows;
 		$config['per_page']     	= $this->limit;
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
-		$data_source['pagination']   	= $this->pagination->create_links();
+		$data_source['pagination']   = $this->pagination->create_links();
 
 		$this->load->view('admin/template', $data_source);
 	}
 	
-	function addSource() {
+	function add_source() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			
+			$this->load->model('Source_model','',TRUE);
+			$num_rows 	= $this->Source_model->countAll();
 			$new_source  = array(
-				'id_source'		=> $this->input->post('id-source'),
+				'id_source'		=> $num_rows+1,
 				'source_name'	=> $this->input->post('source-name'),
 				'source_type'	=> $this->input->post('source-type')
 			);
-			// Proses simpan data absensi
-			$this->load->model('Source_model','',TRUE);
+			// Proses simpan data source
 			$this->Source_model->addSource($new_source);
 			
 			$this->session->set_flashdata('message_success', 'Add new source successfull!');
@@ -69,11 +71,11 @@ class Manage_source extends Controller {
 		}
 	}
 
-	function editSource($id_source) { 
+	function edit_source($id_source) { 
 		$data_source['page_title']	 		= 'Edit Source | Admin News Basket';
 		$data_source['main_view'] 	 		= 'admin/manage_source_view';
-		$data_source['form_action']	 		= site_url('admin/manage_source/addSource');
-		$data_source['form_action_edit']	= site_url('admin/manage_source/editSourceProcess');
+		$data_source['form_action']	 		= site_url('admin/manage_source/add_source');
+		$data_source['form_action_edit']	= site_url('admin/manage_source/edit_source_process');
 		$data_source['form_edit_source'] 	= 'admin/form/edit_source_form';
 		
 		// Siapa yang login
@@ -82,13 +84,21 @@ class Manage_source extends Controller {
 		
 		// Offset
 		$uri_segment 	= 4;
-		$offset 		= $this->uri->segment($uri_segment);
+		$offset 		= 0;
 		
 		$this->load->model('Source_model','',TRUE);	
 		$sources  	= $this->Source_model->getAllSource($this->limit, $offset);
 		$num_rows 	= $this->Source_model->countAll();
 		$data_source['source_table'] = $sources;
 		
+		// Membuat pagination			
+		$config['base_url']    		= site_url('admin/manage_source/load_sources');
+		$config['total_row']		= $num_rows;
+		$config['per_page']     	= $this->limit;
+		$config['uri_segment']  	= $uri_segment;
+		$this->pagination->initialize($config);
+		$data_source['pagination']   = $this->pagination->create_links();
+
 		// ambil data source dari ID nya
 		$source = $this->Source_model->getSourceByID($id_source)->row();
 		
@@ -104,7 +114,7 @@ class Manage_source extends Controller {
 		}
 	}
 	
-	function editSourceProcess() {
+	function edit_source_process() {
 		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
 			
 			// Prepare data untuk disimpan di tabel
@@ -129,7 +139,7 @@ class Manage_source extends Controller {
 		}
 	}
 	
-	function deleteSource($id_source) {
+	function delete_source($id_source) {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->model('Source_model','',TRUE);
 			$this->Source_model->deleteSource($id_source);
