@@ -16,14 +16,20 @@
 	
 	function upload(){
 		$username = $this->session->userdata('username');
+		$user_level = $this->session->userdata('user_level');
 		$data['page_title'] = 'upload Image';
 		$data['main_view'] = 'uploadform';
 		$data['username'] = $username;
+		$data['user_level'] = $user_level;
 		$this->load->model('uploadModel','',TRUE);
 
 		$data['category']=$this->uploadModel->getAllCategory();
-		$this->load->view('template', $data);
-		
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('get_level') == 'administrator'){
+			$this->load->view('template',$data);
+			}else {
+			$this->load->view('user/template',$data);
+		}
+
 		
 	}
 	function picupload(){

@@ -17,12 +17,20 @@ class Gallery extends Controller {
 	function tampil_foto()
 	{
 		$username = $this->session->userdata('username');
+		$user_level = $this->session->userdata('user_level');
 		$id = $this->uri->segment(3);
 		$data['page_title'] =  'Gallery Image Bank';
 		$data['images'] = $this->Gallery_model->tampil_foto();
 		$data['main_view'] = 'gallery';
 		$data['username'] = $username;
-		$this->load->view('template',$data);
+		$data['user_level'] = $user_level;
+		
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('get_level') == 'administrator'){
+			$this->load->view('template',$data);	
+		}else {
+			$this->load->view('user/template',$data);
+		}
+		
 	}	
 	
 	function detail_foto($id)
