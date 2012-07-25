@@ -42,7 +42,7 @@ class Login extends Controller {
 				redirect('admin/manageUser');
 				}
 				else {
-					redirect('home');
+					redirect('gallery');
 				}
 			}
 			else {
