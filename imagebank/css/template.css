@@ -98,6 +98,7 @@ div#login_logout {
 	margin: 0px;
 	padding: 0px;
 	outline-style: none;
+	height : 100%;
 }
 
 /*------------------------- navigasi --------------------------*/
@@ -170,13 +171,14 @@ div#login_logout {
 
 /*------------------------ footer --------------------------------*/
 .footer-bar {
-	position: absolute;
+	position: absolute ;
 	height: 20px;
 	padding: 5px;
 	left: 0px;
 	bottom: 0px;
 	right: 0px;
     border-top: 1px solid rgb(235, 235, 235);
+	
 }
 
 .footer {
