@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
 <head>
-	<meta charset="utf-8" />
 <?php 
 
 foreach($css_files as $file): ?>
@@ -27,7 +24,6 @@ a:hover
 }
 </style>
 </head>
-<body>
 	<div>
 		
 		
@@ -40,5 +36,4 @@ a:hover
    <div class="for_CURD">
 <?php echo $output; ?> 
 </div>  
-</body>
-</html>
+

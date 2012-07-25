@@ -15,10 +15,14 @@
 	}
 	
 	function upload(){
+		$username = $this->session->userdata('username');
+		$data['page_title'] = 'upload Image';
+		$data['main_view'] = 'uploadform';
+		$data['username'] = $username;
 		$this->load->model('uploadModel','',TRUE);
 
 		$data['category']=$this->uploadModel->getAllCategory();
-		$this->load->view('uploadform', $data);
+		$this->load->view('template', $data);
 		
 		
 	}

@@ -1,24 +1,29 @@
-<div class="dashboard">
-	<h3 class="menu">Dashboard</h3>
+<div class="image-gallery">
+	<h3 class="menu">Image Gallery</h3>
 	<ul>
-		<li><a href="<?php echo site_url('admin/dashboard');?>">Home</a></li>
-		<li><a href="<?php echo site_url('login/logoutProcess');?>">Logout</a></li>
+		<li><a href="<?php echo site_url('gallery');?>">All</a></li>
+		<li><a href="http://csandre.wordpress.com/category/belajar/">Wires</a></li>
+		<!--<li class="children"><a href="http://csandre.wordpress.com/category/belajar/">AFP</a></li>
+		<li class="children"><a href="http://csandre.wordpress.com/category/belajar/">ANTARA</a></li>-->
+		<li><a href="http://csandre.wordpress.com/category/belajar/">Publisher</a></li>
+		<!--<li class="children"><a href="http://csandre.wordpress.com/category/belajar/">beritasatu.com</a></li>-->
 	</ul>
 </div>
-<div class="user-menu">
-	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manageUser');?>'">Users</h3>
+<div class="my-images">
+	<h3 class="menu">My Images</h3>
 	<ul>
-		<!--<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Row Article</a></li>
-		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Edited</a></li>
-		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Published</a></li>
-		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Deleted</a></li>-->
+		<li><a href="http://csandre.wordpress.com/category/belajar/">My Gallery</a></li>
+		<li><a href="<?php echo site_url('user/upload');?>">Upload</a></li>
 	</ul>
-	
+</div>
+<div class="my-profile">
+	<h3 class="menu">My Profile</h3>
+	<ul>
+		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Change Profile</a>
+	</ul>
+</div>
+<div class="admin-menu">
 	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manageCategory');?>'">Categories</h3>
-	<ul>
-	</ul>
-	
-	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manageGroup');?>'">Group</h3>
 	<ul>
 		<?php
 		//foreach($navigasi['category'] as $column) {
@@ -30,7 +35,7 @@
 		?>
 	</ul>
 	
-	
+	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manageUser');?>'">Users</h3>
 	<ul>
 		<!--<li class="none">By Publisher</li>-->
 		<?php
@@ -49,7 +54,7 @@
 		<li class="parent"><a href="<?php //echo site_url('admin/manage_user/loadUsers/administrator');?>">Administrator</a></li>-->
 	</ul>
 	
-	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manage_source');?>'">Sources</h3>
+	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manageSource');?>'">Sources</h3>
 	<ul>
 		<!--<li class="none">By Publisher</li>
 		<?php
@@ -64,5 +69,4 @@
 		<li class="parent"><a href="<?php //echo site_url('admin/manage_source/loadSources/wires');?>">Wires</a></li>
 		<li class="parent"><a href="<?php //echo site_url('admin/manage_source/loadSources/publisher');?>">Publisher</a></li>-->
 	</ul>
-	
 </div>
