@@ -42,6 +42,12 @@ a:hover {
     text-decoration: underline;
 }
 
+textarea {
+	font-family: Arial, Verdana, sans-serif;
+	resize:none;
+	overflow:auto;
+}
+
 input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="text"], input[type="url"] {
     display: inline-block;
     height: 22px;
