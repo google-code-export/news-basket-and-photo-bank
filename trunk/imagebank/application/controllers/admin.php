@@ -41,6 +41,7 @@ class Admin extends Controller {
 		$crud->set_theme('flexigrid');
 		$crud->columns('id_user','name','email','id_source','user_level','phone');
 		$crud->display_as('id_source','source name');
+		$crud->required_fields('id_user','name','email');
 		$crud->fields('id_user','password','name','email','user_level','phone','id_source');
 		$crud->display_as('id_group');
 		$crud->change_field_type('password', 'password');
