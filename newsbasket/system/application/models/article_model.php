@@ -43,6 +43,7 @@ class Article_model extends Model {
 	function getArticleByID($id_article) {
         $this->db->where('article.id_article', $id_article);
 		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
+		$this->db->join('category', 'category.id_category = article.id_category'); //join sama tabel source
 		return $this->db->get($this->table);
     }
 	
@@ -61,13 +62,6 @@ class Article_model extends Model {
 		$this->db->order_by('edited_on');
 		return $this->db->get($this->table)->result();
     }
-	
-	function getArticleCategory($id_article) {
-		$this->db->where('article_category.id_article', $id_article);
-		$this->db->from('article_category');
-		$this->db->join('category', 'category.id_category = article_category.id_category');
-		return $this->db->get()->result();
-	}
 	
 	function searchArticle($limit, $offset, $key) {
         $this->db->from('article');

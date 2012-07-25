@@ -10,14 +10,12 @@ class Category_model extends Model {
 	}
 	
 	function getAllCategories() {
-        $this->db->select('*');
         $this->db->from($this->table); //tabel category
 		$this->db->order_by('id_category');
         return $this->db->get()->result();
     }
 	
 	function getAllCategory($limit, $offset) {
-        $this->db->select('*');
         $this->db->from($this->table); //tabel category
 		$this->db->order_by('id_category');
         $this->db->limit($limit, $offset);
@@ -28,9 +26,7 @@ class Category_model extends Model {
 		return $this->db->count_all($this->table);
     }
 	
-	function getCategoryByID($id_category)
-    {
-        $this->db->select('*');
+	function getCategoryByID($id_category) {
 		$this->db->where('id_category', $id_category);
 		return $this->db->get($this->table);
     }
