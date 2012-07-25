@@ -16,10 +16,13 @@ class Gallery extends Controller {
 		//$data['images'] = $this->Gallery_model->get_images();
 	function tampil_foto()
 	{
-		
+		$username = $this->session->userdata('username');
 		$id = $this->uri->segment(3);
+		$data['page_title'] =  'Gallery Image Bank';
 		$data['images'] = $this->Gallery_model->tampil_foto();
-		$this->load->view('gallery',$data);
+		$data['main_view'] = 'gallery';
+		$data['username'] = $username;
+		$this->load->view('template',$data);
 	}	
 	
 	function detail_foto($id)

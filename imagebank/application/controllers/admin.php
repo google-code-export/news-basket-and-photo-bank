@@ -28,22 +28,28 @@ class Admin extends Controller {
 	
     public function manageUser()
     {
-    	$data_article['page_title']		= 'Manage Users| Admin ';
+    	
+		//$data['main_view'] = "example";
+		$username = $this->session->userdata('username');
+		
+		
+		
+		//$username = $this->session->set_userdata('get_level');
     	$crud = new grocery_CRUD();
         $crud->set_table('users');
-		$crud->set_theme('datatables');
-		$crud->columns('username','email','tingkat','id_group');
-		$crud->display_as('id_group','kelompok');
-		$crud->display_as('tingkat','level');
-		$crud->fields('username','password','email','tingkat','id_group');
-		$crud->display_as('id_group','kelompok');
+		//$crud->where('id_user',$username);
+		$crud->set_theme('flexigrid');
+		$crud->columns('id_user','name','email','id_source','user_level','phone');
+		$crud->display_as('id_source','source name');
+		$crud->fields('id_user','password','name','email','user_level','phone','id_source');
+		$crud->display_as('id_group');
 		$crud->change_field_type('password', 'password');
-		//$crud->change_field_type('kelompok','enum');
-
-		$crud->set_relation('id_group','groups','kelompok' );
+		$crud->set_relation('id_source','source','source_name' );
         $output = $crud->render();
-         
-	   $this->load->view('template',$output);
+		$output = (array)$output;
+		 $output['page_title']		= 'Manage Users| Administrator Image Bank ';
+		$output['username']  = $username;
+	   $this->load->view('admin/template_admin',$output);
 	   
 	  
 	      
@@ -51,23 +57,31 @@ class Admin extends Controller {
 	
 	public function manageCategory()
 	{
+		$username = $this->session->userdata('username');
 		$crud = new grocery_CRUD();
 		$crud->set_table('category');
-		$crud->set_theme('datatables');
+		$crud->set_theme('flexigrid');
 		$crud->display_as('short_desc','Short Description');
 		$crud->display_as('long_desc','Long Description');
 		$output =$crud->render();
-
-		 $this->load->view('template.php',$output);
+		$output = (array)$output;
+		 $output['page_title']		= 'Manage Category| Administrator Image Bank ';
+		$output['username']  = $username;
+		 $this->load->view('admin/template_admin.php',$output);
 	   
 	}
 	
-	public function manageGroup(){
+	public function manageSource(){
+		$username = $this->session->userdata('username');
 		$crud= new grocery_CRUD();
-		$crud->set_table('groups');
-		$crud->set_theme('datatables');
+		$crud->set_table('source');
+		$crud->set_theme('flexigrid');
+		$crud->fields('source_name','source_type');
 		$output =$crud->render();
-		 $this->load->view('template.php',$output);
+		$output = (array)$output;
+		 $output['page_title']		= 'Manage Source| Administrator Image Bank ';
+		$output['username']  = $username;
+		 $this->load->view('admin/template_admin.php',$output);
 		 }
  
    protected function get_layout()

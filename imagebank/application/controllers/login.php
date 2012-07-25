@@ -1,39 +1,69 @@
 <?php
+
 class Login extends Controller {
-	
-	function Login()
-	{
-		parent::Controller();
-		$this->load->model('user_model', '', TRUE);
+
+	function Login() {
+		parent::Controller();	
+		   $this->load->library('grocery_CRUD');
 	}
 	
-	function index()
-	{
-		$data['main_content']= 'login_user';
-		$this->load->view('includes/template', $data);
-	 }
+	function index() {
+		$data_login['main_content'] = 'login_view';
+		$data_login['form_action']	= site_url('login/loginProcess');
+		
+		$this->load->view('templates', $data_login);
+	}
 	
-	function validate_credentials()
-	{
-		$this->load->model('user_model');
-		$query = $this->user_model->validate();
+	function loginProcess() {
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('username', 'Username', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
 		
-		if($query)
-		{
-			$data = array(
-				'username' => $this->input->post('Username'),
-				'is_logged_in' => true
-			);
+		//$this->form_validation->set_message('required','Isikan %s Anda');
+        
+		$this->load->helper('security');
+		if ($this->form_validation->run() == TRUE) {
+			$username = $this->input->post('username');
+			$password = dohash($this->input->post('password'));
 			
-			redirect('index.php/site');
-		}
-		else 
+			$this->load->model('Users_model','',TRUE);
+			if ($this->Users_model->checkUser($username, $password) == TRUE)
 			{
-				$this->index();
+				$user_level = $this->Users_model->getLevel($username)->row()->user_level;
+                $data = array(
+                				'username' => $username, 
+                				'login' => TRUE,
+                				 'user_level' => $user_level
+								 
+								 );
+				$this->session->set_userdata($data);
+				if ($user_level == 'administrator') {
+					$data_article['page_title']		= 'Manage Users	| Admin ';
+				redirect('admin/manageUser');
+				}
+				else {
+					redirect('home');
+				}
 			}
-		
+			else {
+				$this->session->set_flashdata('message', 'Wrong username or password!');
+				redirect('login');
+			}
+		}
+	}
+
+	function logoutProcess()
+	{
+		$this->session->sess_destroy();
+		redirect('login', 'refresh');
+	}
+	
+	function test() {
+		$this->load->helper('security');
+		$data['hash'] = dohash($this->input->post('password'));
+		$this->load->view('welcome_message', $data);
 	}
 }
 
-
-?>
+/* End of file login.php */
+/* Location: ./system/application/controllers/login.php */
