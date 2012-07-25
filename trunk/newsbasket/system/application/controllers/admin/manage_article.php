@@ -23,6 +23,7 @@ class Manage_article extends Controller {
 		$data_article['main_view'] 			= 'admin/manage_article_view';
 		$data_article['form_action']		= site_url('admin/manage_article/add_article');
 		$data_article['form_action_search']	= site_url('admin/manage_article/search_article');
+		$data_article['form_action_edit']	= site_url('admin/manage_article/edit_article');
 		
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
@@ -53,8 +54,12 @@ class Manage_article extends Controller {
 	}
 	
 	function detail_article($id_article) {
-		$data_article['page_title']	 	= 'Detail Article | Admin News Basket';
-		$data_article['main_view'] 	 	= 'admin/detail/article_detail_view';
+		$data_article['page_title']	 		= 'Detail Article | Admin News Basket';
+		$data_article['main_view'] 	 		= 'admin/detail/article_detail_view';
+		$data_article['article_property']	= 'admin/detail/article_detail_property';
+		$link_manage_article				= site_url('admin/manage_article');
+		$data_article['breadcrumb']			= "<a href='$link_manage_article' style='color: white;'>Manage Article</a> > Article Detail";
+		$data_article['form_action_edit']	= site_url('admin/manage_article/edit_article').'/'.$id_article;
 		
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
@@ -73,6 +78,7 @@ class Manage_article extends Controller {
 		$data_article['article']['lead_article']	= $article->lead_article;
 		$data_article['article']['headline'] 		= $article->headline;
 		$data_article['article']['body_article']	= $article->body_article;
+		$data_article['article']['category'] 		= $article->category_name;
 		$data_article['article']['slug']			= $article->slug;
 		$data_article['article']['article_flag']	= $article->article_flag;
 		
@@ -84,9 +90,6 @@ class Manage_article extends Controller {
 		
 		// ambil data author
 		$data_article['article']['author'] = $this->Article_model->getUserArticleByIDArticle($id_article, 'row_article');
-		
-		// ambil data category
-		$data_article['article']['category'] = $this->Article_model->getArticleCategory($id_article);
 		
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_article);
@@ -122,12 +125,16 @@ class Manage_article extends Controller {
 	}*/
 	
 	function edit_article($id_article) { 
-		/*$data_article['page_title']	 		= 'Edit Article | Admin News Basket';
-		$data_article['main_view'] 	 		= 'admin/manage_article_view';
-		$data_article['form_action']	 	= site_url('admin/manage_article/add_article');
-		$data_article['form_action_edit']	= site_url('admin/manage_article/edit_article_process');
-		$data_article['form_edit_article'] 	= 'admin/form/edit_article_form';
-		*/
+		$data_article['page_title']	 		= 'Edit Article | Admin News Basket';
+		$data_article['main_view'] 	 		= 'admin/detail/article_detail_view';
+		$data_article['edit_article_form']	= 'admin/form/edit_article_form';
+		$link_manage_article				= site_url('admin/manage_article');
+		$link_detail_article				= site_url('admin/manage_article/detail_article').'/'.$id_article;
+		$data_article['breadcrumb']			= "<a href='$link_manage_article' style='color: white;'>Manage Article</a> > 
+											   <a href='$link_detail_article' style='color: white;'>Article Detail</a> 
+											   > Edit Article";
+		$data_article['form_action_edit']	= site_url('admin/manage_article/edit_article_process').'/'.$id_article;
+		
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_article['username'] = $username;
@@ -140,34 +147,54 @@ class Manage_article extends Controller {
 		$this->session->set_userdata('id_article', $article->id_article);
 			
 		$data_article['article']['id_article'] 		= $article->id_article;
-		$data_article['article']['source'] 			= $article->source_name;
-		$data_article['article']['created_on'] 		= $article->created_on;
 		$data_article['article']['lead_article']	= $article->lead_article;
 		$data_article['article']['headline'] 		= $article->headline;
 		$data_article['article']['body_article']	= $article->body_article;
-		$data_article['article']['slug']			= $article->slug;
-		$data_article['article']['article_flag']	= $article->article_flag;
+		$data_article['article']['id_category'] 	= $article->id_category;
 		
 		// ambil versi artikel
 		$data_article['article']['list_version'] = $this->Article_model->getArticleVersion($id_article);
 		
-		// ambil data editor
-		$data_article['article']['editor'] = $this->Article_model->getUserArticleByIDArticle($id_article, 'edited');
-		
-		// ambil data author
-		$data_article['article']['author'] = $this->Article_model->getUserArticleByIDArticle($id_article, 'row_article');
-		
 		// ambil data category
-		$data_article['article']['category'] = $this->Article_model->getArticleCategory($id_article);
+		$this->load->model('Category_model','',TRUE);
+		$data_article['categories']			 = $this->Category_model->getAllCategories();
 		
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->load->view('admin/form/edit_article_form', $data_article);
+			$this->load->view('admin/template', $data_article);
+		}
+	}
+	
+	function edit_article_process() {
+		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
+		
+			// Prepare data untuk disimpan di tabel
+			$article  = array(
+				'headline'		=> $this->input->post('headline'),
+				'lead_article'	=> $this->input->post('lead-article'),
+				'body_article'  => $this->input->post('body-article'),
+				'id_category'   => $this->input->post('id-category'),
+				'article_flag'  => $this->input->post('article-flag')
+			);
+			
+			// Proses simpan data
+			$id_article = $this->session->userdata('id_article'); // ambil data dari session
+			$this->load->model('Article_model','',TRUE);
+			$this->Article_model->updateArticle($id_article, $article);
+			
+			$message = 'Article '.$id_article.' has been updated!'; 
+			$this->session->set_flashdata('message_success', $message);
+			redirect('admin/manage_article/detail_article'.'/'.$id_article);
+		}
+		else {
+			$message = 'Update article '.$id_article.' failed!'; 
+			$this->session->set_flashdata('message_failed', $message);
+			redirect('admin/manage_article/detail_article'.'/'.$id_article);
 		}
 	}
 	
 	function search_article($start = 0) {
 		$data_article['page_title']			= 'Search Article | Admin News Basket';
-		$data_article['main_view'] 			= 'admin/search_article_view';
+		$data_article['main_view'] 			= 'admin/extra/search_article_view';
 		$data_article['form_action_search']	= site_url('admin/manage_article/search_article');
 		
 		// Siapa yang login
