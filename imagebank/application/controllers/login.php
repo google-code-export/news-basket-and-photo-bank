@@ -33,15 +33,20 @@ class Login extends Controller {
                 $data = array(
                 				'username' => $username, 
                 				'login' => TRUE,
-                				 'user_level' => $user_level
+                				 'user_level' => $user_level,
+                				 'ip_address'>'string- user IP address'
 								 
 								 );
 				$this->session->set_userdata($data);
 				if ($user_level == 'administrator') {
 					$data_article['page_title']		= 'Manage Users	| Admin ';
+					$this->session->set_flashdata('flash_message','You are Logged in.');
+				
 				redirect('admin/manageUser');
 				}
 				else {
+					$this->session->set_flashdata('flash_message','You are Logged in.');
+					
 					redirect('gallery');
 				}
 			}
