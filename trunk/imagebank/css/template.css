@@ -71,6 +71,22 @@ input[type="email"], input[type="number"], input[type="password"], input[type="t
     overflow: hidden;
 }
 
+#siteSearch {
+    display: block;
+    float: left;
+    width: 180px;
+    height: 23px;
+    line-height: 20px;
+    
+    margin: 0;
+    border: 0;
+    font-size: 11px;
+    background-position: 0 -450px;
+    background-repeat: no-repeat;
+    outline: none;
+	position: absolute;
+	right:120px;
+}
 h1#site_name {
     float: left;
     font-size: 18px;
