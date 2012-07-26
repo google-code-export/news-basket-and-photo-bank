@@ -151,6 +151,7 @@ class Manage_article extends Controller {
 		$data_article['article']['headline'] 		= $article->headline;
 		$data_article['article']['body_article']	= $article->body_article;
 		$data_article['article']['id_category'] 	= $article->id_category;
+		$data_article['article']['article_flag'] 	= $article->article_flag;
 		
 		// ambil versi artikel
 		$data_article['article']['list_version'] = $this->Article_model->getArticleVersion($id_article);
@@ -167,7 +168,7 @@ class Manage_article extends Controller {
 	function edit_article_process() {
 		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
 		
-			// Prepare data untuk disimpan di tabel
+			// Prepare data untuk disimpan di tabel article
 			$article  = array(
 				'headline'		=> $this->input->post('headline'),
 				'lead_article'	=> $this->input->post('lead-article'),
@@ -176,10 +177,39 @@ class Manage_article extends Controller {
 				'article_flag'  => $this->input->post('article-flag')
 			);
 			
-			// Proses simpan data
+			// Proses simpan data ke tabel article
 			$id_article = $this->session->userdata('id_article'); // ambil data dari session
 			$this->load->model('Article_model','',TRUE);
 			$this->Article_model->updateArticle($id_article, $article);
+			
+			// Prepare data untuk disimpan di tabel article_version
+			$article_version   = array(
+				'id_article'	=> $id_article,
+				'headline'		=> $this->input->post('headline-version'),
+				'lead_article'	=> $this->input->post('lead-article-version'),
+				'body_article'  => $this->input->post('body-article-version'),
+				'edited_by'   	=> $this->session->userdata('username'), //siapa yang login saat itu
+				'edited_on'  	=> date('Y-m-d G:i:s')
+			);
+			
+			// Proses simpan data ke tabel article_version
+			$this->Article_model->addArticleVersion($article_version);
+			
+			// Pecah input tag
+			$tag_pieces = explode(", ", $this->input->post('tag'));
+			
+			// Prepare data sekaligus proses simpan ke tabel tag
+			$this->load->model('Tag_model','',TRUE);
+			for ($i=0; $i<sizeof($tag_pieces); $i++) {
+				$tag   = array('id_tag' => $tag_pieces[$i]);
+				$this->Tag_model->addTag($tag);
+			}
+			
+			// Prepare data sekaligus proses simpan ke tabel tag_article
+			for ($i=0; $i<sizeof($tag_pieces); $i++) {
+				$tag_article = array('id_article'=> $id_article, 'id_tag' => $tag_pieces[$i]);
+				$this->Tag_model->addTagArticle($tag_article);
+			}
 			
 			$message = 'Article '.$id_article.' has been updated!'; 
 			$this->session->set_flashdata('message_success', $message);
@@ -205,7 +235,7 @@ class Manage_article extends Controller {
 		$uri_segment = 4;
 		$offset      = $this->uri->segment($uri_segment);
 
-		$key = $this->input->post('key');
+		$key = $this->input->get('key');
 		$data_article['key'] = $key;
 		
 		$this->load->model('Article_model','',TRUE);
@@ -229,45 +259,6 @@ class Manage_article extends Controller {
 	}
 	
 	/*
-	function edit_article_process() {
-		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
-			
-			// kondisi password
-			$new_password = $this->input->post('new-password');
-			if(!empty($new_password)) {
-				$password = $new_password;
-			}
-			else {
-				$password = $this->input->post('old-password');
-			}
-			
-			// Prepare data untuk disimpan di tabel
-			$article  = array(
-				'name'		=> $this->input->post('name'),
-				'id_source'	=> $this->input->post('publisher'),
-				'password'  => $password,
-				'email'     => $this->input->post('email'),
-				'phone'     => $this->input->post('phone')
-			);
-			
-			// Proses simpan data
-			$id_article = $this->session->userdata('id_article');
-			$this->load->model('Article_model','',TRUE);
-			$this->Article_model->updateArticle($id_article, $article);
-			
-			$message = 'Article '.$id_article.' has been updated!'; 
-			$this->session->set_flashdata('message_success', $message);
-			//$key = $this->session->userdata('current_table');
-			redirect('admin/manage_article');
-		}
-		else {
-			$message = 'Update article '.$id_article.' failed!'; 
-			$this->session->set_flashdata('message_failed', $message);
-			//$key = $this->session->userdata('current_table');
-			redirect('admin/manage_article');
-		}
-	}
-	
 	function delete_article($id_article) {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->model('Article_model','',TRUE);

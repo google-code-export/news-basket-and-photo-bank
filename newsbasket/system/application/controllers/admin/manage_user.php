@@ -3,11 +3,12 @@
 class Manage_user extends Controller {
 	
 	//limitasi tabel
-	var $limit = 2;
-	
+	var $limit = 10;
+	public $swfCharts;
+ 
 	function Manage_user() {
 		parent::Controller();
-		$this->load->helper(array('fusioncharts'));
+		//$this->load->library('fusioncharts');
 		$this->swfCharts  = base_url().'library/charts/' ;
 	}
 	

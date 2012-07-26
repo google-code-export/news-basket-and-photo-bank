@@ -59,7 +59,8 @@ class Article_model extends Model {
 	function getArticleVersion($id_article) {
         $this->db->where('article.id_article', $id_article);
 		$this->db->join('article_version', 'article_version.id_article = article.id_article'); //join sama tabel version
-		$this->db->order_by('edited_on');
+		$this->db->order_by('edited_on', 'desc');
+		$this->db->limit(5);
 		return $this->db->get($this->table)->result();
     }
 	
@@ -67,6 +68,8 @@ class Article_model extends Model {
         $this->db->from('article');
         $this->db->like('headline', $key);
         $this->db->or_like('body_article', $key);
+		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
+		$this->db->join('category', 'category.id_category = article.id_category'); //join sama tabel source
         $this->db->order_by('created_on', 'desc');
         $this->db->limit($limit, $offset);
         return $this->db->get()->result();
@@ -90,6 +93,10 @@ class Article_model extends Model {
     function deleteArticle($id_article) {
 		$this->db->where('id_article', $id_article);
 		$this->db->delete($this->table);
+    }
+	
+	function addArticleVersion($new_article_version){
+		$this->db->insert('article_version', $new_article_version);
     }
 }
 
