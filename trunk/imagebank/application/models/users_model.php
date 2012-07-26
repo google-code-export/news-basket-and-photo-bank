@@ -12,17 +12,45 @@ class Users_model extends Model {
 	function checkUser($username, $password) {
 		$id_user = mysql_real_escape_string($username);
 		$pass_user = mysql_real_escape_string($password);
-		
+		$user_id = 0;
 		$query = $this->db->get_where($this->table, array('id_user'=>$username, 'password'=>$password), 10, 0);
-		
-		if ($query->num_rows() == 1) {
+		$is_valid = ($query->num_rows()>0);
+		if ($is_valid == TRUE) {
+			$this->update_last_logged_in($id_user);
+			
+			$this->update_last_ip($id_user);	
 			return TRUE;
+			
 		}
 		else {
 			return FALSE;
 		}
 	}
-        
+	
+	function update_last_logged_in($id_user)
+	{
+		$now = date('Y-m-d H:i:s');
+		$this->db->where('id_user',$id_user);
+		$this->db->update('users',array('last_login' =>$now));
+		
+		
+		return $id_user;
+	}
+	
+	function update_last_ip($id_user)
+	{
+		$ip_address = $this->session->userdata['ip_address'];
+		$this->db->where('id_user',$id_user);
+		$this->db->update('users', array('last_ip'=>$ip_address));
+	}
+	
+	function update_last_logged_out($id_user){
+		
+		$now = date('Y-m-d H:i:s');
+		$this->db->where('id_user',$id_user);
+		$this->db->update('users',array('last_logout'=>$now));
+	}
+      
 	function getLevel($username) {
 		$this->db->select('user_level');
 		$this->db->where('id_user', $username);
@@ -49,24 +77,13 @@ class Users_model extends Model {
         return $this->db->get()->result();
     }
 	
-	function getAllUserByPublisher($limit, $offset, $key) {
-        $this->db->select('*');
-        $this->db->from($this->table); //tabel user
-		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
-        $this->db->where('source.id_source', $key);
-        $this->db->order_by('date_created');
-        $this->db->limit($limit, $offset);
-        return $this->db->get()->result();
-    }
+	
 	
 	function countAll() {
 		return $this->db->count_all($this->table);
     }
 	
-	function countUserByPublisher($key) {
-		$this->db->where('id_source',  $key);
-		return $this->db->get($this->table)->num_rows();
-    }
+
 	
 	function countUserByLevel($key) {
 		$this->db->where('user_level',  $key);
@@ -115,4 +132,6 @@ class Users_model extends Model {
 			return FALSE; //username belum terpakai
 		}
 	}
+	
+	
 }

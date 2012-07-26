@@ -51,10 +51,25 @@ class Gallery extends Controller {
 			}else {
 				$this->load->model('gallery_model');
 				$this->gallery_model->updateImage($id);
+				//data tag
+			$tag_pieces = explode(", " ,$this->input->post('tag'));
+		
+			$this->load->model('Tag_model','',TRUE);
+			for ($i=0;$i<sizeof($tag_pieces);$i++){
+			 $tag = array('id_tag'=>$tag_pieces[$i]);
+				$this->Tag_model->addTag($tag);		
+			
+		}
+		
+			for ($i=0;$i<sizeof($tag_pieces);$i++){
+			 $tag_Image = array('id_image'=>$id,'id_tag'=>$tag_pieces[$i]);
+			$this->Tag_model->addTagImage($tag_Image);	
+		//proses simpan ke tabel tag
+		}
 				redirect('gallery');
 			}
 			
-			
+
 			
 		}
 	
