@@ -111,8 +111,10 @@ td.bold{
 	width: 100px;
 	font-weight: bold;
 }
-
-
+/*---------------- search -----------------*/
+.result {
+	background: none repeat scroll 0% 0% rgb(240, 255, 200);
+}
 /*------------------ detail ---------------*/
 .detail {
 	font-size: 12px;
@@ -131,8 +133,8 @@ td.bold{
 	float: left;
 	right: 15px;
 	left: 475px;
-	max-height: 500px;
-	padding: 0px 5px 0px;
+	height: 530px;
+	padding: 0px 10px 0px;
 }
 
 p.flip {

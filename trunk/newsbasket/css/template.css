@@ -178,7 +178,6 @@ div#login_logout {
 .footer-bar {
 	position: absolute;
 	height: 20px;
-	padding: 5px;
 	left: 0px;
 	bottom: 0px;
 	right: 0px;
@@ -189,6 +188,7 @@ div#login_logout {
 	clear: both;
     font-size: 0.85em;
     white-space: nowrap;
+    background: none repeat scroll 0% 0% rgb(175, 0, 0);
 }
 
 .footer ul li {
@@ -196,11 +196,11 @@ div#login_logout {
 }
 
 .footer ul {
-    color: rgb(153, 153, 153);
+    color: white;
 }
 
 .content {
-    padding: 0px 44px 5px;
+    padding: 2px 44px 5px;
 }
 
 .clearfix:after {

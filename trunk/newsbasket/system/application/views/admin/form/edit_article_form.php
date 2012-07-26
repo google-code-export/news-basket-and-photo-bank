@@ -19,7 +19,7 @@
 			</td>
 		</tr>
 		<tr>
-		<td class="bold">Category</td>
+			<td class="bold">Category</td>
 			<td class="label">
 				<select name="id-category">
 					<?php
@@ -36,6 +36,10 @@
 			</td>
 		</tr>
 		<tr>
+			<td class="bold">Tag</td>
+			<td class="label"><input type="text" name="tag" size="46px;" style="margin-left: 3px;"/></td>
+		</tr>
+		<tr>
 			<td class="bold">Status Flag</td>
 			<td class="label">
 				<select name="article-flag">
@@ -43,7 +47,7 @@
 					$level = array('row_article','edited','published','deleted');
 					for ($i=0; $i<=3; $i++) {
 						$value = $i + 1;
-						if ($level[$i] == $artice['article_flag']) {
+						if ($level[$i] == $article['article_flag']) {
 							echo "<option value='$value' SELECTED>$level[$i]</option>";
 						}
 						else {
@@ -64,5 +68,8 @@
 			</td>
 		</tr>
 	</table>
+	<input type="hidden" name="headline-version" value="<?php echo $article['headline']?>"/>
+	<input type="hidden" name="lead-article-version" value="<?php echo $article['lead_article']?>"/>
+	<input type="hidden" name="body-article-version" value="<?php echo $article['body_article']?>"/>
 </form>
 	
