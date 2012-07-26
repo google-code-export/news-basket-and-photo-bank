@@ -60,6 +60,9 @@ class Login extends Controller {
 	function logoutProcess()
 	{
 		$this->session->sess_destroy();
+		$username = $this->session->userdata('username');
+		$this->load->model('Users_model','',TRUE);
+		//$this->users_model->update_last_logged_out($username);
 		redirect('login', 'refresh');
 	}
 	
