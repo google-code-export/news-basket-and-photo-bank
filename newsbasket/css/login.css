@@ -256,25 +256,38 @@ button.nb-button, input.nb-button[type="submit"] {
 /*----------------------------- footer ---------------------------------*/
 .footer-bar {
     position: absolute;
-    bottom: 0px;
     height: 35px;
-    width: 100%;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
     border-top: 1px solid rgb(235, 235, 235);
-    overflow: hidden;
+    background: none repeat scroll 0% 0% rgb(175, 0, 0);
 }
 
 .footer {
-    padding-top: 9px;
+	clear: both;
+	margin-top: 7px;
     font-size: 0.85em;
     white-space: nowrap;
-    line-height: 0;
 }
 
 .footer ul li {
     display: inline;
-    padding: 0px 1.5em 0px 0px;
 }
 
 .footer ul {
-    color: rgb(153, 153, 153);
+    color: white;
+}
+
+.content {
+    padding: 2px 44px 5px;
+}
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: '.';
+	clear: both;
+	height: 0;
 }

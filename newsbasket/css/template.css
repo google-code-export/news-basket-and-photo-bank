@@ -40,6 +40,7 @@ a {
 
 a:hover {
     text-decoration: underline;
+	cursor: pointer;
 }
 
 textarea {
@@ -72,7 +73,7 @@ input[type="email"], input[type="number"], input[type="password"], input[type="t
 /*------------------------- atas --------------------------*/
 .header-bar {
     height: 30px;
-    background: none repeat scroll 0% 0% rgb(175, 0, 0);
+    background: url(../images/header.png) repeat-x top left;
 	box-shadow: 0px 4px 10px -1px rgba(200, 200, 200, 0.7);
     overflow: hidden;
 }
@@ -108,13 +109,12 @@ div#login_logout {
 
 /*------------------------- navigasi --------------------------*/
 .navigation {
+	position: absolute;
 	width: 200px;
-	float: left;
 	top: 30px;
 	left: 0px;
 	bottom: 20px;
 	overflow-y: auto;
-	overflow-x: hidden;
 	background-color: rgb(245, 245, 245);
 	border-color: rgb(204, 204, 204);
 	border-bottom-color: rgb(204, 204, 204);
@@ -147,9 +147,15 @@ div#login_logout {
 	color: white;
 }
 
+.navigation a:active {
+	color: white;
+	background: none repeat scroll 0% 0% #98bf21;
+}
+
 .navigation li:hover {
 	background: none repeat scroll 0% 0% rgb(175, 0, 0);
 }
+
 
 .navigation li.none {
 	cursor: auto;
