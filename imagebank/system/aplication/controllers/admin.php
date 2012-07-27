@@ -24,17 +24,14 @@ class Admin extends Controller {
         }
 	}
     
- 
+
+	
 	
     public function manageUser()
     {
     	
-		//$data['main_view'] = "example";
-		$username = $this->session->userdata('username');
 		
-		
-		
-		//$username = $this->session->set_userdata('get_level');
+		$username = $this->session->userdata('username');		
     	$crud = new grocery_CRUD();
         $crud->set_table('users');
 		//$crud->where('id_user',$username);
@@ -46,6 +43,8 @@ class Admin extends Controller {
 		$crud->display_as('id_group');
 		$crud->change_field_type('password', 'password');
 		$crud->set_relation('id_source','source','source_name' );
+		
+
         $output = $crud->render();
 		$output = (array)$output;
 		 $output['page_title']		= 'Manage Users| Administrator Image Bank ';
