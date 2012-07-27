@@ -39,15 +39,18 @@
 	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
 ?>
 		
-<div id="myTable" class="tablesorter">
+<div>
 	<?php //echo ! empty($table) ? $table : ''; ?>
-	<table id="zebra">
+	<table id="category" class="tablesorter">
+		<thead> 
 		<tr>
 			<th>No</th>
 			<th>ID Category</th>
 			<th>Category Name</th>
 			<th class="center" colspan="2">Action</th>
 		</tr>
+		</thead>
+		<tbody>
 		<?php
 			$No = 1;
 			$this->load->helper('text');
@@ -66,7 +69,7 @@
 				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
-						<td>$No</td>
+						<td class='center'>$No</td>
 						<td id='id-category'>$column->id_category</td>
 						<td>$column->category_name</td>
 						<td class='center'>$editLink</td>
@@ -76,5 +79,6 @@
 				$No++;
 			}
 		?>
+		</tbody>
 	</table>
 </div>

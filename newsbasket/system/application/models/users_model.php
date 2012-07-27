@@ -73,16 +73,14 @@ class Users_model extends Model {
 		return $this->db->get($this->table)->num_rows();
     }
 	
-	function getUserByID($id_user)
-    {
+	function getUserByID($id_user) {
         $this->db->distinct('id_user');
 		$this->db->where('users.id_user', $id_user);
 		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
         return $this->db->get($this->table);
     }
 	
-	function getUserArticleByIDUser($id_user)
-    {
+	function getUserArticleByIDUser($id_user) {
         $this->db->distinct('');
 		$this->db->where('users_article.id_user', $id_user);
 		$this->db->from('users_article'); // table users_article
@@ -90,14 +88,33 @@ class Users_model extends Model {
 		$this->db->order_by('process_date', 'desc');
 		return $this->db->get()->result();
     }
-	
-	function countStatistic($id_user) {
+	/*
+	function countStatistic($id_user, $flag) {
 		$query = $this->db->query("
 			SELECT date(process_date) as date_process, COUNT(id_users_article) as statistic
-			FROM users_article WHERE id_user='$id_user'
+			FROM users_article WHERE id_user='$id_user' and flag='$flag'
 			GROUP BY date(process_date) LIMIT 10
 		");
 		return $query->result();
+	}*/
+	
+	function searchUser($limit, $offset, $key) {
+        $this->db->like('id_user', $key);
+		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
+        $this->db->limit($limit, $offset);
+        return $this->db->get($this->table)->result();
+    }
+	
+	function countSearch($key) {
+		$this->db->like('id_user', $key);
+		return $this->db->get($this->table)->num_rows();
+    }
+	
+	function countStatistic($id_user, $flag) {
+		$this->db->from('users_article');
+		$this->db->where('id_user', $id_user);
+		$this->db->where('flag', $flag);
+		return $this->db->count_all_results();
 	}
 	
 	function addUser($new_user){

@@ -76,15 +76,10 @@
 		</table>
 	</form>
 </div>
-<div id="edit-user" class="edit-form">
-	<?php
-		!empty($form_edit_user)? $this->load->view($form_edit_user) : '';
-	?>
-</div>
 <div id="user-table" class="table-menu">
 	<div class="search">
-		<form id="search-by" name="search_by" action="" method="post">
-			<input type="text" name="search_key" id="search-key" value="" required="required" />
+		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
+			Search by username : <input type="text" name="key" id="key" value="" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>
 	</div>
@@ -114,9 +109,9 @@
 	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
 ?>
 		
-<div id="myTable" class="tablesorter">
-	<?php //echo ! empty($table) ? $table : ''; ?>
-	<table id="zebra">
+<div>
+	<table id="user" class="tablesorter">
+		<thead> 
 		<tr>
 			<th>No</th>
 			<th>Username</th>
@@ -125,8 +120,10 @@
 			<th>Phone</th>
 			<th>Email</th>
 			<th>Level</th>
-			<th class="center" colspan="3">Action</th>
+			<th class="center" colspan="2">Action</th>
 		</tr>
+		</thead>
+		<tbody>
 		<?php
 			$No = 1;
 			$this->load->helper('text');
@@ -136,11 +133,6 @@
 					'<button>Delete</button>',
 					array('class'=>'btn-delete', 'onclick'=>"return confirm('Are you sure want to delete this user?')")
 				);
-				$editLink = anchor(
-					'admin/manage_user/edit_user/'.$column->id_user,
-					'<button>Edit</button>',
-					array('class'=>'btn-edit-user')
-				);
 				$detailLink = anchor(
 					'admin/manage_user/detail_user/'.$column->id_user,
 					'<button>Detail</button>',
@@ -149,8 +141,8 @@
 				
 				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
-					<tr class=$class_tr>
-						<td>$No</td>
+					<tr class='$class_tr'>
+						<td class='center'>$No</td>
 						<td id='id-user'>$column->id_user</td>
 						<td>$column->source_name</td>
 						<td>$column->name</td>
@@ -158,13 +150,13 @@
 						<td>$column->email</td>
 						<td>$column->user_level</td>
 						<td class='center'>$detailLink</td>
-						<td class='center'>$editLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>
 				";
 				$No++;
 			}
 		?>
+		</tbody>
 	</table>
 </div>
 <div id="pagination">
