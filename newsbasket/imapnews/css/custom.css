@@ -1,0 +1,60 @@
+body{
+	background: #f7f7f7;
+}
+.navbar-inner{
+	border-radius: 0px;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+}
+.navbar .brand{
+	color: #fff;
+}
+.navbar .container{
+	width: 940px;
+}
+.grids{
+	background: #fff;
+	border:1px solid #E8E8E8;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+table.table tr{
+	cursor: pointer;
+}
+.mails_header{
+	padding: 10px;
+}
+i{
+	color: #999999;
+	font-size: 12px;
+}
+.inner{
+	margin-top: 10px;
+	display: block;
+}
+.mails_header{
+	border-bottom: 1px solid #e8e8e8;
+	padding-bottom: 10px;
+}
+.subject{
+	cursor: pointer;
+}
+.mail_info{
+	background: none repeat scroll 0 0 #F7F7F7;
+	margin-top: 13px;
+	padding: 20px;
+	display: none;
+}
+.time{
+	float: right;
+}
+.icon-circle-arrow-down{
+	cursor: pointer;
+}
+.mail_info h4{
+	margin-bottom: 10px;
+}
+.attachments{
+	margin-bottom: 10px;
+}
