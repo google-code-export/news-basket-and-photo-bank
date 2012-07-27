@@ -70,39 +70,6 @@
 		
 	}
 	
-	function editCaption(){
-		$this->load->helper('form');
-		$now = date('Y-m-d H:i:s');
-		
-		$image_data = array(
-			'title'		=>$this->input->post('title'),
-			'caption'	=>$this->input->post('caption'),
-			'updated_at' => $now,
-			
-		);
-		
-		//data tag
-		$tag_pieces = explode(", " ,$this->input->post('tag'));
-		
-		$this->load->model('Tag_model','',TRUE);
-		for ($i=0;$i<sizeof($tag_pieces);$i++){
-		 $tag = array('id_tag'=>$tag_pieces[$i]);
-				$this->Tag_model->addTag($tag);		
-			
-		}
-		
-		for ($i=0;$i<sizeof($tag_pieces);$i++){
-		 $tag_Image = array('id_image'=>$image_id,'id_tag'=>$tag_pieces[$i]);
-				$this->Tag_model->addTagImage($tag_Image);	
-		//proses simpan ke tabel tag
-		}
-		
-		$this->image_model->update($image_data, $image_id);
-		redirect('gallery');
-		$this->load->view('edit_image');
-		
 	
-	
- }   
  } 
     ?>
