@@ -9,6 +9,7 @@
         
         <style type="text/css">@import url("<?php echo base_url().'css/template.css'; ?>");</style>
         <style type="text/css">@import url("<?php echo base_url().'css/admin.css'; ?>");</style>
+      
         
 </head>
 <?php flush();?>
