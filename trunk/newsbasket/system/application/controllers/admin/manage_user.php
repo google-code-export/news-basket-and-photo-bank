@@ -22,10 +22,11 @@ class Manage_user extends Controller {
 	}
 	
 	function load_users($offset = 0) {
-		$data_user['page_title']	= 'Manage User | Admin News Basket';
-		$data_user['main_view'] 	= 'admin/manage_user_view';
-		$data_user['form_action']	= site_url('admin/manage_user/add_user');
-		$data_user['form_add_user'] = 'admin/form/add_user_form';
+		$data_user['page_title']			= 'Manage User | Admin News Basket';
+		$data_user['main_view'] 			= 'admin/manage_user_view';
+		$data_user['form_action']			= site_url('admin/manage_user/add_user');
+		$data_user['form_add_user'] 		= 'admin/form/add_user_form';
+		$data_user['form_action_search']	= site_url('admin/manage_user/search_user');
 
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
@@ -57,8 +58,12 @@ class Manage_user extends Controller {
 	}
 	
 	function detail_user($id_user) {
-		$data_user['page_title']	= 'Detail User | Admin News Basket';
-		$data_user['main_view'] 	= 'admin/detail/user_detail_view';
+		$data_user['page_title']		= 'Detail User | Admin News Basket';
+		$data_user['main_view'] 		= 'admin/detail/user_detail_view';
+		$data_user['user_property']		= 'admin/detail/user_detail_property';
+		$link_manage_user				= site_url('admin/manage_user');
+		$data_user['breadcrumb']		= "<a href='$link_manage_user' style='color: white;'>Manage User</a> > User Detail";
+		$data_user['form_action_edit']	= site_url('admin/manage_user/edit_user').'/'.$id_user;
 		
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
@@ -82,13 +87,48 @@ class Manage_user extends Controller {
 		// activity log
 		$data_user['user']['activity_log']  = $this->Users_model->getUserArticleByIDUser($id_user);
 		
-		/* user statistic
-		$data_user['user']['created']	= $this->Users_model->countStatistic($id_user,'row_article');
-		$data_user['user']['edited']	= $this->Users_model->countStatistic($id_user,'edited');
-		$data_user['user']['published'] = $this->Users_model->countStatistic($id_user,'published');
-		*/
-		$data_user['user']['statistic'] = $this->Users_model->countStatistic($id_user);
+		// user statistic
+		$data_user['user']['create'] 	= $this->Users_model->countStatistic($id_user, 'row_article');
+		$data_user['user']['edit'] 		= $this->Users_model->countStatistic($id_user, 'edited');
+		$data_user['user']['publish']	= $this->Users_model->countStatistic($id_user, 'published');
+		$data_user['user']['delete']	= $this->Users_model->countStatistic($id_user, 'deleted');
 		
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_user);
+		}
+	}
+	
+	function search_user($start = 0) {
+		$data_user['page_title']			= 'Search User | Admin News Basket';
+		$data_user['main_view'] 			= 'admin/extra/search_user_view';
+		$data_user['form_action_search']	= site_url('admin/manage_user/search_user');
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_user['username'] = $username;
+		
+		// Limit & Offset
+		$uri_segment = 4;
+		$offset      = $this->uri->segment($uri_segment);
+
+		$key = $this->input->get('key');
+		$data_user['key'] = $key;
+		
+		$this->load->model('Users_model','',TRUE);
+		$data_user['result'] = $this->Users_model->searchUser($this->limit, $offset, $key);
+		$data_user['count']  = $this->Users_model->countSearch($key);
+		
+		// Membuat pagination			
+		$config['base_url']    = site_url('admin/manage_user/search_user');
+		$config['total_rows']  = $data_user['count'];
+		$config['per_page']    = $this->limit;
+		$config['uri_segment'] = $uri_segment;
+		$this->pagination->initialize($config);
+		$data_user['pagination']    = $this->pagination->create_links();
+
+		$data_user['first_result'] = $start + 1;
+		$data_user['last_result']  = min($start + $this->limit, $data_user['count']);
+
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_user);
 		}
@@ -132,10 +172,14 @@ class Manage_user extends Controller {
 	
 	function edit_user($id_user) { 
 		$data_user['page_title']	 	= 'Edit User | Admin News Basket';
-		$data_user['main_view'] 	 	= 'admin/manage_user_view';
-		$data_user['form_action']	 	= site_url('admin/manage_user/add_user');
-		$data_user['form_action_edit']	= site_url('admin/manage_user/edit_user_process');
-		$data_user['form_edit_user'] 	= 'admin/form/edit_user_form';
+		$data_user['main_view'] 	 	= 'admin/detail/user_detail_view';
+		$data_user['edit_user_form']	= 'admin/form/edit_user_form';
+		$link_manage_user				= site_url('admin/manage_user');
+		$link_detail_user				= site_url('admin/manage_user/detail_user').'/'.$id_user;
+		$data_user['breadcrumb']		= "<a href='$link_manage_user' style='color: white;'>Manage User</a> > 
+											   <a href='$link_detail_user' style='color: white;'>User Detail</a> 
+											   > Edit User";
+		$data_user['form_action_edit']	= site_url('admin/manage_user/edit_user_process').'/'.$id_user;
 		
 		// untuk option form
 		$this->load->model('Source_model','',TRUE);
@@ -166,6 +210,7 @@ class Manage_user extends Controller {
 		
 		// ambil data user dari ID nya
 		$user = $this->Users_model->getUserByID($id_user)->row();
+		$data_user['user']['id_user'] = $id_user;
 		
 		//simpan session username yang ingin di edit
 		$this->session->set_userdata('id_user', $user->id_user);
@@ -176,7 +221,16 @@ class Manage_user extends Controller {
 		$data_user['default']['email'] 		= $user->email;
 		$data_user['default']['level'] 		= $user->user_level;
 		$data_user['default']['publisher']	= $user->id_source;
-	
+		
+		// activity log
+		$data_user['user']['activity_log']  = $this->Users_model->getUserArticleByIDUser($id_user);
+		
+		// user statistic
+		$data_user['user']['create'] 	= $this->Users_model->countStatistic($id_user, 'row_article');
+		$data_user['user']['edit'] 		= $this->Users_model->countStatistic($id_user, 'edited');
+		$data_user['user']['publish']	= $this->Users_model->countStatistic($id_user, 'published');
+		$data_user['user']['delete']	= $this->Users_model->countStatistic($id_user, 'deleted');
+		
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_user);
 		}

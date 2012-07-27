@@ -20,9 +20,10 @@
 	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
 ?>
 		
-<div id="myTable" class="tablesorter">
+<div>
 	<?php //echo ! empty($table) ? $table : ''; ?>
-	<table id="zebra">
+	<table id="article" class="tablesorter">
+		<thead> 
 		<tr>
 			<th>No</th>
 			<th>Title</th>
@@ -30,17 +31,19 @@
 			<th>Author</th>
 			<th>Date Created</th>
 			<th>Status Flag</th>
-			<th class="center" colspan="3">Action</th>
+			<th class="center">Action</th>
 		</tr>
+		</thead> 
+		<tbody>
 		<?php
 			$No = 1;
 			$this->load->helper('text');
 			foreach ($article_table as $column) {
-				$deleteLink = anchor(
+				/*$deleteLink = anchor(
 					'admin/manage_article/deleteArticle/'.$column->id_article,
 					'<button>Delete</button>',
 					array('class'=>'btn-delete', 'onclick'=>"return confirm('Are you sure want to delete this article?')")
-				);
+				);*/
 				$detailLink = anchor(
 					'admin/manage_article/detail_article/'.$column->id_article,
 					'<button>Detail</button>',
@@ -50,18 +53,18 @@
 				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
-						<td>$No</td>
+						<td class='center'>$No</td>
 						<td id='id-article'>$column->headline</td>
 						<td>$column->source_name</td>
 						<td>$column->author</td>
 						<td>$column->created_on</td>
 						<td>$column->article_flag</td>
 						<td class='center'>$detailLink</td>
-						<td class='center'>$deleteLink</td>
 					</tr>
 				";
 				$No++;
 			}
 		?>
+		</tbody>
 	</table>
 </div>

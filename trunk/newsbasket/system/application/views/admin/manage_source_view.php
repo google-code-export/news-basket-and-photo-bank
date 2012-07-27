@@ -42,14 +42,17 @@
 	$message_failed = $this->session->flashdata('message_failed');
 	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
 ?>
-<div id="myTable" class="tablesorter">
-	<table id="zebra">
+<div>
+	<table id="source" class="tablesorter">
+		<thead> 
 		<tr>
 			<th>ID Source</th>
 			<th>Source Name</th>
 			<th>Source Type</th>
 			<th class="center" colspan="2">Action</th>
 		</tr>
+		</thead>
+		<tbody>
 		<?php
 			$No = 1;
 			foreach ($source_table as $column) {
@@ -67,7 +70,7 @@
 				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
-						<td id='id-source'>$column->id_source</td>
+						<td id='id-source' class='center'>$column->id_source</td>
 						<td>$column->source_name</td>
 						<td>$column->source_type</td>
 						<td class='center'>$editLink</td>
@@ -77,6 +80,7 @@
 				$No++;
 			}
 		?>
+		</tbody>
 	</table>
 </div>
 <div id="pagination">

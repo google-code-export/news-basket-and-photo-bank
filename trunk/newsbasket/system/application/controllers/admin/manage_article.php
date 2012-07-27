@@ -201,14 +201,18 @@ class Manage_article extends Controller {
 			// Prepare data sekaligus proses simpan ke tabel tag
 			$this->load->model('Tag_model','',TRUE);
 			for ($i=0; $i<sizeof($tag_pieces); $i++) {
-				$tag   = array('id_tag' => $tag_pieces[$i]);
-				$this->Tag_model->addTag($tag);
+				if ($this->Tag_model->checkTag($tag_pieces[$i]) == FALSE) { // jika tag belum ada maka di tambahkan
+					$tag   = array('id_tag' => $tag_pieces[$i]);
+					$this->Tag_model->addTag($tag);
+				}
 			}
 			
 			// Prepare data sekaligus proses simpan ke tabel tag_article
 			for ($i=0; $i<sizeof($tag_pieces); $i++) {
-				$tag_article = array('id_article'=> $id_article, 'id_tag' => $tag_pieces[$i]);
-				$this->Tag_model->addTagArticle($tag_article);
+				if ($this->Tag_model->checkTagArticle($id_article, $tag_pieces[$i]) == FALSE) { // jika tag belum ada maka di tambahkan
+					$tag_article = array('id_article'=> $id_article, 'id_tag' => $tag_pieces[$i]);
+					$this->Tag_model->addTagArticle($tag_article);
+				}
 			}
 			
 			$message = 'Article '.$id_article.' has been updated!'; 

@@ -5,7 +5,7 @@
 			echo !empty($edit_article_form)? $this->load->view($edit_article_form) : $this->load->view($article_property);
 		?>
 	</div>
-	<div id="version" class="detail-right" style="overflow-y: auto;">
+	<div id="version" class="detail-right">
 		<?php
 			$no = 1;
 			foreach ($article['list_version'] as $column) {

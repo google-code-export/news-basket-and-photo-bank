@@ -68,6 +68,7 @@
 			</td>
 		</tr>
 	</table>
+	<!-- data untuk membuat article_version -->
 	<input type="hidden" name="headline-version" value="<?php echo $article['headline']?>"/>
 	<input type="hidden" name="lead-article-version" value="<?php echo $article['lead_article']?>"/>
 	<input type="hidden" name="body-article-version" value="<?php echo $article['body_article']?>"/>
