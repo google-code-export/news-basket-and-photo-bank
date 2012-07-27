@@ -12,7 +12,7 @@
 <div class="my-images">
 	<h3 class="menu">My Images</h3>
 	<ul>
-		<li><a href="http://csandre.wordpress.com/category/belajar/">My Gallery</a></li>
+		<li><a href="<?php echo site_url('album/index');?>">My Gallery</a></li>
 		<li><a href="<?php echo site_url('user/upload');?>">Upload</a></li>
 	</ul>
 </div>
