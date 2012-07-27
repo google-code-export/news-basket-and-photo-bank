@@ -42,26 +42,6 @@ a:hover {
     text-decoration: underline;
 }
 
-input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="text"], input[type="url"] {
-    display: inline-block;
-    height: 22px;
-    margin: 0px;
-    padding: 0px 5px;
-    background: none repeat scroll 0% 0% rgb(255, 255, 255);
-    border-right: 1px solid rgb(217, 217, 217);
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(192, 192, 192) rgb(217, 217, 217) rgb(217, 217, 217);
-    -moz-border-top-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-image: none;
-    -moz-box-sizing: border-box;
-    -webkit-border-image: none;
-    -webkit-box-sizing: border-box;
-    border-radius: 1px 1px 1px 1px;
-}
 
 /*------------------------- atas --------------------------*/
 .header-bar {
