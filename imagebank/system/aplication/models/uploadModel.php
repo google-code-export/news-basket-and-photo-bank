@@ -24,7 +24,7 @@
 				
 			
     	}
-		function process_pic($uploads,$title,$caption)
+		function process_pic($uploads,$title,$caption,$album)
     {   
         //Connect to database
         $this->load->database();
@@ -86,7 +86,7 @@
 			$row['path'] =$filepath;
 			$row['filetype']= $filetype;
 			$row['update_at'] = $now;
-            
+            $row['id_album'] = $album;
             //Insert Info Into Database
             $this->db->insert('images',$row);
 			
@@ -108,5 +108,14 @@
 
 	
 	}
+	
+	function getAlbumByIdUser($id_user){
+		
+		
+		$this->db->select('*');
+		$this->db->where('id_user',$id_user);
+		$this->db->from('album');
+		return $this->db->get()->result();
+		}
 }
 ?>
