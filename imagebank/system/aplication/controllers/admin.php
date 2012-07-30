@@ -42,6 +42,7 @@ class Admin extends Controller {
 		$crud->fields('id_user','password','name','email','user_level','phone','id_source');
 		$crud->display_as('id_group');
 		$crud->change_field_type('password', 'password');
+		$crud->callback_before_insert(array($this,'encrypt_pw'));
 		$crud->set_relation('id_source','source','source_name' );
 		
 
@@ -55,6 +56,12 @@ class Admin extends Controller {
 	  
 	      
     }
+	  function encrypt_pw($post_array) {
+                                if(!empty($post_array['password'])) {
+                                                $post_array['password'] = SHA1($_POST['password']);
+                                }
+                                return $post_array;
+                }
 	
 	public function manageCategory()
 	{
