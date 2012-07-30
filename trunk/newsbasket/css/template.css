@@ -1,4 +1,4 @@
-html, body, div, h1, h2, h3, h4, h5, h6, p, img,
+html, body, div, a, h1, h2, h3, h4, h5, h6, p, img,
 dl, dt, dd, ol, ul, li, table, tr, td, form, object,
 embed, article, aside, canvas, command, details,
 fieldset, figcaption, figure, footer, group, header, hgroup, 
@@ -115,11 +115,7 @@ div#login_logout {
 	left: 0px;
 	bottom: 20px;
 	overflow-y: auto;
-	background-color: rgb(245, 245, 245);
-	border-color: rgb(204, 204, 204);
-	border-bottom-color: rgb(204, 204, 204);
-	border-width: 0px 1px 0px 0px;
-	border-style: solid;
+	background: url(../images/nav-top.png) repeat-x top left rgb(245, 245, 245);
 	list-style: none outside none;
 }
 
@@ -169,14 +165,22 @@ div#login_logout {
 	padding-left: 1.5em;
 }
 
-.navigation h3.menu {
+.navigation .menu {
 	color: white;
+	width: 155px;
+	font-size: 14px;
+	font-weight: bold;
 	padding: 0px 5px;
+	line-height: 24px;
 	background: none repeat scroll 0% 0% rgb(175, 0, 0);
 	cursor: pointer;
 }
 
-.navigation h3.menu:hover {
+.navigation .menu:hover {
+	background: none repeat scroll 0% 0% #98bf21;
+}
+
+.navigation .menu:active {
 	background: none repeat scroll 0% 0% #98bf21;
 }
 
@@ -187,7 +191,6 @@ div#login_logout {
 	left: 0px;
 	bottom: 0px;
 	right: 0px;
-    border-top: 1px solid rgb(235, 235, 235);
 }
 
 .footer {
