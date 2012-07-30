@@ -1,10 +1,9 @@
-
+<?php $flashmessage = $this->session->flashdata('message')?>
 	
-<div class="page Header">
-	<h1>Albums</h1>	
-	</div>
+<h2>My Galleries</h2>
 	
 	
+	<?php echo ! empty($flashmessage) ? '<p class="success">' . $flashmessage . '</p>': '';?>
 	
 <table width="597" border="1">
   <tr>

@@ -1,15 +1,26 @@
-<html>
-	<title>upload Form</title>
-	<body>
+
+	<h2>Upload Image</h2>
+
 <?php  echo form_open_multipart('user/picupload');?>
 <?=form_hidden('project_id',"1"); ?>
 <fieldset>
-	<legend>Add Image</legend>
+	
 	<p> Title:<br /><input type="text" name="title" /></p>
 	<p>Description <br /><textarea name="caption" rows="3" cols="20"></textarea></p>
 	<p>File: <input type="file" name="file_name"/></p>
 	
+	<h3> select your album</h3>
+	<select name="id_album">
+	<?php 
+	foreach ($album as $row) {
+		echo "<option value ='$row->id_album'>$row->album_name</option>";
+	}
+	
+	?>
+	</select>
+	
 	<h3> Select categories</h3>
+	
 	<?php 
 	foreach ($category as $row ) {
 		
@@ -21,5 +32,4 @@
 	<p><input type="submit" value="upload" /></p>
 </fieldset>
 </form>
-</body>
-</html>
+
