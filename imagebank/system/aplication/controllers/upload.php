@@ -11,7 +11,10 @@
 	
 	function index()
 	{
-		$this->load->view('uploadform');
+		$id_user = $this->session->userdata('username');
+		$this->load->model('uploadModel','',TRUE);
+		echo $this->db->last_query();
+		$this->load->view('uploadform',$album);
 	}
 	function picupload(){
 		

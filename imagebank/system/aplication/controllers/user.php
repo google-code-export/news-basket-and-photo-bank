@@ -22,7 +22,8 @@
 		$data['username'] = $username;
 		$data['user_level'] = $user_level;
 		$this->load->model('uploadModel','',TRUE);
-
+		$data['album'] = $this->uploadModel->getAlbumByIdUser($username);
+		
 		$data['category']=$this->uploadModel->getAllCategory();
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator'){
 			$this->load->view('template',$data);
@@ -54,7 +55,7 @@
 				}
 				else{
 					$uploads = array($this->upload->data());
-					$id_gambar=$this->uploadModel->process_pic($uploads,$this->input->post('title'),$this->input->post('caption'));
+					$id_gambar=$this->uploadModel->process_pic($uploads,$this->input->post('title'),$this->input->post('caption'),$this->input->post('id_album'));
 					
 				}
 			}
