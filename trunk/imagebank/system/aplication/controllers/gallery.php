@@ -25,9 +25,9 @@ class Gallery extends Controller {
 		$data['username'] = $username;
 		$data['user_level'] = $user_level;
 		
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('get_level') == 'administrator'){
-			$this->load->view('template',$data);	
-		}else {
+	if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator'){
+			$this->load->view('template',$data);
+			}else {
 			$this->load->view('user/template',$data);
 		}
 		

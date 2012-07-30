@@ -49,6 +49,7 @@ class Admin extends Controller {
 		$output = (array)$output;
 		 $output['page_title']		= 'Manage Users| Administrator Image Bank ';
 		$output['username']  = $username;
+		$output['h2_title'] = 'Admin > Manage User';
 	   $this->load->view('admin/template_admin',$output);
 	   
 	  
@@ -67,6 +68,7 @@ class Admin extends Controller {
 		$output = (array)$output;
 		 $output['page_title']		= 'Manage Category| Administrator Image Bank ';
 		$output['username']  = $username;
+		$output['h2_title'] = 'Admin > Manage Category';
 		 $this->load->view('admin/template_admin.php',$output);
 	   
 	}
@@ -81,6 +83,7 @@ class Admin extends Controller {
 		$output = (array)$output;
 		 $output['page_title']		= 'Manage Source| Administrator Image Bank ';
 		$output['username']  = $username;
+		$output['h2_title'] = 'Admin > Manage Source';
 		 $this->load->view('admin/template_admin.php',$output);
 		 }
  
