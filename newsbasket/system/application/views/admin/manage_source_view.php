@@ -46,7 +46,7 @@
 	<table id="source" class="tablesorter">
 		<thead> 
 		<tr>
-			<th>ID Source</th>
+			<th class="center">ID Source</th>
 			<th>Source Name</th>
 			<th>Source Type</th>
 			<th class="center" colspan="2">Action</th>

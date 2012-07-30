@@ -36,8 +36,15 @@
 			</td>
 		</tr>
 		<tr>
+			<td class="bold">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="bold">&nbsp;</td>
+			<td class="label"><span style="margin-left: 3px;"><i>how to write tag, e.g. : Life, Love</i></span></td>
+		</tr>
+		<tr>
 			<td class="bold">Tag</td>
-			<td class="label"><input type="text" name="tag" size="46px;" style="margin-left: 3px;"/></td>
+			<td class="label"><input type="text" name="tag" size="46px;" style="margin-left: 3px;" value="<?php echo $article['tag']?>"/></td>
 		</tr>
 		<tr>
 			<td class="bold">Status Flag</td>

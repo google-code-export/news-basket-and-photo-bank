@@ -79,12 +79,12 @@
 <div id="user-table" class="table-menu">
 	<div class="search">
 		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
-			Search by username : <input type="text" name="key" id="key" value="" required="required" />
+			Search by name : <input type="text" name="key" id="key" value="" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>
 	</div>
 	<div class="paging">
-		<p><?php echo !empty($pagination) ? $pagination : ''; ?></p>
+		<p><?php echo !empty($pagination)? $pagination : ''; ?></p>
 		<!--<span class="disabled">
 			<a class="disabled" href=#><< Prev</a>
 		</span>
@@ -105,6 +105,7 @@
 <?php
 	$message_success = $this->session->flashdata('message_success');
 	echo !empty($message_success) ? "<p class='success'>" . $message_success . "</p>": "";
+	
 	$message_failed = $this->session->flashdata('message_failed');
 	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
 ?>
@@ -113,7 +114,7 @@
 	<table id="user" class="tablesorter">
 		<thead> 
 		<tr>
-			<th>No</th>
+			<th class="center">No</th>
 			<th>Username</th>
 			<th>Publisher</th>
 			<th>Full Name</th>

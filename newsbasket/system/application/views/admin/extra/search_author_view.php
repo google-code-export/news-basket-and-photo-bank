@@ -1,8 +1,8 @@
 <h2>
-	<a href="<?php echo site_url('admin/manage_user');?>" style="color: white;">Manage User</a> > Search User
+	<a href="<?php echo site_url('admin/manage_author');?>" style="color: white;">Manage Author</a> > Search Author
 	<?php echo (!empty($result))? "> keyword '$key' shows result ($first_result - $last_result dari $count) :" : "> No Results.";?>
 </h2>
-<div id="user-table" class="table-menu">
+<div id="author-table" class="table-menu">
 	<div class="search">
 		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
 			Search by name : <input type="text" name="key" id="key" required="required" />
@@ -13,16 +13,15 @@
 	</div>
 </div>
 <div id="search-result" style="height: 500px; overflow-y:auto;">
-	<table id="user" class="tablesorter">
+	<table id="author" class="tablesorter">
 		<thead> 
 		<tr>
 			<th>No</th>
-			<th>Username</th>
+			<th>ID Author</th>
 			<th>Publisher</th>
 			<th>Full Name</th>
 			<th>Phone</th>
 			<th>Email</th>
-			<th>Level</th>
 			<th class="center" colspan="2">Action</th>
 		</tr>
 		</thead>
@@ -32,27 +31,26 @@
 			$No = 1;
 			foreach ($result as $column) {
 				$deleteLink = anchor(
-					'admin/manage_user/delete_user/'.$column->id_user,
+					'admin/manage_author/delete_author/'.$column->id_author,
 					'<button>Delete</button>',
-					array('class'=>'btn-delete', 'onclick'=>"return confirm('Are you sure want to delete this user?')")
+					array('class'=>'btn-delete', 'onclick'=>"return confirm('Are you sure want to delete this author?')")
 				);
-				$detailLink = anchor(
-					'admin/manage_user/detail_user/'.$column->id_user,
-					'<button>Detail</button>',
-					array('class'=>'btn-detail-user')
+				$editLink = anchor(
+					'admin/manage_author/edit_author/'.$column->id_author,
+					'<button>Edit</button>',
+					array('class'=>'btn-detail-author')
 				);
 				
 				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class='$class_tr'>
 						<td class='center'>$No</td>
-						<td id='id-user'>$column->id_user</td>
+						<td id='id-author'>$column->id_author</td>
 						<td>$column->source_name</td>
 						<td>$column->name</td>
 						<td>$column->phone</td>
 						<td>$column->email</td>
-						<td>$column->user_level</td>
-						<td class='center'>$detailLink</td>
+						<td class='center'>$editLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>
 				";

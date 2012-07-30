@@ -34,6 +34,7 @@ class Users_model extends Model {
         $this->db->from($this->table); //tabel user
 		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
 		$this->db->where_not_in('id_user', $username);
+		$this->db->where_not_in('user_level', 'administrator');
 		$this->db->order_by('date_created', 'desc');
         $this->db->limit($limit, $offset);
         return $this->db->get()->result();
@@ -99,14 +100,14 @@ class Users_model extends Model {
 	}*/
 	
 	function searchUser($limit, $offset, $key) {
-        $this->db->like('id_user', $key);
+        $this->db->like('name', $key);
 		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
         $this->db->limit($limit, $offset);
         return $this->db->get($this->table)->result();
     }
 	
 	function countSearch($key) {
-		$this->db->like('id_user', $key);
+		$this->db->like('name', $key);
 		return $this->db->get($this->table)->num_rows();
     }
 	

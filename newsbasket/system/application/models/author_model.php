@@ -42,6 +42,18 @@ class Author_model extends Model {
         return $this->db->get()->result();
     }
 	
+	function searchAuthor($limit, $offset, $key) {
+        $this->db->like('name', $key);
+		$this->db->join('source', 'source.id_source = author.id_source'); //join sama tabel source
+        $this->db->limit($limit, $offset);
+        return $this->db->get($this->table)->result();
+    }
+	
+	function countSearch($key) {
+		$this->db->like('name', $key);
+		return $this->db->get($this->table)->num_rows();
+    }
+	
 	function countAll() {
 		return $this->db->count_all($this->table);
     }

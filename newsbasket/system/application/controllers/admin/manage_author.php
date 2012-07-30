@@ -19,10 +19,11 @@ class Manage_author extends Controller {
 	}
 	
 	function load_author() {
-		$data_author['page_title']	= 'Manage Author | Admin News Basket';
-		$data_author['main_view'] 	= 'admin/manage_author_view';
-		$data_author['form_action']	= site_url('admin/manage_author/add_author');
-		$data_author['form_add_author'] = 'admin/form/add_author_form';
+		$data_author['page_title']			= 'Manage Author | Admin News Basket';
+		$data_author['main_view'] 			= 'admin/manage_author_view';
+		$data_author['form_action']			= site_url('admin/manage_author/add_author');
+		$data_author['form_add_author'] 	= 'admin/form/add_author_form';
+		$data_author['form_action_search']	= site_url('admin/manage_author/search_author');
 		
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
@@ -94,6 +95,7 @@ class Manage_author extends Controller {
 		$data_author['form_action']	 		= site_url('admin/manage_author/add_author');
 		$data_author['form_action_edit']	= site_url('admin/manage_author/edit_author_process');
 		$data_author['form_edit_author'] 	= 'admin/form/edit_author_form';
+		$data_author['form_action_search']	= site_url('admin/manage_author/search_author');
 		
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
@@ -167,6 +169,43 @@ class Manage_author extends Controller {
 			redirect('admin/manage_author');
 		}  
 	}
+	
+	function search_author($start = 0) {
+		$data_author['page_title']			= 'Search Author | Admin News Basket';
+		$data_author['main_view'] 			= 'admin/extra/search_author_view';
+		$data_author['form_action_search']	= site_url('admin/manage_author/search_author');
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_author['username'] = $username;
+		
+		// Limit & Offset
+		$uri_segment = 4;
+		$offset      = $this->uri->segment($uri_segment);
+
+		$key = $this->input->get('key');
+		$data_author['key'] = $key;
+		
+		$this->load->model('Author_model','',TRUE);
+		$data_author['result'] = $this->Author_model->searchAuthor($this->limit, $offset, $key);
+		$data_author['count']  = $this->Author_model->countSearch($key);
+		
+		// Membuat pagination			
+		$config['base_url']    = site_url('admin/manage_author/search_author');
+		$config['total_rows']  = $data_author['count'];
+		$config['per_page']    = $this->limit;
+		$config['uri_segment'] = $uri_segment;
+		$this->pagination->initialize($config);
+		$data_author['pagination']    = $this->pagination->create_links();
+
+		$data_author['first_result'] = $start + 1;
+		$data_author['last_result']  = min($start + $this->limit, $data_author['count']);
+
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_author);
+		}
+	}
+	
 	
 	// validasi dengan AJAX
 	function checkAuthornameAvailability() {

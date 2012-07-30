@@ -14,7 +14,7 @@ class Manage_user extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->load_users();
+			$this->load_users(0);
 		}
 		else {
 			redirect('login');
@@ -33,7 +33,7 @@ class Manage_user extends Controller {
 		$data_user['navigasi']['publisher'] = $publisher;	
 		
 		// Offset
-		$uri_segment 	= 4;
+		$uri_segment 	= 3;
 		$offset 		= $this->uri->segment($uri_segment);
 		
 		// Siapa yang login
@@ -50,10 +50,9 @@ class Manage_user extends Controller {
 		$config['base_url']    		= site_url('admin/manage_user/load_users');
 		$config['total_row']		= 200;
 		$config['per_page']     	= 2;
-		//$config['uri_segment']  	= $uri_segment;
+		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
 		$data_user['pagination']   	= $this->pagination->create_links();
-		
 		$this->load->view('admin/template', $data_user);
 	}
 	

@@ -18,10 +18,12 @@
 							<td class='bold'><label for='flag'>Headline</label></td>
 							<td class='label'>$column->headline</td>
 						</tr>
+						<tr><td>&nbsp;</td></tr>
 						<tr class='padding'>	
 							<td class='bold'><label for='flag'>Lead Article</label></td>
 							<td class='label'>$column->lead_article</td>
 						</tr>
+						<tr><td>&nbsp;</td></tr>
 						<tr class='padding'>	
 							<td class='bold'><label for='flag'>Body Article</label></td>
 							<td class='label'>$column->body_article</td>
