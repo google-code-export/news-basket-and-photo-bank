@@ -24,7 +24,7 @@ class Login extends Controller {
 		$this->load->helper('security');
 		if ($this->form_validation->run() == TRUE) {
 			$username = $this->input->post('username');
-			$password = ($this->input->post('password'));
+			$password = dohash($this->input->post('password'));
 			
 			$this->load->model('Users_model','',TRUE);
 			if ($this->Users_model->checkUser($username, $password) == TRUE)
