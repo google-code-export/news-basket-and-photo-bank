@@ -5,6 +5,7 @@ $(document).ready(function() {
 		$("#category").tablesorter({sortList: [[0,0]], headers: {3:{sorter: false}}});
 		$("#source").tablesorter({sortList: [[0,0]], headers: {3:{sorter: false}}});
 		$("#user").tablesorter({sortList: [[0,0]], headers: {7:{sorter: false}}});
+		$("#tag").tablesorter({sortList: [[0,0]], headers: {3:{sorter: false}}});
     } 
 );  
 
@@ -121,6 +122,7 @@ $(document).ready(function(){
 		$("#add-category").slideToggle("fast");
 		$("#add-source").slideToggle("fast");
 		$("#add-author").slideToggle("fast");
+		$("#add-tag").slideToggle("fast");
 	});
 });
 
@@ -130,6 +132,7 @@ $(document).ready(function(){
 		$("#add-category").slideToggle("fast");
 		$("#add-source").slideToggle("fast");
 		$("#add-author").slideToggle("fast");
+		$("#add-tag").slideToggle("fast");
 	});
 });
 
