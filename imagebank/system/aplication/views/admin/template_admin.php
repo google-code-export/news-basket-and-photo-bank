@@ -3,6 +3,7 @@
 
 <head>
     <title><?php echo $page_title;?></title>
+   
     <meta charset="utf-8" />
     <meta name="description" content="Manage Image Bank" />
     <meta name="author" content="BeritaSatu" />
@@ -26,7 +27,9 @@
 			</div>
 		</div>
 		<div id="main" class="main">
+			 <h2><?php echo $h2_title;?></h2>
 			<?php $this->load->view('example'); ?>
+			
 		</div>
 		<div class="footer-bar">
 			<?php $this->load->view('footer'); ?>
