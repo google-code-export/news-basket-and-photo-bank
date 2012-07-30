@@ -18,14 +18,18 @@
 		<td class="bold"><label for="author-by">Author</td>
 		<td class="label">
 			<?php
+				$authorstr = array();
 				foreach ($article['author'] as $column) {
-					$detailEditor = anchor(
+					$detailAuthor = anchor(
 						'admin/manage_user/detail_user/'.$column->id_user,
 						$column->name,
 						array('class'=>'btn-detail-user')
 					);
-					echo "$detailEditor ";
+					
+					$authorstr[] = $detailAuthor;
 				}
+				$author = implode(", ", $authorstr);
+				echo $author;
 			?>
 		</td>
 	</tr>
@@ -33,14 +37,17 @@
 		<td class="bold">Editor</td>
 		<td class="label">
 			<?php
+				$editorstr = array();
 				foreach ($article['editor'] as $column) {
 					$detailEditor = anchor(
 						'admin/manage_user/detail_user/'.$column->id_user,
 						$column->name,
 						array('class'=>'btn-detail-user')
 					);
-					echo "$detailEditor ";
+					$editorstr[] = $detailEditor;
 				}
+				$editor = implode(", ", $editorstr);
+				echo $editor;
 			?>
 		</td>
 	</tr>	
@@ -71,7 +78,7 @@
 		<td class="bold">Body Article</td>
 		<td class="label">
 			<?php 
-			echo word_limiter($article['body_article'], 25);
+			echo word_limiter($article['body_article'], 35);
 			?>
 		</td>
 	</tr>	
@@ -83,7 +90,16 @@
 	</tr>	
 	<tr>
 		<td class="bold">Tag</td>
-		<td class="label"></td>
+		<td class="label">
+			<?php
+				$tagstr = array();
+				foreach ($article['tag'] as $column) {
+					$tagstr[] = $column->id_tag;
+				}
+				$tag = implode(", ", $tagstr);
+				echo $tag;
+			?>
+		</td>
 	</tr>	
 	<tr><td class="bold">&nbsp;</td></tr>
 	

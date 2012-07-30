@@ -56,8 +56,8 @@
 </div>
 <div id="author-table" class="table-menu">
 	<div class="search">
-		<form id="search-by" name="search_by" action="" method="post">
-			<input type="text" name="search_key" id="search-key" value="" required="required" />
+		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
+			Search by name : <input type="text" name="key" id="key" value="" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>
 	</div>
@@ -91,10 +91,10 @@
 	<table id="author" class="tablesorter">
 		<thead> 
 		<tr>
-			<th>No</th>
+			<th class="center">No</th>
 			<th>ID Author</th>
 			<th>Publisher</th>
-			<th>Name</th>
+			<th>Full Name</th>
 			<th>Phone</th>
 			<th>Email</th>
 			<th class="center" colspan="2">Action</th>

@@ -1,12 +1,14 @@
+<br />
+<br />
 <div class="dashboard">
-	<h3 class="menu">Dashboard</h3>
+	<a class="menu" href="<?php echo site_url('admin/dashboard');?>">Dashboard</a>
 	<ul>
 		<li><a href="<?php echo site_url('admin/dashboard');?>">Home</a></li>
 		<li><a href="<?php echo site_url('login/logoutProcess');?>">Logout</a></li>
 	</ul>
 </div>
 <div class="user-menu">
-	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manage_article');?>'">Articles</h3>
+	<a class="menu" href="<?php echo site_url('admin/manage_article');?>">Articles</a>
 	<ul>
 		<!--<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Row Article</a></li>
 		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Edited</a></li>
@@ -14,11 +16,11 @@
 		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Deleted</a></li>-->
 	</ul>
 	
-	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manage_author');?>'">Authors</h3>
+	<a class="menu" href="<?php echo site_url('admin/manage_author');?>">Authors</a>
 	<ul>
 	</ul>
 	
-	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manage_category');?>'">Categories</h3>
+	<a class="menu" href="<?php echo site_url('admin/manage_category');?>">Categories</a>
 	<ul>
 		<?php
 		//foreach($navigasi['category'] as $column) {
@@ -30,7 +32,7 @@
 		?>
 	</ul>
 	
-	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manage_user');?>'">Users</h3>
+	<a class="menu" href="<?php echo site_url('admin/manage_user');?>">Users</a>
 	<ul>
 		<!--<li class="none">By Publisher</li>-->
 		<?php
@@ -49,7 +51,7 @@
 		<li class="parent"><a href="<?php //echo site_url('admin/manage_user/loadUsers/administrator');?>">Administrator</a></li>-->
 	</ul>
 	
-	<h3 class="menu" onclick="location.href='<?php echo site_url('admin/manage_source');?>'">Sources</h3>
+	<a class="menu" href="<?php echo site_url('admin/manage_source');?>">Sources</a>
 	<ul>
 		<!--<li class="none">By Publisher</li>
 		<?php
@@ -64,5 +66,6 @@
 		<li class="parent"><a href="<?php //echo site_url('admin/manage_source/loadSources/wires');?>">Wires</a></li>
 		<li class="parent"><a href="<?php //echo site_url('admin/manage_source/loadSources/publisher');?>">Publisher</a></li>-->
 	</ul>
+	<a class="menu" href="<?php echo site_url('admin/manage_tag');?>">Tag</a>
 	
 </div>

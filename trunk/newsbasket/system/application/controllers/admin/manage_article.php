@@ -82,6 +82,9 @@ class Manage_article extends Controller {
 		$data_article['article']['slug']			= $article->slug;
 		$data_article['article']['article_flag']	= $article->article_flag;
 		
+		// ambil tag artikel
+		$data_article['article']['tag'] = $this->Article_model->getTagArticle($id_article);
+		
 		// ambil versi artikel
 		$data_article['article']['list_version'] = $this->Article_model->getArticleVersion($id_article);
 		
@@ -153,6 +156,14 @@ class Manage_article extends Controller {
 		$data_article['article']['id_category'] 	= $article->id_category;
 		$data_article['article']['article_flag'] 	= $article->article_flag;
 		
+		// ambil tag artikel
+		$tag_article = $this->Article_model->getTagArticle($id_article);
+		$tagstr = array();
+		foreach ($tag_article as $column) {
+			$tagstr[] = $column->id_tag;
+		}
+		$data_article['article']['tag'] = implode(", ", $tagstr);
+		
 		// ambil versi artikel
 		$data_article['article']['list_version'] = $this->Article_model->getArticleVersion($id_article);
 		
@@ -166,7 +177,7 @@ class Manage_article extends Controller {
 	}
 	
 	function edit_article_process() {
-		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
+		if ((($this->session->userdata('user_level') == 'editor') || ($this->session->userdata('user_level') == 'administrator')) && $this->session->userdata('login') == TRUE) {
 		
 			// Prepare data untuk disimpan di tabel article
 			$article  = array(
@@ -201,18 +212,30 @@ class Manage_article extends Controller {
 			// Prepare data sekaligus proses simpan ke tabel tag
 			$this->load->model('Tag_model','',TRUE);
 			for ($i=0; $i<sizeof($tag_pieces); $i++) {
-				if ($this->Tag_model->checkTag($tag_pieces[$i]) == FALSE) { // jika tag belum ada maka di tambahkan
-					$tag   = array('id_tag' => $tag_pieces[$i]);
+				if ($this->Tag_model->checkTag($tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ') { // jika tag belum ada maka di tambahkan
+					$tag   = array('id_tag' => $tag_pieces[$i], 'tag_name' => $tag_pieces[$i]);
 					$this->Tag_model->addTag($tag);
 				}
 			}
 			
 			// Prepare data sekaligus proses simpan ke tabel tag_article
 			for ($i=0; $i<sizeof($tag_pieces); $i++) {
-				if ($this->Tag_model->checkTagArticle($id_article, $tag_pieces[$i]) == FALSE) { // jika tag belum ada maka di tambahkan
+				if ($this->Tag_model->checkTagArticle($id_article, $tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ') { // jika tag belum ada maka di tambahkan
 					$tag_article = array('id_article'=> $id_article, 'id_tag' => $tag_pieces[$i]);
 					$this->Tag_model->addTagArticle($tag_article);
 				}
+			}
+			
+			// update tabel user article untuk log activity
+			$id_user  = $this->session->userdata('username'); // username dari saat login
+			if ($this->session->userdata('user_level') == 'administrator') {
+				$activity_log = array(
+					'id_article'	=> $id_article,
+					'id_user'   	=> $this->session->userdata('username'), //siapa yang login saat itu
+					'flag'  		=> $this->input->post('article-flag'),
+					'process_date' 	=> date('Y-m-d G:i:s')
+				);
+				$this->Article_model->AddUserArticle($activity_log);
 			}
 			
 			$message = 'Article '.$id_article.' has been updated!'; 

@@ -62,7 +62,6 @@ class Manage_category extends Controller {
 			$this->session->set_flashdata('message_success', 'Add new category successfull!');
 			redirect('admin/manage_category');
 		}
-		
 		else {
 			$this->session->set_flashdata('message_failed', 'Add new category failed!');
 			redirect('admin/manage_category');

@@ -34,9 +34,9 @@
 </div>
 <?php
 	$message_success = $this->session->flashdata('message_success');
-	echo !empty($message_success) ? "<p class='success'>" . $message_success . "</p>": "";
+	echo !empty($message_success) ? "<p class='success'>" . $message_success . "</p>" : "";
 	$message_failed = $this->session->flashdata('message_failed');
-	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
+	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>" : "";
 ?>
 		
 <div>
@@ -44,7 +44,7 @@
 	<table id="category" class="tablesorter">
 		<thead> 
 		<tr>
-			<th>No</th>
+			<th class="center">No</th>
 			<th>ID Category</th>
 			<th>Category Name</th>
 			<th class="center" colspan="2">Action</th>

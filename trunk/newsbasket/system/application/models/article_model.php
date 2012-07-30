@@ -43,18 +43,25 @@ class Article_model extends Model {
 	function getArticleByID($id_article) {
         $this->db->where('article.id_article', $id_article);
 		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
-		$this->db->join('category', 'category.id_category = article.id_category'); //join sama tabel source
+		$this->db->join('category', 'category.id_category = article.id_category'); //join sama tabel category
 		return $this->db->get($this->table);
     }
 	
 	function getUserArticleByIDArticle($id_article, $flag) {
-        $this->db->distinct('id_user');
-		$this->db->where('id_article', $id_article);
+        $this->db->where('id_article', $id_article);
 		$this->db->where('users_article.flag', $flag);
 		$this->db->from('users_article');
 		$this->db->join('users', 'users_article.id_user = users.id_user'); //join sama tabel user_article
+		$this->db->group_by('users.id_user');
 		return $this->db->get()->result();
     }
+	
+	function getTagArticle($id_article) {
+		$this->db->where('id_article', $id_article);
+		$this->db->where_not_in('id_tag', ' ');
+		$this->db->from('tag_article');
+		return $this->db->get()->result();
+	}
 	
 	function getArticleVersion($id_article) {
         $this->db->where('article.id_article', $id_article);
@@ -89,6 +96,10 @@ class Article_model extends Model {
         $this->db->where('id_article', $id_article);
         $this->db->update($this->table, $new_article);
     }
+	
+	function AddUserArticle($new_users_article) {
+		$this->db->insert('users_article', $new_users_article);
+	}
     
     function deleteArticle($id_article) {
 		$this->db->where('id_article', $id_article);

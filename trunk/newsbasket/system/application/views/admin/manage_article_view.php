@@ -25,7 +25,7 @@
 	<table id="article" class="tablesorter">
 		<thead> 
 		<tr>
-			<th>No</th>
+			<th class="center">No</th>
 			<th>Title</th>
 			<th>Article Source</th>
 			<th>Author</th>
