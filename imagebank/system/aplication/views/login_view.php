@@ -1,13 +1,13 @@
 <div class="main content clearfix">
-	<img src="<?php echo base_url().'images/comingsoon.png';?>" width="200" style="float: right; position: absolute; z-index: 1; top: 60px; right:60px;">
+	
 	<div class="signin-box">
-		<h2>News Basket Login<strong></strong></h2>
+		<h2>Imagebank<strong></strong></h2>
 		<form id="newsbasket-login" name="newsbasket_login" action="<?php echo $form_action; ?>" method="post">
 		<div class="username">
 			<label for="username"><strong class="username-label">Username</strong></label>
 			<input type="text" name="username" id="username" value="" required="required" autofocus="autofocus">
 		</div>
-		<div class="password-div">
+		<div class="password">
 			<label for="password"><strong class="password-label">Password</strong></label>
 			<input type="password" name="password" id="password" required="required">
 		</div>
