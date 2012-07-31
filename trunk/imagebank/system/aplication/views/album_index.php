@@ -9,9 +9,8 @@
   <tr>
     <td width="317">Name</td>
     <td width="129">Photos</td>
-    <td width="129"><form id="Create New Album" name="Create New Album" method="post" action="<?php echo site_url('album/create');?>">
-      <input type="submit" name="new album" id="new album" value="Create New Album" />
-    </form></td>
+    <td width="129"><a class="btn btn-primary" href="<?php echo site_url('album/create');?>">Create New Album </a>
+     </td>
   </tr>
   <tr>
     <td>&nbsp;</td>

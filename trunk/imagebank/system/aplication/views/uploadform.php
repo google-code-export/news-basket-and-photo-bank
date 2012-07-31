@@ -3,7 +3,7 @@
 
 <?php  echo form_open_multipart('user/picupload');?>
 <?=form_hidden('project_id',"1"); ?>
-<fieldset>
+<div class="well"><fieldset>
 	
 	<p> Title:<br /><input type="text" name="title" /></p>
 	<p>Description <br /><textarea name="caption" rows="3" cols="20"></textarea></p>
@@ -29,7 +29,8 @@
 	}	
 	 ?>
 	
-	<p><input type="submit" value="upload" /></p>
+	<button id ="submit" class="btn btn-primary"value="upload" type="submit" name="upload">upload</button> 
 </fieldset>
 </form>
+</div>
 

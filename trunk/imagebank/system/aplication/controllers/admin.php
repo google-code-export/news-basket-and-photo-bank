@@ -14,7 +14,7 @@ class Admin extends Controller {
     }
  
     
-    
+    //set userdata
         function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->loadArticle();
@@ -26,28 +26,29 @@ class Admin extends Controller {
     
 
 	
+	//fungsi grocery CRUD untuk manage USer
 	
     public function manageUser()
     {
     	
 		
 		$username = $this->session->userdata('username');		
-    	$crud = new grocery_CRUD();
-        $crud->set_table('users');
+    	$crud = new grocery_CRUD();  //bikin obyek baru dinamakan Crud
+        $crud->set_table('users');	//set table yang akan diproses
 		//$crud->where('id_user',$username);
-		$crud->set_theme('flexigrid');
-		$crud->columns('id_user','name','email','id_source','user_level','phone');
-		$crud->display_as('id_source','source name');
-		$crud->required_fields('id_user','name','email');
-		$crud->fields('id_user','password','name','email','user_level','phone','id_source');
+		$crud->set_theme('flexigrid');//tema defauult 
+		$crud->columns('id_user','name','email','id_source','user_level','phone');//colom yang akan ditampilkan dalam melihat pengaturan
+		$crud->display_as('id_source','source name');// tampilkan sebagai
+		$crud->required_fields('id_user','name','email');// field yang harus diisi
+		$crud->fields('id_user','password','name','email','user_level','phone','id_source');// field yang nanti akan diedit dan ditambahkan
 		$crud->display_as('id_group');
-		$crud->change_field_type('password', 'password');
-		$crud->callback_before_insert(array($this,'encrypt_pw'));
-		$crud->set_relation('id_source','source','source_name' );
+		$crud->change_field_type('password', 'password');// set field untuk password
+		$crud->callback_before_insert(array($this,'encrypt_pw'));// fungsi password yang nanti diproses pada fungsi enkripsi
+		$crud->set_relation('id_source','source','source_name' );// relasi dua table
 		
 
-        $output = $crud->render();
-		$output = (array)$output;
+        $output = $crud->render();// proses render dari crud
+		$output = (array)$output;   // buat output sebagai array supaya bisa diproses
 		 $output['page_title']		= 'Manage Users| Administrator Image Bank ';
 		$output['username']  = $username;
 		$output['h2_title'] = 'Admin > Manage User';
@@ -56,6 +57,7 @@ class Admin extends Controller {
 	  
 	      
     }
+//fungsi buat enkrip password dengan algoritma SHA 1
 	  function encrypt_pw($post_array) {
                                 if(!empty($post_array['password'])) {
                                                 $post_array['password'] = SHA1($_POST['password']);
@@ -93,7 +95,7 @@ class Admin extends Controller {
 		$output['h2_title'] = 'Admin > Manage Source';
 		 $this->load->view('admin/template_admin.php',$output);
 		 }
- 
+ //fungsi untuk membaca layout css file dan js file nanti di view
    protected function get_layout()
 {
   $js_files = $this->get_js_files();
