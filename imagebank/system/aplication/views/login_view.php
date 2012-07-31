@@ -33,8 +33,8 @@ a:hover
    text-decoration: underline;
 }
 </style>
-<script type="text/javascript" src="library/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="library/wb.conveyerbelt.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/wb.conveyerbelt.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function()
 {
