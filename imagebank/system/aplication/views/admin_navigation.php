@@ -2,10 +2,10 @@
 	<h3 class="menu">Image Gallery</h3>
 	<ul>
 		<li><a href="<?php echo site_url('gallery');?>">All</a></li>
-		<li><a href="http://csandre.wordpress.com/category/belajar/">Wires</a></li>
+		<li><a href="<?php echo site_url('gallery/tampil_wire'); ?>">Wires</a></li>
 		<!--<li class="children"><a href="http://csandre.wordpress.com/category/belajar/">AFP</a></li>
 		<li class="children"><a href="http://csandre.wordpress.com/category/belajar/">ANTARA</a></li>-->
-		<li><a href="http://csandre.wordpress.com/category/belajar/">Publisher</a></li>
+		<li><a href="<?php echo site_url('gallery/tampil_publisher'); ?>">Publisher</a></li>
 		<!--<li class="children"><a href="http://csandre.wordpress.com/category/belajar/">beritasatu.com</a></li>-->
 	</ul>
 </div>

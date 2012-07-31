@@ -10,7 +10,25 @@ class Gallery_model extends Model {
 		$this->db->from('images');
 		return $this->db->get()->result();		
 	}
-	
+	function tampil_wire(){
+		$this->db->select('*');
+		$this->db->from('images');
+		$this->db->join('album','images.id_album=album.id_album');
+		$this->db->join('users','album.id_user=users.id_user');
+		$this->db->join('source','users.id_source=source.id_source');
+		$this->db->where('source.source_type','wires');
+		return $this->db->get()->result();
+		
+	}
+	function tampil_publisher(){
+		$this->db->select('*');
+		$this->db->from('images');
+		$this->db->join('album','images.id_album=album.id_album');
+		$this->db->join('users','album.id_user=users.id_user');
+		$this->db->join('source','users.id_source=source.id_source');
+		$this->db->where('source.source_type','publisher');
+		return $this->db->get()->result();;
+	}
 	function detail_foto($id){
 		$this->db->select('*');
 		$this->db->from('images');
