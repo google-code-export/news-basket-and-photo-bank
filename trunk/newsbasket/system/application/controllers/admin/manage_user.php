@@ -53,6 +53,7 @@ class Manage_user extends Controller {
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
 		$data_user['pagination']   	= $this->pagination->create_links();
+		
 		$this->load->view('admin/template', $data_user);
 	}
 	
