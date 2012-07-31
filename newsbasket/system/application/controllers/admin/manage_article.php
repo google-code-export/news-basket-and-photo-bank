@@ -3,7 +3,7 @@
 class Manage_article extends Controller {
 	
 	//limitasi tabel
-	var $limit = 10;
+	var $limit = 15;
 	
 	function Manage_article() {
 		parent::Controller();	
@@ -249,6 +249,17 @@ class Manage_article extends Controller {
 		}
 	}
 	
+	/*
+	function delete_article($id_article) {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->model('Article_model','',TRUE);
+			$this->Article_model->deleteArticle($id_article);
+			$this->session->set_flashdata('message_success', 'Delete article successfull!');
+
+			redirect('admin/manage_article');
+		}  
+	}*/
+	
 	function search_article($start = 0) {
 		$data_article['page_title']			= 'Search Article | Admin News Basket';
 		$data_article['main_view'] 			= 'admin/extra/search_article_view';
@@ -285,16 +296,67 @@ class Manage_article extends Controller {
 		}
 	}
 	
-	/*
-	function delete_article($id_article) {
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->load->model('Article_model','',TRUE);
-			$this->Article_model->deleteArticle($id_article);
-			$this->session->set_flashdata('message_success', 'Delete article successfull!');
-
-			redirect('admin/manage_article');
-		}  
-	}*/
+	function retrieve_email() {
+		/*$config['type'] = 'imap';
+		$config['host'] = 'mail.google.com';
+		$config['username'] = 'andrefadila@gmail.com';
+		$config['password'] = 'p72412714';
+		$config['port'] = 993;
+		//$config['secure'] = TRUE;
+		$config['timeout'] = 15;
+		$this->load->library('mailbox', $config);
+		
+		//$mailbox  = new Mailbox('imap', 'imap.gmail.com', 'andrefadila@gmail.com', 'p72412714', 993);
+		$messages = $this->mailbox->listMessages(5);
+		*/
+		
+		$this->load->helper('imapmailbox');
+		
+		define('GMAIL_EMAIL', 'andrefadila@gmail.com');
+		define('GMAIL_PASSWORD', 'p72412714');
+		
+		$mailbox = new ImapMailbox('{imap.gmail.com:993/imap/novalidate-cert/ssl}imap', GMAIL_EMAIL, GMAIL_PASSWORD,'','utf-8');
+		$mails = array();
+		foreach($mailbox->searchMails('UNSEEN') as $mailId) { // mencari email yang belum terbaca
+			$mail = $mailbox->getMail($mailId, 1);
+			$mails[] = $mail; // simpan semuanya kedalam array
+		}
+		
+		// load model author dan article
+		$this->load->model('Author_model','',TRUE);
+		$this->load->model('Article_model','',TRUE);
+		
+		// proses loop simpan ke database
+		foreach($mails as $key => $value) {
+			$new_author = array(
+				'id_author' => $value->fromAddress,
+				'id_source'	=> 1,
+				'name' 		=> $value->fromName,
+				'email' 	=> $value->fromAddress
+			);
+			
+			if ($this->Author_model->checkAuthorAvailability($new_author['id_author']) == FALSE) { // jika author belum ada maka di tambahkan
+				$this->Author_model->addAuthor($new_author);
+			}
+			
+			$new_article = array(
+				'id_source'		=> 1,
+				'id_category'	=> 'tes',
+				'author'		=> $value->fromName,
+				'created_on'	=> $value->date,
+				'headline'		=> $value->subject,
+				'body_article'	=> strip_tags($value->textHtml),
+				'article_flag'	=> 'row_article',
+				'locked'		=> 'no'
+			);
+			
+			$this->Article_model->addArticle($new_article);
+		}
+		
+		$data['mails'] = $mails;
+		
+		$this->load->view('test', $data);
+	}
 }
 
 /* End of file manage_article.php */
