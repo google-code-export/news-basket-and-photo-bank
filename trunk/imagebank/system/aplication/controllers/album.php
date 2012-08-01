@@ -55,7 +55,7 @@ class Album extends Controller{
 			$this->load->model('album_model','',TRUE);
 			$this->album_model->create();
 		
-		$this->session->set_flashdata('message', 'Satu album baru berhasil disimpan!');
+		$this->session->set_flashdata('message', 'Succesfully Created Album!');
 		redirect('album/index');
 		}else{
 			$this->session->set_flashdata('message', 'album name cannot empty');
