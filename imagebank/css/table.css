@@ -5,6 +5,7 @@ table {
 	border-radius: 6px;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
+	font-family: "Lucida Grande","Lucida Sans Unicode",,Arial,sans-serif;
 }
 
 td,th {
@@ -12,6 +13,11 @@ td,th {
 	padding: 5px;
 	color: #333;
 	
+}
+
+.meta {
+	
+	font-weight: bold;
 }
 thead {
 font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
