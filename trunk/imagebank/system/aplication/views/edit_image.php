@@ -4,7 +4,7 @@
 				
 
 		
-	
+	<div class="well">
 		<?php  echo form_open('gallery/updateImage/'.$images->id_images);?>
 		<h2>Edit Title And Caption</h2>
 		<fieldset>	
@@ -16,6 +16,6 @@
 		<p><button id="submit" class="btn btn-primary" value="submit" type="submit" name="submit">save</button></p>
 	
 	</fieldset>
-	
+	</div>
 
 
