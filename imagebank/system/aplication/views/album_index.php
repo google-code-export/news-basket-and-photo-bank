@@ -3,7 +3,7 @@
 <h2>My Galleries</h2>
 	
 	
-	<?php echo ! empty($flashmessage) ? '<p class="success">' . $flashmessage . '</p>': '';?>
+	<?php echo ! empty($flashmessage) ? '<p class="alert alert-success">' . $flashmessage . '</p>': '';?>
 	
 <table width="597" border="1">
   <tr>
