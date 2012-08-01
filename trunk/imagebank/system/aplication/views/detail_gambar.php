@@ -73,7 +73,7 @@
 			foreach ($images as $row) {
 				$image = base_url()."images/galeri/".$row->image_name;
 				
-				echo " <a href='$image' ><img src='$image' width='700px'   title=$row->thumbnail></a>";		
+				echo " <a href='$image' ><img src='$image' width='640px'    title=$row->thumbnail></a>";		
 
 			} 
 		 ?>
@@ -93,35 +93,35 @@
             <table width="100%" border="1" align="center" cellpadding="0" cellspacing="1" class="maintable ">
             <tr><td class="tableb tableb_alternate"><table width="100%" border="1" align="center" cellpadding="0" cellspacing="1" class="maintable ">
               <tr>
-                <td class="tableb tableb_alternate" valign="top">Title:</td>
+                <td class="meta" valign="top">Title:</td>
                 <td class="tableb tableb_alternate"><?php echo "$row->title";?></td>
               </tr>
               <tr>
-                <td class="tableb tableb_alternate" valign="top">Caption:</td>
+                <td class="meta" valign="top">Caption:</td>
                 <td class="tableb tableb_alternate"><?php echo "$row->caption";?></td>
               </tr>
               <tr>
-                <td width="34%" valign="top" class="tableb tableb_alternate">Filename:</td>
-                <td width="66%" class="tableb tableb_alternate"><?php echo "$row->image_name";?></td>
+                <td  valign="top" class="meta">Filename:</td>
+                <td  class="tableb tableb_alternate"><?php echo "$row->image_name";?></td>
               </tr>
               <tr>
-                <td class="tableb tableb_alternate" valign="top">Keywords:</td>
+                <td class="meta" valign="top">Keywords:</td>
                 <td class="tableb tableb_alternate">&nbsp;</td>
               </tr>
               <tr>
-                <td class="tableb tableb_alternate" valign="top">Filesize:</td>
+                <td class="meta" valign="top">Filesize:</td>
                 <td class="tableb tableb_alternate"><?php echo "$row->filesize";?> kb</td>
               </tr>
               <tr>
-                <td class="tableb tableb_alternate" valign="top">Date added:</td>
+                <td class="meta" valign="top">Date added:</td>
                 <td class="tableb tableb_alternate"><?php echo "$row->update_at"; ?></td>
               </tr>
               <tr>
-                <td class="tableb tableb_alternate" valign="top">Dimensions:</td>
+                <td class="meta" valign="top">Dimensions:</td>
                 <td class="tableb tableb_alternate"><?php echo"$row->image_height";?>x<?php echo "$row->image_width";?> pixel</td>
               </tr>
               <tr>
-                <td class="tableb tableb_alternate" valign="top">location</td>
+                <td class="meta" valign="top">location</td>
                 <td class="tableb tableb_alternate"><?php echo "$row->path";?></td>
               </tr>
             </table></td></tr></table>
