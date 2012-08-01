@@ -60,6 +60,24 @@
 				}
 			}
 		}
+		$id = $this->db->insert_id();
+		$tag_pieces = explode(", " ,$this->input->post('tag'));
+		
+			$this->load->model('Tag_model','',TRUE);
+			for ($i=0;$i<sizeof($tag_pieces);$i++){
+				if($this->Tag_model->checkTag($tag_pieces[$i] )==FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' '){
+				$tag = array('id_tag'=>$tag_pieces[$i]);
+				$this->Tag_model->addTag($tag);		
+					
+				}
+			 		}
+		
+			for ($i=0;$i<sizeof($tag_pieces);$i++){
+				if($this->Tag_model->checkImageTag($id,$tag_pieces[$i] )==FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' '){
+			 $tag_Image = array('id_image'=>$id,'id_tag'=>$tag_pieces[$i]);
+			$this->Tag_model->addTagImage($tag_Image);	
+				}
+			}
 		
 		foreach($_POST['kat'] as $k){
 			$data = array('id_images' => $id_gambar, 'id_category'=> $k);
