@@ -84,8 +84,9 @@
 			$this->db->insert('imagescategory', $data);
 		}
 
-		$data['succes'] ='Thank you,FIle Uploaded';
-		$this->load->view('upload_succes', $data);
+		$this->session->set_flashdata('message', 'Succesfully Uploaded Photo to Your Album!');
+		redirect('gallery');
+
 		
 	}
 	
