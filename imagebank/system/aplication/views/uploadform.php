@@ -28,6 +28,8 @@
 	
 	}	
 	 ?>
+	 
+	 <p>Tag : <br/><input type="text" name="tag" /></p>
 	
 	<button id ="submit" class="btn btn-primary"value="upload" type="submit" name="upload">upload</button> 
 </fieldset>
