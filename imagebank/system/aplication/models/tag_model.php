@@ -14,4 +14,12 @@
 		$this->db->insert('imagetag', $new_tag_image);
 	}
   }
+  
+  function editTag($new_tag){
+  	$this->db->update('tag', $new_tag);
+  }
+  
+  function editTagImage($new_tag_image){
+  	$this->db->update('imagetag',$new_tag_image);
+  }
 ?>
