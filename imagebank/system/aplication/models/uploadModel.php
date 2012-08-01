@@ -108,6 +108,12 @@
 
 	
 	}
+	function getId(){
+  	$this->db->select('id_images');
+	$this->db->from('images');
+	$this->db->where('timestamp',time());
+	return $this->db->get()->row()->id_images;
+  }
 	
 	function getAlbumByIdUser($id_user){
 		
