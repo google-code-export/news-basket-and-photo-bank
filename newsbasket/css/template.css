@@ -25,9 +25,6 @@ ul, ol {
     padding: 0px;
 }
 
-li {
-    margin: 5px 5px 0.5em;
-}
 
 h1, h2, h3, h4, h5, h6 {
     color: rgb(34, 34, 34);
@@ -127,8 +124,7 @@ div#login_logout {
 	list-style: none outside none;
 	list-style-position: outside;
 	cursor: pointer;
-	text-decoration: none;
-	padding: 1px 3px;
+	text-decoration: none;	
 }
 
 .navigation a {
@@ -139,33 +135,11 @@ div#login_logout {
 	height: 100%;
 }
 
-.navigation a:hover {
-	color: white;
-}
-
-.navigation a:active {
-	color: white;
-	background: none repeat scroll 0% 0% #98bf21;
-}
-
-.navigation li:hover {
-	background: none repeat scroll 0% 0% rgb(175, 0, 0);
-}
-
-
-.navigation li.none {
-	cursor: auto;
-}
-
-.navigation li.none:hover {
-	background: none;
-}
-
 .navigation .children {
 	padding-left: 1.5em;
 }
 
-.navigation .menu {
+.navigation .menu a{
 	color: white;
 	width: 155px;
 	font-size: 14px;
@@ -176,12 +150,28 @@ div#login_logout {
 	cursor: pointer;
 }
 
-.navigation .menu:hover {
+.navigation .menu a:hover {
 	background: none repeat scroll 0% 0% #98bf21;
 }
 
-.navigation .menu:active {
+.navigation .menu a.active {
 	background: none repeat scroll 0% 0% #98bf21;
+}
+
+.navigation .child a{
+	background: none repeat scroll 0% 0%;
+	font-size: 12px;
+	margin-right: 10px;
+	color: black;
+	font-weight: normal;
+}
+
+.navigation .child a:hover{
+	background: none repeat scroll 0% 0% #98bf21;
+	font-size: 12px;
+	margin-right: 10px;
+	color: black;
+	font-weight: normal;
 }
 
 /*------------------------ footer --------------------------------*/

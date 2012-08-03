@@ -112,6 +112,14 @@ td.bold{
 	width: 100px;
 	font-weight: bold;
 }
+
+/*---------------- button -----------------*/
+.btn-add {
+	float: right;
+	height: 30px;
+	margin-top: -2px;
+}
+
 /*---------------- search -----------------*/
 .result {
 	background: none repeat scroll 0% 0% rgb(240, 255, 200);
@@ -189,7 +197,6 @@ span.right {
 
 /*.tablesorter tr.odd td 
 {
-	color:#000000;
 	background-color:#EAF2D3;
 }*/
 
