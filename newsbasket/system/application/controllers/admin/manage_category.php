@@ -3,7 +3,7 @@
 class Manage_category extends Controller {
 	
 	//limitasi tabel
-	var $limit = 10;
+	var $limit = 13;
 	
 	function Manage_category() {
 		parent::Controller();	
@@ -26,6 +26,7 @@ class Manage_category extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_category['username'] = $username;
+		$data_category['active']   = 'category';
 		
 		// Offset
 		$uri_segment 	= 4;
@@ -40,7 +41,7 @@ class Manage_category extends Controller {
 		
 		// Membuat pagination			
 		$config['base_url']    		= site_url('admin/manage_category/load_categories');
-		$config['total_row']		= $num_rows;
+		$config['total_rows']		= $num_rows;
 		$config['per_page']     	= $this->limit;
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
@@ -78,6 +79,7 @@ class Manage_category extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_category['username'] = $username;
+		$data_category['active']   = 'category';
 		
 		// Offset
 		$uri_segment 	= 4;

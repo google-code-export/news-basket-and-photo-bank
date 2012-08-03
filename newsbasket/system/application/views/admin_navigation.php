@@ -1,71 +1,55 @@
 <br />
 <br />
+<?php
+	switch($active) {
+		case 'dashboard':
+			$dashboard = 'active';
+			$article = $author  = $category = $user = $source = $tag = '';
+			break;
+		case 'article':
+			$article = 'active';
+			$dashboard = $author  = $category = $user = $source = $tag = '';
+			break;
+		case 'author':
+			$author  = 'active';
+			$dashboard = $article = $category = $user = $source = $tag = '';
+			break;
+		case 'category':
+			$category = 'active';
+			$dashboard = $author = $article = $user = $source = $tag = '';
+			break;
+		case 'user':
+			$user = 'active';
+			$dashboard = $author = $category = $article = $source = $tag = '';
+			break;
+		case 'source':
+			$source = 'active';
+			$dashboard = $author = $category = $user = $article = $tag = '';
+			break;
+		case 'tag':
+			$tag = 'active';
+			$dashboard = $author = $category = $user = $source = $article = '';
+			break;
+	}
+?>
+		
 <div class="dashboard">
-	<a class="menu" href="<?php echo site_url('admin/dashboard');?>">Dashboard</a>
-	<ul>
-		<li><a href="<?php echo site_url('admin/dashboard');?>">Home</a></li>
-		<li><a href="<?php echo site_url('login/logoutProcess');?>">Logout</a></li>
+	<ul class="menu">
+		<li id="dashboard"><?php echo anchor('admin/dashboard', 'Dashboard', array('class'=>$dashboard));?></li>
+		<ul>
+			<li class="child"><a href="<?php echo site_url('admin/manage_user/detail_user').'/'.$username;?>">My Profile</a></li>
+			<li class="child"><a href="<?php echo site_url('login/logoutProcess');?>">Logout</a></li>
+		</ul>
 	</ul>
 </div>
+<br />
 <div class="user-menu">
-	<a class="menu" href="<?php echo site_url('admin/manage_article');?>">Articles</a>
-	<ul>
-		<!--<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Row Article</a></li>
-		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Edited</a></li>
-		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Published</a></li>
-		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Deleted</a></li>-->
+	<ul class="menu">
+		<li id="menu-article"><?php echo anchor('admin/manage_article', 'Article', array('class'=>$article));?></li>
+		<li id="menu-author"><?php echo anchor('admin/manage_author', 'Author', array('class'=>$author));?></li>
+		<li id="menu-category"><?php echo anchor('admin/manage_category', 'Category', array('class'=>$category));?></li>
+		<li id="menu-user"><?php echo anchor('admin/manage_user', 'User', array('class'=>$user));?></li>
+		<li id="menu-source"><?php echo anchor('admin/manage_source', 'Source', array('class'=>$source));?></li>
+		<li id="menu-tag"><?php echo anchor('admin/manage_tag', 'Tag', array('class'=>$tag));?></li>
 	</ul>
-	
-	<a class="menu" href="<?php echo site_url('admin/manage_author');?>">Authors</a>
-	<ul>
-	</ul>
-	
-	<a class="menu" href="<?php echo site_url('admin/manage_category');?>">Categories</a>
-	<ul>
-		<?php
-		//foreach($navigasi['category'] as $column) {
-			//$link = site_url('admin/manage_user/loadUsers').'/'.$column->id_category;
-			//echo "
-				//<li class='parent'><a href='$link'>$column->category_name</a></li>
-			//";
-		//}
-		?>
-	</ul>
-	
-	<a class="menu" href="<?php echo site_url('admin/manage_user');?>">Users</a>
-	<ul>
-		<!--<li class="none">By Publisher</li>-->
-		<?php
-		//foreach($navigasi['publisher'] as $column) {
-		//	$link = site_url('admin/manage_user/loadUsers').'/'.$column->id_source;
-		//	echo "
-		//		<li class='children'><a href='$link'>$column->source_name</a></li>
-		//	";
-		//}
-		?>
-		<!--<li class="none">By Level</li>
-		<li class="parent"><a href="<?php //echo site_url('admin/manage_user/loadUsers/viewer');?>">Viewer</a></li>
-		<li class="parent"><a href="<?php //echo site_url('admin/manage_user/loadUsers/reporter');?>">Reporter</a></li>
-		<li class="parent"><a href="<?php //echo site_url('admin/manage_user/loadUsers/editor');?>">Editor</a></li>
-		<li class="parent"><a href="<?php //echo site_url('admin/manage_user/loadUsers/publisher');?>">Publisher</a></li>
-		<li class="parent"><a href="<?php //echo site_url('admin/manage_user/loadUsers/administrator');?>">Administrator</a></li>-->
-	</ul>
-	
-	<a class="menu" href="<?php echo site_url('admin/manage_source');?>">Sources</a>
-	<ul>
-		<!--<li class="none">By Publisher</li>
-		<?php
-		//foreach($navigasi['publisher'] as $column) {
-		//	$link = site_url('admin/manage_user/loadUsers').'/'.$column->id_source;
-		//	echo "
-		//		<li class='children'><a href='$link'>$column->source_name</a></li>
-		//	";
-		//}
-		?>
-		<li class="none">By Level</li>
-		<li class="parent"><a href="<?php //echo site_url('admin/manage_source/loadSources/wires');?>">Wires</a></li>
-		<li class="parent"><a href="<?php //echo site_url('admin/manage_source/loadSources/publisher');?>">Publisher</a></li>-->
-	</ul>
-	<a class="menu" href="<?php echo site_url('admin/manage_tag');?>">Tag</a>
-	
 </div>

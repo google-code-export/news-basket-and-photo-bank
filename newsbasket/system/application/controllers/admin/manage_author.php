@@ -3,7 +3,7 @@
 class Manage_author extends Controller {
 	
 	//limitasi tabel
-	var $limit = 10;
+	var $limit = 13;
 	
 	function Manage_author() {
 		parent::Controller();	
@@ -32,6 +32,7 @@ class Manage_author extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_author['username'] = $username;
+		$data_author['active']   = 'author';
 		
 		// Offset
 		$uri_segment 	= 4;
@@ -44,7 +45,7 @@ class Manage_author extends Controller {
 
 		// Membuat pagination			
 		$config['base_url']    		= site_url('admin/manage_author/load_author');
-		$config['total_row']		= $num_rows;
+		$config['total_rows']		= $num_rows;
 		$config['per_page']     	= $this->limit;
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
@@ -54,16 +55,6 @@ class Manage_author extends Controller {
 	}
 	
 	function add_author() {
-		/* Set validation rules
-		$this->form_validation->set_rules('id-author', 'Authorname', 'required');		
-		//$this->form_validation->set_rules('publisher', 'Publisher', 'required');
-		$this->form_validation->set_rules('password', 'Password', 'required');
-		$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('phone', 'Phone', 'required|numeric');
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-		//$this->form_validation->set_rules('author-level', 'Author-level', 'required');
-		*/
-		
 		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
 			$new_author  = array(
 				'id_author'		=> $this->input->post('id-author'),
@@ -100,6 +91,7 @@ class Manage_author extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_author['username'] = $username;
+		$data_author['active']   = 'author';
 		
 		// untuk option form
 		$this->load->model('Source_model','',TRUE);
@@ -178,6 +170,7 @@ class Manage_author extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_author['username'] = $username;
+		$data_author['active']   = 'author';
 		
 		// Limit & Offset
 		$uri_segment = 4;
@@ -208,12 +201,12 @@ class Manage_author extends Controller {
 	
 	
 	// validasi dengan AJAX
-	function checkAuthornameAvailability() {
+	function checkAuthorAvailability() {
 		$id_author = $this->input->post('id-author');
 		$this->load->model('Author_model','',TRUE);
-		$this->Author_model->checkAuthornameAvailability($id_author);
+		$this->Author_model->checkAuthorAvailability($id_author);
 		
-		if ($this->Author_model->checkAuthornameAvailability($id_author) == TRUE) {
+		if ($this->Author_model->checkAuthorAvailability($id_author) == TRUE) {
 			echo "no"; // id author ini terpakai
 		} 
 		else if (strlen($id-author) == 0) {

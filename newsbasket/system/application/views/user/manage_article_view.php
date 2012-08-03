@@ -1,4 +1,4 @@
-<h2>Manage Article<?php echo anchor('admin/manage_article/retrieve_email','<button class="btn-add">Retrieve Email</button>');?></h2>
+<h2>Manage Article</h2>
 <div id="add-article" class="add-form">
 </div>
 <div id="edit-article" class="edit-form">
@@ -9,9 +9,6 @@
 			Enter keywords : <input type="text" name="key" id="key" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>
-	</div>
-	<div class="paging">
-		<?php echo (!empty($pagination))? 'Page : '.$pagination : 'Page : <a style="cursor:auto; color:black;"><strong>1</strong></a>';?>
 	</div>
 </div>
 <?php
@@ -40,16 +37,20 @@
 			$this->load->helper('text');
 			foreach ($article_table as $column) {
 				/*$deleteLink = anchor(
-					'admin/manage_article/deleteArticle/'.$column->id_article,
+					'user/manage_article/deleteArticle/'.$column->id_article,
 					'<button>Delete</button>',
 					array('class'=>'btn-delete', 'onclick'=>"return confirm('Are you sure want to delete this article?')")
 				);*/
 				$detailLink = anchor(
-					'admin/manage_article/detail_article/'.$column->id_article,
+					'user/manage_article/detail_article/'.$column->id_article,
 					'<button>Detail</button>',
 					array('class'=>'btn-detail-article')
 				);
-				
+				$editLink = anchor(
+					'user/manage_article/edit_article/'.$column->id_article,
+					'<button>Edit</button>',
+					array('class'=>'btn-detail-article')
+				);				
 				($no%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
@@ -59,7 +60,7 @@
 						<td>$column->author</td>
 						<td>$column->created_on</td>
 						<td>$column->article_flag</td>
-						<td class='center'>$detailLink</td>
+						<td class='center'>$detailLink $editLink</td>
 					</tr>
 				";
 				$no++;
@@ -67,4 +68,9 @@
 		?>
 		</tbody>
 	</table>
+	<div id="article-table" class="table-menu">
+	<div class="paging">
+		<?php echo (!empty($pagination))? 'Page : '.$pagination : 'Page : <a style="cursor:auto; color:black;"><strong>1</strong></a>';?>
+	</div>
+</div>
 </div>

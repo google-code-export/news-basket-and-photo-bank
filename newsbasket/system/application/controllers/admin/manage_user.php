@@ -3,7 +3,7 @@
 class Manage_user extends Controller {
 	
 	//limitasi tabel
-	var $limit = 10;
+	var $limit = 13;
 	public $swfCharts;
  
 	function Manage_user() {
@@ -36,9 +36,10 @@ class Manage_user extends Controller {
 		$uri_segment 	= 3;
 		$offset 		= $this->uri->segment($uri_segment);
 		
-		// Siapa yang login
+		// Siapa yang login dan membuat navigasi aktif
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_user['username'] = $username;
+		$data_user['active']   = 'user';
 		
 		// Opsi load data dari tabel user 
 		$this->load->model('Users_model','',TRUE);
@@ -48,8 +49,8 @@ class Manage_user extends Controller {
 	
 		// Membuat pagination
 		$config['base_url']    		= site_url('admin/manage_user/load_users');
-		$config['total_row']		= 200;
-		$config['per_page']     	= 2;
+		$config['total_rows']		= $num_rows;
+		$config['per_page']     	= $this->limit;
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
 		$data_user['pagination']   	= $this->pagination->create_links();
@@ -68,6 +69,7 @@ class Manage_user extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_user['username'] = $username;
+		$data_user['active']   = 'user';
 		
 		// ambil data user dari ID nya
 		$this->load->model('Users_model','',TRUE);
@@ -106,6 +108,7 @@ class Manage_user extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_user['username'] = $username;
+		$data_user['active']   = 'user';
 		
 		// Limit & Offset
 		$uri_segment = 4;
@@ -193,6 +196,7 @@ class Manage_user extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_user['username'] = $username;
+		$data_user['active']   = 'user';
 		
 		// Opsi load data dari tabel user 
 		$this->load->model('Users_model','',TRUE);
@@ -202,7 +206,7 @@ class Manage_user extends Controller {
 		
 		// Membuat pagination
 		$config['base_url']    		= site_url('admin/manage_user/load_users');
-		$config['total_row']		= $num_rows;
+		$config['total_rows']		= $num_rows;
 		$config['per_page']     	= $this->limit;
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);

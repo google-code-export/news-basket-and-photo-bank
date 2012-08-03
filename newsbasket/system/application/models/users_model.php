@@ -28,7 +28,7 @@ class Users_model extends Model {
 		$this->db->where('id_user', $username);
 		return $this->db->get($this->table);
 	}
-	
+		
 	function getAllUser($limit, $offset, $username) {
         $this->db->select('*');
         $this->db->from($this->table); //tabel user

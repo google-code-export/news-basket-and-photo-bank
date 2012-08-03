@@ -1,4 +1,4 @@
-<h2>Manage Author<button class="btn-add" style="float: right; height: 30px; margin-top: -2px;">+ Add New Author</button></h2>
+<h2>Manage Author<button class="btn-add">+ Add New Author</button></h2>
 <div id="add-author" class="add-form">
 	<form id="add-author-form" method="post" action="<?php echo $form_action; ?>">
 		<table id="table-edit-author" class="table-form">
@@ -62,22 +62,7 @@
 		</form>
 	</div>
 	<div class="paging">
-		<p><?php echo !empty($pagination) ? $pagination : ''; ?></p>
-		<!--<span class="disabled">
-			<a class="disabled" href=#><< Prev</a>
-		</span>
-		<span class="current">
-			<a href=#>1</a>
-		</span>
-		<span class="disabled">
-			<a class="disabled" href=#>2</a>
-		</span>
-		<span class="disabled">
-			<a class="disabled" href=#>3</a>
-		</span>
-		<span class="prevnext">
-			<a href="#">Next >></a>
-		</span>-->
+		<?php echo (!empty($pagination))? 'Page : '.$pagination : 'Page : <a style="cursor:auto; color:black;"><strong>1</strong></a>';?>
 	</div>
 </div>
 <?php

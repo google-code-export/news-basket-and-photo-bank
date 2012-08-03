@@ -33,7 +33,7 @@ class Login extends Controller {
 					redirect('admin/dashboard');
 				}
 				else {
-					redirect('user/home');
+					redirect('user/dashboard');
 				}
 			}
 			else {

@@ -1,4 +1,4 @@
-<h2>Manage Tag<button class="btn-add" style="float: right; height: 30px; margin-top: -2px;">+ Add New Tag</button></h2>
+<h2>Manage Tag<button class="btn-add">+ Add New Tag</button></h2>
 <div id="add-tag" class="add-form">
 	<form id="add-tag-form" method="post" action="<?php echo $form_action; ?>">
 		<table id="tag-form" class="table-form">
@@ -30,6 +30,7 @@
 	<div class="search">
 	</div>
 	<div class="paging">
+		<?php echo (!empty($pagination))? 'Page : '.$pagination : 'Page : <a style="cursor:auto; color:black;"><strong>1</strong></a>';?>
 	</div>
 </div>
 <?php
