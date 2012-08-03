@@ -10,7 +10,7 @@ class Manage_article extends Controller {
 	}
 	
 	function index() {
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
 			$this->load_article();
 		}
 		else {
@@ -19,11 +19,11 @@ class Manage_article extends Controller {
 	}
 	
 	function load_article() {
-		$data_article['page_title']			= 'Manage Article | Admin News Basket';
-		$data_article['main_view'] 			= 'admin/manage_article_view';
-		$data_article['form_action']		= site_url('admin/manage_article/add_article');
-		$data_article['form_action_search']	= site_url('admin/manage_article/search_article');
-		$data_article['form_action_edit']	= site_url('admin/manage_article/edit_article');
+		$data_article['page_title']			= 'Manage Article | News Basket';
+		$data_article['main_view'] 			= 'user/manage_article_view';
+		$data_article['form_action']		= site_url('user/manage_article/add_article');
+		$data_article['form_action_search']	= site_url('user/manage_article/search_article');
+		$data_article['form_action_edit']	= site_url('user/manage_article/edit_article');
 		
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
@@ -45,23 +45,23 @@ class Manage_article extends Controller {
 		$data_article['no'] 		   = $offset + 1; // untuk penomoran tabel
 		
 		// Membuat pagination			
-		$config['base_url']    		= site_url('admin/manage_article/load_article/');
+		$config['base_url']    		= site_url('user/manage_article/load_article/');
 		$config['total_rows']		= $num_rows;
 		$config['per_page']     	= $this->limit;
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
 		$data_article['pagination'] = $this->pagination->create_links();
 		
-		$this->load->view('admin/template', $data_article);
+		$this->load->view('user/template', $data_article);
 	}
 	
 	function detail_article($id_article) {
-		$data_article['page_title']	 		= 'Detail Article | Admin News Basket';
-		$data_article['main_view'] 	 		= 'admin/detail/article_detail_view';
-		$data_article['article_property']	= 'admin/detail/article_detail_property';
-		$link_manage_article				= site_url('admin/manage_article');
+		$data_article['page_title']	 		= 'Detail Article |  News Basket';
+		$data_article['main_view'] 	 		= 'user/detail/article_detail_view';
+		$data_article['article_property']	= 'user/detail/article_detail_property';
+		$link_manage_article				= site_url('user/manage_article');
 		$data_article['breadcrumb']			= "<a href='$link_manage_article' style='color: white;'>Manage Article</a> > Article Detail";
-		$data_article['form_action_edit']	= site_url('admin/manage_article/edit_article').'/'.$id_article;
+		$data_article['form_action_edit']	= site_url('user/manage_article/edit_article').'/'.$id_article;
 		
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
@@ -97,14 +97,14 @@ class Manage_article extends Controller {
 		// ambil data author
 		$data_article['article']['author'] = $this->Article_model->getUserArticleByIDArticle($id_article, 'row_article');
 		
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->load->view('admin/template', $data_article);
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+			$this->load->view('user/template', $data_article);
 		}
 	}
-	/*
+	
 	function add_article() {
 		$this->load->helper('security');
-		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
+		if ($this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer' && $this->session->userdata('login') == TRUE) {
 			$new_article  = array(
 				'id_article'	=> $this->input->post('id-article'),
 				'id_source'		=> $this->input->post('publisher'),
@@ -120,26 +120,26 @@ class Manage_article extends Controller {
 			
 			$message = 'Add new article '.$new_article['id_article'].' successfull!'; 
 			$this->session->set_flashdata('message_success', $message);
-			redirect('admin/manage_article');
+			redirect('user/manage_article');
 		}
 		
 		else {
 			$message = 'Add new article '.$new_article['id_article'].' failed!'; 
 			$this->session->set_flashdata('message_failed', $message);
-			redirect('admin/manage_article');
+			redirect('user/manage_article');
 		}
-	}*/
+	}
 	
 	function edit_article($id_article) { 
-		$data_article['page_title']	 		= 'Edit Article | Admin News Basket';
-		$data_article['main_view'] 	 		= 'admin/detail/article_detail_view';
-		$data_article['edit_article_form']	= 'admin/form/edit_article_form';
-		$link_manage_article				= site_url('admin/manage_article');
-		$link_detail_article				= site_url('admin/manage_article/detail_article').'/'.$id_article;
+		$data_article['page_title']	 		= 'Edit Article |  News Basket';
+		$data_article['main_view'] 	 		= 'user/detail/article_detail_view';
+		$data_article['edit_article_form']	= 'user/form/edit_article_form';
+		$link_manage_article				= site_url('user/manage_article');
+		$link_detail_article				= site_url('user/manage_article/detail_article').'/'.$id_article;
 		$data_article['breadcrumb']			= "<a href='$link_manage_article' style='color: white;'>Manage Article</a> > 
 											   <a href='$link_detail_article' style='color: white;'>Article Detail</a> 
 											   > Edit Article";
-		$data_article['form_action_edit']	= site_url('admin/manage_article/edit_article_process').'/'.$id_article;
+		$data_article['form_action_edit']	= site_url('user/manage_article/edit_article_process').'/'.$id_article;
 		
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
@@ -175,13 +175,13 @@ class Manage_article extends Controller {
 		$this->load->model('Category_model','',TRUE);
 		$data_article['categories']			 = $this->Category_model->getAllCategories();
 		
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->load->view('admin/template', $data_article);
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+			$this->load->view('user/template', $data_article);
 		}
 	}
 	
 	function edit_article_process() {
-		if ((($this->session->userdata('user_level') == 'editor') || ($this->session->userdata('user_level') == 'administrator')) && $this->session->userdata('login') == TRUE) {
+		if ((($this->session->userdata('user_level') == 'editor') || ($this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer')) && $this->session->userdata('login') == TRUE) {
 		
 			// Prepare data untuk disimpan di tabel article
 			$article  = array(
@@ -233,7 +233,7 @@ class Manage_article extends Controller {
 			
 			// update tabel user article untuk log activity
 			$id_user  = $this->session->userdata('username'); // username dari saat login
-			if ($this->session->userdata('user_level') == 'administrator') {
+			if ($this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
 				$activity_log = array(
 					'id_article'	=> $id_article,
 					'id_user'   	=> $this->session->userdata('username'), //siapa yang login saat itu
@@ -245,30 +245,30 @@ class Manage_article extends Controller {
 			
 			$message = 'Article '.$id_article.' has been updated!'; 
 			$this->session->set_flashdata('message_success', $message);
-			redirect('admin/manage_article/detail_article'.'/'.$id_article);
+			redirect('user/manage_article/detail_article'.'/'.$id_article);
 		}
 		else {
 			$message = 'Update article '.$id_article.' failed!'; 
 			$this->session->set_flashdata('message_failed', $message);
-			redirect('admin/manage_article/detail_article'.'/'.$id_article);
+			redirect('user/manage_article/detail_article'.'/'.$id_article);
 		}
 	}
 	
-	/*
+	
 	function delete_article($id_article) {
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
 			$this->load->model('Article_model','',TRUE);
 			$this->Article_model->deleteArticle($id_article);
 			$this->session->set_flashdata('message_success', 'Delete article successfull!');
 
-			redirect('admin/manage_article');
+			redirect('user/manage_article');
 		}  
-	}*/
+	}
 	
 	function search_article($start = 0) {
-		$data_article['page_title']			= 'Search Article | Admin News Basket';
-		$data_article['main_view'] 			= 'admin/extra/search_article_view';
-		$data_article['form_action_search']	= site_url('admin/manage_article/search_article');
+		$data_article['page_title']			= 'Search Article |  News Basket';
+		$data_article['main_view'] 			= 'user/extra/search_article_view';
+		$data_article['form_action_search']	= site_url('user/manage_article/search_article');
 		
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
@@ -287,7 +287,7 @@ class Manage_article extends Controller {
 		$data_article['count']  = $this->Article_model->countSearch($key);
 		
 		// Membuat pagination			
-		$config['base_url']    = site_url('admin/manage_article/search_article');
+		$config['base_url']    = site_url('user/manage_article/search_article');
 		$config['total_rows']  = $data_article['count'];
 		$config['per_page']    = $this->limit;
 		$config['uri_segment'] = $uri_segment;
@@ -297,77 +297,12 @@ class Manage_article extends Controller {
 		$data_article['first_result'] = $start + 1;
 		$data_article['last_result']  = min($start + $this->limit, $data_article['count']);
 
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->load->view('admin/template', $data_article);
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+			$this->load->view('user/template', $data_article);
 		}
+	}
 	}
 	
-	function retrieve_email() {
-		/*$config['type'] = 'imap';
-		$config['host'] = 'mail.google.com';
-		$config['username'] = 'andrefadila@gmail.com';
-		$config['password'] = 'p72412714';
-		$config['port'] = 993;
-		//$config['secure'] = TRUE;
-		$config['timeout'] = 15;
-		$this->load->library('mailbox', $config);
-		
-		//$mailbox  = new Mailbox('imap', 'imap.gmail.com', 'andrefadila@gmail.com', 'p72412714', 993);
-		$messages = $this->mailbox->listMessages(5);
-		*/
-		
-		$this->load->helper('imapmailbox');
-		
-		define('GMAIL_EMAIL', 'andrefadila@gmail.com');
-		define('GMAIL_PASSWORD', 'p72412714');
-		
-		//$mailbox = new ImapMailbox('{imap.gmail.com:993/imap/novalidate-cert/ssl}imap', GMAIL_EMAIL, GMAIL_PASSWORD,'','utf-8');
-		$mailbox = new ImapMailbox('{imap.gmail.com:993/imap/novalidate-cert/ssl}', GMAIL_EMAIL, GMAIL_PASSWORD,'','utf-8');
-		$mails = array();
-		foreach($mailbox->searchMails('UNSEEN') as $mailId) { // mencari email yang belum terbaca
-			$mail = $mailbox->getMail($mailId, 1);
-			$mails[] = $mail; // simpan semuanya kedalam array
-		}
-		
-		// load model author dan article
-		$this->load->model('Author_model','',TRUE);
-		$this->load->model('Article_model','',TRUE);
-		
-		// proses loop simpan ke database
-		$sum = 0;
-		foreach($mails as $key => $value) {
-			$new_author = array(
-				'id_author' => $value->fromAddress,
-				'id_source'	=> 1,
-				'name' 		=> $value->fromName,
-				'email' 	=> $value->fromAddress
-			);
-			
-			if ($this->Author_model->checkAuthorAvailability($new_author['id_author']) == FALSE) { // jika author belum ada maka di tambahkan
-				$this->Author_model->addAuthor($new_author);
-			}
-			
-			$new_article = array(
-				'id_source'		=> 1,
-				'id_category'	=> 'tes',
-				'author'		=> $value->fromName,
-				'created_on'	=> $value->date,
-				'headline'		=> $value->subject,
-				'body_article'	=> strip_tags($value->textHtml),
-				'article_flag'	=> 'row_article',
-				'locked'		=> 'no'
-			);
-			
-			$this->Article_model->addArticle($new_article);
-			
-			$sum++;
-			
-			$message = 'Add '. $sum .' new article successfull!'; 
-			$this->session->set_flashdata('message_success', $message);
-		}
-		redirect('admin/manage_article');
-	}
-}
 
 /* End of file manage_article.php */
-/* Location: ./system/application/controllers/admin/manage_article.php */
+/* Location: ./system/application/controllers/user/manage_article.php */

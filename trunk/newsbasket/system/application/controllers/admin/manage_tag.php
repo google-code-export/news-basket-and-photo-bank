@@ -3,7 +3,7 @@
 class Manage_tag extends Controller {
 	
 	//limitasi tabel
-	var $limit = 10;
+	var $limit = 13;
 	
 	function Manage_tag() {
 		parent::Controller();	
@@ -26,6 +26,7 @@ class Manage_tag extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_tag['username'] = $username;
+		$data_tag['active']   = 'tag';
 		
 		// Offset
 		$uri_segment 	= 4;
@@ -39,7 +40,7 @@ class Manage_tag extends Controller {
 		
 		// Membuat pagination			
 		$config['base_url']    		= site_url('admin/manage_tag/load_tags');
-		$config['total_row']		= $num_rows;
+		$config['total_rows']		= $num_rows;
 		$config['per_page']     	= $this->limit;
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
@@ -77,6 +78,7 @@ class Manage_tag extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_tag['username'] = $username;
+		$data_tag['active']   = 'tag';
 		
 		// Offset
 		$uri_segment 	= 4;

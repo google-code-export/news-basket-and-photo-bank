@@ -1,4 +1,4 @@
-<h2>Manage Source<button class="btn-add" style="float: right; height: 30px; margin-top: -2px;">+ Add New Source</button></h2>
+<h2>Manage Source<button class="btn-add">+ Add New Source</button></h2>
 <div id="add-source" class="add-form">
 	<form id="add-source-form" method="post"  onsubmit="return validateForm()" action="<?php echo $form_action; ?>">
 		<table id="source-form" class="table-form">
@@ -34,6 +34,7 @@
 	<div class="search">
 	</div>
 	<div class="paging">
+		<?php echo (!empty($pagination))? 'Page : '.$pagination : 'Page : <a style="cursor:auto; color:black;"><strong>1</strong></a>';?>
 	</div>
 </div>
 <?php

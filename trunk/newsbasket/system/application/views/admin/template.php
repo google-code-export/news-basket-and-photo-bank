@@ -19,7 +19,7 @@
 	<div class="container">
 		<div class="navigation">
 			<div class="navigation-inner">
-				<?php $this->load->view('admin_navigation'); ?>
+				<?php $this->load->view('admin_navigation', $active); ?>
 			</div>
 		</div>
 		<div id="main" class="main">
