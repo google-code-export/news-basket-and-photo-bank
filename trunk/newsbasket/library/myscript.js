@@ -10,32 +10,13 @@ $(document).ready(function() {
 );  
 
 
-//MENYIMPAN DATA ARTIKEL
-function saveArticle(id_article){
-	var dataForm = $("#form-edit").serialize();
-	$.ajax({
-		type	: "POST",
-		url		: "admin/manage_article/edit_article_process",
-		data	: dataForm+"&id_artice="+id_article,
-		success	: function(data){
-					$("#pesan").html(data);
-					$("#pesan").hide();
-					$("#pesan").fadeIn();
-				},
-		error	: function(){
-					alert("Error.");
-				}
-	});
-
-}
-
 //MENGECEK USERNAME YANG ADA
 $(document).ready(function() {
 	$("#username").blur(function() {
 		//remove all the class, add new classes and start fading
 		$("#check-user").removeClass().addClass('image-load').text('AA').fadeIn("fast");
 		//check the username exists or not from ajax
-		$.post("manage_user/checkUsernameAvailability",{ username:$(this).val() } ,function(data) {
+		$.post("http://localhost/newsbasket/admin/manage_user/checkUsernameAvailability",{ username:$(this).val() } ,function(data) {
 			if(data=='no') { //if username not avaiable
 				$("#check-user").fadeTo(200,0.1,function() { //start fading the messagebox
 					//add message and change the class of the box and start fading
@@ -81,7 +62,7 @@ $(document).ready(function() {
 		//remove all the class, add new classes and start fading
 		$("#check-numeric").removeClass().addClass('image-load').text('AA').fadeIn("fast");
 		//check the username exists or not from ajax
-		$.post("manage_user/checkPhoneNumber",{ phone:$("#phone").val() } ,function(data) {
+		$.post("http://localhost/newsbasket/admin/manage_user/checkPhoneNumber",{ phone:$("#phone").val() } ,function(data) {
 			if(data=='no') { //if phone not numeric
 				$("#check-numeric").fadeTo(200,0.1,function() { //start fading the messagebox
 					//add message and change the class of the box and start fading
