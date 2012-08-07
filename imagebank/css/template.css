@@ -1,82 +1,91 @@
-html, body, div, h1, h2, h3, h4, h5, h6, p, img,
-dl, dt, dd, ol, ul, li, table, tr, td, form, object,
-embed, article, aside, canvas, command, details,
-fieldset, figcaption, figure, footer, group, header, hgroup, 
-legend, mark, menu, meter, nav, output, progress, section, summary, time, audio, video {
-    margin: 0px;
-    padding: 0px;
-    border: 0px none;
+html, body, div, h1, h2, h3, h4, h5, h6, p, img, dl, dt, dd, ol, ul, li, table, tr, td, form, object, embed, article, aside, canvas, command, details, fieldset, figcaption, figure, footer, group, header, hgroup, legend, mark, menu, meter, nav, output, progress, section, summary, time, audio, video {
+	margin: 0px;
+	padding: 0px;
+	border: 0px none;
 }
 
 body {
-    font-family: "Lucida Grande","Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-    font-size: 12px;
-    line-height: 1.4em;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size: 12px;
+	line-height: 1.4em;
 	height: 100%;
 	overflow: hidden;
 }
+img {
+	margin: 8px;
+	padding: 5px;
+	border: 0px;
+}
 
 ul {
-    list-style: none outside none;
-	
+	list-style: none outside none;
 }
 
 ul, ol {
-    padding: 0px;
+	padding: 0px;
 }
 
 li {
-    margin: 5px 5px 0.5em;
+	margin: 5px 5px 0.5em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: rgb(34, 34, 34);
-    line-height: 24px;
-    font-family:"Halvetica Neue",Helvetica,Arial,sans-serif;
+	color: rgb(34, 34, 34);
+	line-height: 24px;
+	
 }
 
 a {
-    text-decoration: none;
-    color:purple;
+	text-decoration: none;
+	color: purple;
 }
 
 a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
-.btn-primary{
+.btn-primary {
 	background-color: rgb(0,109,204);
-	background-image: -moz-linear-gradient(center top, rgb(0,136,204),rgb(0,68,204));
+	background-image: -moz-linear-gradient( top, rgb(0,136,204),rgb(0,68,204));
+	background-image:-ms-linear-gradient(top, #0088cc, #0044cc);
+	background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));
+	background-image:-webkit-linear-gradient(top, #0088cc, #0044cc);
+	background-image:-o-linear-gradient(top, #0088cc, #0044cc);
+	background-image:linear-gradient(top, #0088cc, #0044cc);
+	background-repeat:repeat-x;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088cc', endColorstr='#0044cc', GradientType=0);
+	border-color:#0044cc #0044cc #002a80;
+	border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 	background-repeat: repeat-x;
-	border-color:rgba(0,0,0,0.01)rgba(0,0,0,0.1)rgba(0,0,0,0.25);
+	border-color: rgba(0,0,0,0.01) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
 }
-.btn-primary,.btn-primary:hover,.btn-warning,.btn-warning:hover,.btn-danger,.btn-danger:hover,.btn-info,.btn-info:hover{
+.btn-primary, .btn-primary:hover, .btn-warning, .btn-warning:hover, .btn-danger, .btn-danger:hover, .btn-info, .btn-info:hover {
 	text-shadow: 0px-1px 0px rgba(0,0,0,0.25);
 	color: rgb(255,255,255);
 }
-.btn{
+.btn {
 	display: inline-block;
 	padding: 4px 10px;
 	font-size: 13px;
-	line-height:18px;
+	line-height: 18px;
 	/*color:rgb(51,51,51);*/
 	text-align: center;
 	text-shadow: 0px 1px 1px rgba(255,255,255,0.75);
 	background-color: rgb(250,250,250);
-	background-image:-moz-linear-gradient(center top,rgb(255,255,255),rgb(255,255,255)25% rgb(230,230,230));
+	background-image: -moz-linear-gradient(center top,rgb(255,255,255),rgb(255,255,255)25% rgb(230,230,230));
 	background-repeat: no-repeat;
 	border-width: 1px;
 	border-style: solid;
-	border-color:rgb(204,204,204)rgb(204,204,204)rgb(187,187,187);
+	border-color: rgb(204,204,204) rgb(204,204,204) rgb(187,187,187);
 	border-radius: 4px 4px 4px 4px;
-	box-shadow: 0px 1px 0px rgba(255,255,255,0.2)inset,0px 1px 2px rgba(0,0,0,0.05);
+	box-shadow: 0px 1px 0px rgba(255,255,255,0.2) inset, 0px 1px 2px rgba(0,0,0,0.05);
 	cursor: pointer;
 }
 
-.label,input,select,textarea{
-	font-family: "Helverica Neue",Helvetica,Arial,sans-serif;
+.label, input, select, textarea {
+	font-family: "Helverica Neue", Helvetica, Arial, sans-serif;
 	font-size: 13px;
-	font-weight:normal;
-	line-height:18px;
+	font-weight: normal;
+	line-height: 18px;
 }
 
 legend {
@@ -89,10 +98,9 @@ legend {
 	color: rgb(51,51,51);
 	border-width: 0px 0px 1px;
 	border-style: none none solid;
-	border-color: -moz-use-text-color
-					-moz-user-text-color rgb(238,238,238);
+	border-color: -moz-use-text-color-moz-user-text-color rgb(238,238,238);
 }
-input,textarea,select,.uneditable-input{
+input, textarea, select, .uneditable-input {
 	display: inline-block;
 	width: 210px;
 	/*height:18px;*/
@@ -103,85 +111,127 @@ input,textarea,select,.uneditable-input{
 	color: rgb(85,85,85);
 	border: 1px solid rgb(204,204,204);
 	border-radius: 3px 3px 3px 3px;
-	
 }
-input,textarea{
-	box-shadow: 0px 1px 1px rgba(0,0,0,0.075)inset;
-	-moz-transition:border 0.2s linear 0s,box-shadow 0.2s linear 0s;
+input, textarea {
+	box-shadow: 0px 1px 1px rgba(0,0,0,0.075) inset;
+	-moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
 }
-label{
+.main .table-menu .search {
+	margin-top: -2px;
+	padding: 5px 5px;
+	float: right;
+}
+label {
 	display: block;
 	margin-bottom: 5px;
-	color:rgb(51,51,51);
+	color: rgb(51,51,51);
 }
-input[type="checkbox"]{
-	width:35px;
+input[type="checkbox"] {
+	width: 35px;
 }
 
 /*-------------------------class well---------------------*/
-.well{
-	
+.well {
+
 	min-height: 20px;
 	padding: 19px;
 	margin-bottom: 20px;
 	background-color: rgb(245,245,245);
-	border:1px solid rgba(0,0,0,0.05);
+	border: 1px solid rgba(0,0,0,0.05);
 	border-radius: 4px 4px 4px 4px;
 	box-shadow: 0px 1px 1px rgba(0,0,0,0.05);
-	font-family: "Helvetica Neuse",Helvetica,Arial,sans-serif;
-	font-size:13px;
+	font-family: "Helvetica Neuse", Helvetica, Arial, sans-serif;
+	font-size: 13px;
 	line-height: 18px;
 	color: rgb(51,51,51);
 }
 
 /*---------------------buat message-------------------*/
-.alert-danger,.alert-error,.alert-danger,.alert-heading,.alert-error.alert-heading{
-	color:rgb(185,74,72);
+.alert-danger, .alert-error, .alert-danger, .alert-heading, .alert-error.alert-heading {
+	color: rgb(185,74,72);
+}
+.alert-success, .alert-success.alert-heading {
+	color: rgb(70,136,71);
+}
+.alert-success {
+	background-color: rgb(223,240,216);
+	border-color: rgb(214,233,198);
 }
 
-.alert-danger,.alert-error {
-	background-color:rgb(242,222,222);
-	border-color:rgb(238,22,215);
+.alert-danger, .alert-error {
+	background-color: rgb(242,222,222);
+	border-color: rgb(238,22,215);
 }
-.alert,.alert-heading{
-	color:rgb(192,152,83);
+.alert, .alert-heading {
+	color: rgb(192,152,83);
 }
-.alert{
-	padding :8px 35px 8px 14px;
-	margin-bottom:18px;
+.alert {
+	padding: 8px 35px 8px 14px;
+	margin-top: 20px;
+	margin-bottom: 18px;
 	text-shadow: 0px 1px 0px rgba(255,255,255,0.5);
-	background-color:rgb(252,255,255,0.5);
-	border:1px solid rgb(251,238,213);
-	border-radius:4px 4px 4px 4px;
+	background-color: rgb(252,255,255,0.5);
+	border: 1px solid rgb(251,238,213);
+	border-radius: 4px 4px 4px 4px;
 }
 
 /*------------------------- atas --------------------------*/
 .header-bar {
-    height: 32px;
-    background: none repeat scroll 0% 0% #1B1B1B;
+	height: 40px;
+	background: none repeat scroll 0% 0% #1B1B1B;
 	box-shadow: 0px 4px 5px -1px rgba(200, 200, 200, 0.7);
-    overflow: hidden;
+	overflow: hidden;
+}
+
+#imagebank {
+	display: block;
+	positon: absolute;
+	width: 140px;
+	height: 30px;
+	color: #D9EDF7;
+	font-family: "Arial", Helvetica, sans-serif;
 }
 
 #siteSearch {
-    display: block;
-    float: left;
-    width: 180px;
-    height: 20px;
-    line-height: 20px;
-    
-    margin: 0;
-    border: 0;
-    font-size: 11px;
-    background-position: 0 -450px;
-    background-repeat: no-repeat;
-    outline: none;
+	display: block;
+	float: left;
+	width: 120px;
+	height: 20px;
+	line-height: 20px;
+	margin-right: 170px;
+	border: 0;
+	font-size: 11px;
+	background-position: 0 -450px;
+	background-repeat: no-repeat;
+	outline: none;
 	position: absolute;
-	right:120px;
+	right: 120px;
+}
+#tab_search{
+	position:absolute;
+	margin-left: 850px;
+	height: 35px;
+	weight:100px;
+	margin-bottom:10px;
+}
+#tab_dropdown{
+	position:absolute;
+	margin-left: 20px;
+	height: 30px;
+	weight:100px;
+	margin-bottom:10px;
+}
+#siteSearch.placeholder {
+	position: absolute;
+	z-index: 2;
+	top: 10px;
+	left: 22px;
+	color: rgb(34,34,34);
+	line-height: 18px;
 }
 h1#site_name {
-    float: left;
-    font-size: 18px;
+	float: left;
+	font-size: 18px;
 	padding-left: 5px;
 	padding-top: 2px;
 }
@@ -191,13 +241,13 @@ h1#site_name {
 }
 
 div#login_logout {
-    float: right;
+	float: right;
 	padding-right: 5px;
 	padding-top: 6px;
 	color: white;
 }
 
-#login_logout a{
+#login_logout a {
 	color: white;
 }
 
@@ -206,9 +256,26 @@ div#login_logout {
 	margin: 0px;
 	padding: 0px;
 	outline-style: none;
-	height : 100%;
+	height: 100%;
+	
 }
 
+form{
+	padding:2.5px;
+	position:relative;
+	margin-bottom:20px;
+}
+/*-----------------search-bar-------------------------------*/
+
+.search-bar{
+	background :none repeat scroll 0% 0% rgb(245,245,245);
+	border-bottom:1px solid rgb(229,229,229);
+	height:40px;
+	color:rgb(34,34,34);
+	font-family:arial,sans-serif;
+	margin-bottom: 7.5px;
+	
+}
 /*------------------------- navigasi --------------------------*/
 .navigation {
 	width: 200px;
@@ -239,7 +306,7 @@ div#login_logout {
 }
 
 .navigation a {
-	color:purple;
+	color: purple;
 	text-decoration: none;
 	margin: 0px;
 	display: block;
@@ -280,32 +347,31 @@ div#login_logout {
 
 /*------------------------ footer --------------------------------*/
 .footer-bar {
-	position: absolute ;
+	position: absolute;
 	height: 20px;
 	padding: 5px;
 	left: 0px;
 	bottom: 0px;
 	right: 0px;
-    border-top: 1px solid rgb(235, 235, 235);
-	
+	border-top: 1px solid rgb(235, 235, 235);
 }
 
 .footer {
 	clear: both;
-    font-size: 0.85em;
-    white-space: nowrap;
+	font-size: 0.85em;
+	white-space: nowrap;
 }
 
 .footer ul li {
-    display: inline;
+	display: inline;
 }
 
 .footer ul {
-    color: rgb(153, 153, 153);
+	color: rgb(153, 153, 153);
 }
 
 .content {
-    padding: 0px 44px 5px;
+	padding: 0px 44px 5px;
 }
 
 .clearfix:after {
