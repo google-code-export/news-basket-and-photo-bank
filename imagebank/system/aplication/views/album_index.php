@@ -1,6 +1,6 @@
 <?php $flashmessage = $this->session->flashdata('message')?>
 	
-<h2>My Galleries</h2>
+
 	
 	
 	<?php echo ! empty($flashmessage) ? '<p class="alert alert-success">' . $flashmessage . '</p>': '';?>
@@ -25,16 +25,5 @@
 </table>
 
 </body>
-<script type="text/javascript">
-var deleteUrl;
-$(document).ready(function() {
-  $('.album-delete-btn').click(function() {
-    deleteUrl = $(this).attr('rel');
-  });
-  
-  $('#album-modal').on('show', function() {
-    $('#album-modal-delete-btn').attr('href', deleteUrl);
-  });
-});
-</script>
+
 
