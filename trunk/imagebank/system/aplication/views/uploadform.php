@@ -1,5 +1,5 @@
 
-	<h2>Upload Image</h2>
+	
 
 <?php  echo form_open_multipart('user/picupload');?>
 <?=form_hidden('project_id',"1"); ?>
