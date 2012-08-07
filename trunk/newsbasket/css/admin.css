@@ -13,7 +13,6 @@
 	color: white;
 	height: 30px;
 	padding: 10px 10px 5px;
-	/*background: none repeat scroll 0% 0% rgb(175, 0, 0);*/
 	background: url(../images/h2.png) no-repeat top left rgb(175, 0, 0);
 }
 
@@ -21,12 +20,7 @@
 	height: 30px;
 	padding: 5px 5px;
     background: none repeat scroll 0% 0% rgb(240, 240, 240);
-    overflow: hidden;
-}
-
-.main .table-menu .paging {
-	padding: 5px 5px;
-    float: left;
+	border:1px solid #98bf21;
 }
 
 .main .table-menu .paging {
@@ -39,36 +33,7 @@
 	padding: 2px 2px;
 	margin-right: 2px;
     text-decoration: none;
-	color: #98bf21;
-}
-
-.main .table-menu .paging  a:hover{
-}
-
-.main .table-menu .paging  a.disabled{
-	cursor: default;
-}
-
-.main .table-menu .paging  span.current{
-	padding: 2px 2px 2px 8px;
-	margin-right: 2px;
-	border: 1px solid #000000;
-	font-weight: bold;
-	color: #FFFFFF;
-}
-
-.main .table-menu .paging  span.disabled{
-	padding: 2px 2px 2px 8px;
-	margin-right: 2px;
-	border: 1px solid #999999;
-	color: #999999;
-	cursor: default;
-}
-
-.main .table-menu .paging  span.prevnext{
-	border: 1px solid #000000;
-	padding: 2px 2px 2px 8px;
-	font-weight: bold;
+	color: blue;
 }
 
 .main .table-menu .search {
@@ -77,14 +42,16 @@
     float: right;
 }
 
-.main .tablesorter {
-	width:100%;
+.main .table-list {
+	height: 450px;
+	width: 100%;
+	overflow-y: auto;
 }
 
 .add-form {
 	width: 100%;
 	display: none;
-	background-color: #90E281;
+	background-color: #A7C942;
 	border-bottom: solid 1px rgb(150, 0, 0);
 }
 
@@ -95,7 +62,7 @@
 
 .edit-form {
 	width: 100%;
-	background-color: #90E281;
+	background-color: #A7C942;
 	border-bottom: solid 1px rgb(150, 0, 0);
 }
 
