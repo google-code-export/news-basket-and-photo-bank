@@ -40,7 +40,7 @@
 		</tr>
 		<tr>
 			<td class="bold">&nbsp;</td>
-			<td class="label"><span style="margin-left: 3px;"><i>Example : Life, Love, Long</i></span></td>
+			<td class="label"><span style="margin-left: 3px;"><i>Example : Life, Love, Long, Live</i></span></td>
 		</tr>
 		<tr>
 			<td class="bold">Tag</td>
@@ -51,7 +51,6 @@
 			<td class="label">
 				<select name="article-flag">
 					<?php
-					
 					$level = array('row_article','edited','published','deleted');
 					for ($i=0; $i<=3; $i++) {
 						$value = $i + 1;
@@ -70,8 +69,8 @@
 			<td>&nbsp;</td>
 			<td>
 				<span style="float: right;">
-					<input type="submit" value="Save Article" />
-					<a id="edit-article" href="<?php echo site_url('user/manage_article/detail_article').'/'.$article['id_article'];?>"><button>Cancel</button></a>
+					<input type="submit" class="button" value="Save Article" />
+					<a id="edit-article" href="<?php echo site_url('user/manage_article/detail_article').'/'.$article['id_article'];?>"><button class="button">Cancel</button></a>
 				</span>
 			</td>
 		</tr>

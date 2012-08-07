@@ -51,8 +51,8 @@
 			<td>&nbsp;</td>
 			<td>
 				<span style="float: right;">
-					<input type="submit" value="Save Article" />
-					<a id="add-article" href="<?php echo site_url('user/manage_article')?>"><button>Cancel</button></a>
+					<input type="submit" class="button" value="Save Article" />
+					<a id="add-article" href="<?php echo site_url('user/manage_article')?>"><button class="button">Cancel</button></a>
 				</span>
 			</td>
 		</tr>
