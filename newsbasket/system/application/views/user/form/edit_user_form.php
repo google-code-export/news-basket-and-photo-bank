@@ -32,7 +32,7 @@
 			<td align="right">
 				<input type="submit" name="btn-edit-user" class="button" value="Save" />
 				<!--<button id="btn-add-user" type="button" onclick="">Add</button>-->
-				<button class="button" onclick="location.href='<?php echo site_url('admin/manage_user/detail_user'.'/'.$user['id_user']);?>'" type="button">Cancel</button>
+				<button class="button" onclick="location.href='<?php echo site_url('user/manage_user/detail_user'.'/'.$user['id_user']);?>'" type="button">Cancel</button>
 			</td>
 		</tr>
 	</table>
