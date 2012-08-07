@@ -28,6 +28,18 @@ class Users_model extends Model {
 		$this->db->where('id_user', $username);
 		return $this->db->get($this->table);
 	}
+	
+	function getSourceUser($username) {
+		$this->db->select('id_source');
+		$this->db->where('id_user', $username);
+		return $this->db->get($this->table)->row()->id_source;
+	}
+	
+	function getNameUser($username) {
+		$this->db->select('name');
+		$this->db->where('id_user', $username);
+		return $this->db->get($this->table)->row()->name;
+	}
 		
 	function getAllUser($limit, $offset, $username) {
         $this->db->select('*');
@@ -125,7 +137,7 @@ class Users_model extends Model {
     function updateUser($id_user, $new_user) {
         $this->db->where('id_user', $id_user);
         $this->db->update($this->table, $new_user);
-    }
+    }	
     
     function deleteUser($id_user) {
 		$this->db->where('id_user', $id_user);

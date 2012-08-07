@@ -4,10 +4,11 @@
 <div id="edit-article" class="edit-form">
 </div>
 <div id="article-table" class="table-menu">
+	<input type=button class="button" onClick="location.href='<?php echo site_url('user/manage_article/add_article'); ?>'" value='+ Add New Article'>
 	<div class="search">
 		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
 			Enter keywords : <input type="text" name="key" id="key" required="required" />
-			<input type="submit" name="search" id="search" value="Search" />
+			<input type="submit" name="search" id="search" class="button" value="Search" />
 		</form>
 	</div>
 </div>
@@ -17,7 +18,6 @@
 	$message_failed = $this->session->flashdata('message_failed');
 	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
 ?>
-		
 <div>
 	<?php //echo ! empty($table) ? $table : ''; ?>
 	<table id="article" class="tablesorter">
@@ -43,13 +43,13 @@
 				);*/
 				$detailLink = anchor(
 					'user/manage_article/detail_article/'.$column->id_article,
-					'<button>Detail</button>',
+					'<button class="button">Detail</button>',
 					array('class'=>'btn-detail-article')
 				);
 				$editLink = anchor(
 					'user/manage_article/edit_article/'.$column->id_article,
-					'<button>Edit</button>',
-					array('class'=>'btn-detail-article')
+					'<button class="button">Edit</button>',
+					array('class'=>'btn-edit-article')
 				);				
 				($no%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "

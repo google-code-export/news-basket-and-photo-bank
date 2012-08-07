@@ -1,11 +1,11 @@
 <p class='flip'><strong><?php echo $user['id_user']?> profile</strong>
 	<a id="edit-article" href="<?php echo $form_action_edit;?>">
-		<button style="float: right; margin-top: -5px;" >Edit User</button>
+		<button class="button" style="float: right; margin-top: -5px;" >Edit User</button>
 	</a>
 </p>
 <table style="margin-left: 3px;">
 	<tr>
-		<td><label for="id-user">ID User</label></td>
+		<td class="bold"><label for="id-user">ID User</label></td>
 		<td class="label"><p id="id-user"><?php echo $user['id_user']?></p></td>
 	</tr>	
 	<tr>	

@@ -103,41 +103,105 @@ class Manage_article extends Controller {
 	}
 	
 	function add_article() {
-		$this->load->helper('security');
-		if ($this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer' && $this->session->userdata('login') == TRUE) {
-			$new_article  = array(
-				'id_article'	=> $this->input->post('id-article'),
-				'id_source'		=> $this->input->post('publisher'),
-				'password'		=> dohash($this->input->post('password')),
-				'name'      	=> $this->input->post('name'),
-				'phone'       	=> $this->input->post('phone'),
-				'email'   		=> $this->input->post('email'),
-				'date_created'	=> date('Y-m-d G:i:s')
-			);
-			// Proses simpan data absensi
-			$this->load->model('Article_model','',TRUE);
-			$this->Article_model->addUrticle($new_article);
+		$data_article['page_title']	 		= 'Add Article | News Basket';
+		$data_article['main_view']			= 'user/form/add_article_form';
+		$link_manage_article				= site_url('user/manage_article');
+		$data_article['breadcrumb']			= "<a href='$link_manage_article' style='color: white;'>Manage Article</a>
+											   > Add  New Article";		
+		$data_article['form_action_add']	= site_url('user/manage_article/add_article_process');
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_article['username'] = $username;
+		$data_article['active']   = 'article';
+						
+		// ambil data category
+		$this->load->model('Category_model','',TRUE);
+		$data_article['categories']			 = $this->Category_model->getAllCategories();
+		
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+			$this->load->view('user/template', $data_article);
+		}
+	}
+	
+		function add_article_process() {
+		if ((($this->session->userdata('user_level') == 'editor') || ($this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer')) && $this->session->userdata('login') == TRUE) {
 			
-			$message = 'Add new article '.$new_article['id_article'].' successfull!'; 
+			$this->load->model('Users_model','', TRUE);
+			$id_source = $this->Users_model->getSourceUser($this->session->userdata('username'));
+			$name = $this->Users_model->getNameUser($this->session->userdata('username'));
+			
+			// Prepare data untuk disimpan di tabel article
+			$new_article  = array(
+				'headline'		=> $this->input->post('headline'),
+				'id_source'  	=> $id_source,
+				'lead_article'	=> $this->input->post('lead-article'),
+				'body_article'  => $this->input->post('body-article'),
+				'id_category'   => $this->input->post('id-category'),
+				'article_flag'  => 'row_article',
+				'created_on'	=> date('Y-m-d'),
+				'locked'		=> 'no',
+				'author'		=> $name
+			);
+			
+			// Proses simpan data ke tabel article
+			$id_article = $this->session->userdata('new_article'); // ambil data dari session
+			$this->load->model('Article_model','',TRUE);
+			$this->Article_model->addArticle($new_article);
+			$id_article = $this->db->insert_id();
+			
+			// Pecah input tag
+			$tag_pieces = explode(", ", $this->input->post('tag'));
+			
+			// Prepare data sekaligus proses simpan ke tabel tag
+			$this->load->model('Tag_model','',TRUE);
+			for ($i=0; $i<sizeof($tag_pieces); $i++) {
+				// jika tag belum ada maka di tambahkan
+				if ($this->Tag_model->checkTag($tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ') {
+					$tag   = array('id_tag' => $tag_pieces[$i], 'tag_name' => $tag_pieces[$i]);
+					$this->Tag_model->addTag($tag);
+				}
+			}
+			
+			// Prepare data sekaligus proses simpan ke tabel tag_article
+			for ($i=0; $i<sizeof($tag_pieces); $i++) {
+				if ($this->Tag_model->checkTagArticle($id_article, $tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ') { // jika tag belum ada maka di tambahkan
+					$tag_article = array('id_article'=> $id_article, 'id_tag' => $tag_pieces[$i]);
+					$this->Tag_model->addTagArticle($tag_article);
+				}
+			}
+			
+			// update tabel user article untuk log activity
+			$id_user  = $this->session->userdata('username'); // username dari saat login
+			if ($this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+				$activity_log = array(
+					'id_article'	=> $id_article,
+					'id_user'   	=> $this->session->userdata('username'), //siapa yang login saat itu
+					'flag'  		=> $this->input->post('article-flag'),
+					'process_date' 	=> date('Y-m-d G:i:s')
+				);
+				$this->Article_model->AddUserArticle($activity_log);
+			}
+			
+			$message = 'Article '.$id_article.' has been created!'; 
 			$this->session->set_flashdata('message_success', $message);
 			redirect('user/manage_article');
 		}
-		
 		else {
-			$message = 'Add new article '.$new_article['id_article'].' failed!'; 
+			$message = 'Add article '.$id_article.' failed!'; 
 			$this->session->set_flashdata('message_failed', $message);
 			redirect('user/manage_article');
 		}
 	}
-	
+
+
 	function edit_article($id_article) { 
 		$data_article['page_title']	 		= 'Edit Article |  News Basket';
 		$data_article['main_view'] 	 		= 'user/detail/article_detail_view';
 		$data_article['edit_article_form']	= 'user/form/edit_article_form';
 		$link_manage_article				= site_url('user/manage_article');
 		$link_detail_article				= site_url('user/manage_article/detail_article').'/'.$id_article;
-		$data_article['breadcrumb']			= "<a href='$link_manage_article' style='color: white;'>Manage Article</a> > 
-											   <a href='$link_detail_article' style='color: white;'>Article Detail</a> 
+		$data_article['breadcrumb']			= "<a href='$link_manage_article' style='color: white;'>Manage Article</a>
 											   > Edit Article";
 		$data_article['form_action_edit']	= site_url('user/manage_article/edit_article_process').'/'.$id_article;
 		
