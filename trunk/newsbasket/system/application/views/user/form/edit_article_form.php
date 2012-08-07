@@ -40,7 +40,7 @@
 		</tr>
 		<tr>
 			<td class="bold">&nbsp;</td>
-			<td class="label"><span style="margin-left: 3px;"><i>how to write tag, e.g. : Life, Love</i></span></td>
+			<td class="label"><span style="margin-left: 3px;"><i>Example : Life, Love, Long</i></span></td>
 		</tr>
 		<tr>
 			<td class="bold">Tag</td>
@@ -51,6 +51,7 @@
 			<td class="label">
 				<select name="article-flag">
 					<?php
+					
 					$level = array('row_article','edited','published','deleted');
 					for ($i=0; $i<=3; $i++) {
 						$value = $i + 1;

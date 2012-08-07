@@ -3,7 +3,7 @@
 	<div id="property" class="detail-left">
 		<?php
 			echo !empty($edit_article_form)? $this->load->view($edit_article_form) : $this->load->view($article_property);
-		?>
+		?>		
 	</div>
 	<div id="version" class="detail-right">
 		<?php

@@ -1,10 +1,11 @@
-<p class='flip'><strong>Edit Article</strong></p>
-<form id="edit-article-form" method="post" action="<?php echo $form_action_edit;?>" >
+<h2><?php echo $breadcrumb ?></h2>
+<p class='flip'><strong>Add New Article</strong></p>
+<form id="edit-article-form" action="<?php echo $form_action_add;?>"method="post">
 	<br />
 	<table style="margin-left: 2px;">
 		<tr class="alternate">
 			<td class="bold"><label for="headline">Headline</label></td>
-			<td class="label"><input type="text" name="headline" size="46px;"/></td>
+			<td class="label"><input type="text" name="headline" size="46px;"></td>
 		</tr>
 		<tr>
 			<td class="bold"><label for="lead-article">Lead Article</label></td>
@@ -44,33 +45,14 @@
 		</tr>
 		<tr>
 			<td class="bold">Tag</td>
-			<td class="label"><input type="text" name="tag" size="46px;" value="<?php echo $article['tag']?>"/></td>
-		</tr>
-		<tr>
-			<td class="bold">Status Flag</td>
-			<td class="label">
-				<select name="article-flag">
-					<?php
-					$level = array('row_article','edited','published','deleted');
-					for ($i=0; $i<=3; $i++) {
-						$value = $i + 1;
-						if ($level[$i] == $article['article_flag']) {
-							echo "<option value='$value' SELECTED>$level[$i]</option>";
-						}
-						else {
-							echo "<option value='$value'>$level[$i]</option>";			
-						}
-					}
-					?>
-				</select>
-			</td>
+			<td class="label"><input type="text" name="tag" size="46px;"/></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td>
 				<span style="float: right;">
 					<input type="submit" value="Save Article" />
-					<a id="edit-article" href="<?php echo site_url('user/manage_article/detail_article').'/'.$article['id_article'];?>"><button>Cancel</button></a>
+					<a id="add-article" href="<?php echo site_url('user/manage_article')?>"><button>Cancel</button></a>
 				</span>
 			</td>
 		</tr>

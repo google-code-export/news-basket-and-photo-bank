@@ -27,26 +27,6 @@
 				<td class="label"><?php echo $user['delete']?></td>
 			</tr>
 		</table>
-		<?php
-			/*$this->load->helper('fusioncharts');
-			$FC = new FusionCharts("Column2D","1010","300");
-			$FC->setSWFPath(base_url().'library/charts/');
-
-			$strParam="caption=test ;yAxisName=Value ;xAxisName=Date ;bgColor=e2ffe2;rotateNames=1;formatNumberScale=0;decimalPrecision=0;decimalSeparator=,;thousandSeparator=.";
-			
-			foreach ($user['statistic'] as $column) {
-				$FC->addCategory('tes');
-				echo $column->date_process.' ';
-				$FC->addChartData(20,"name=asd");
-				echo $column->statistic.'<br />';	
-			}
-
-			$FC->setChartParams($strParam);
-
-			$FC->renderChart();*/
-			
-			
-		?>
 		</div>
 	</div>
 	<div class="detail-right">
