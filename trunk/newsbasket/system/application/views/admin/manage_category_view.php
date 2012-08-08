@@ -26,7 +26,7 @@
 		!empty($form_edit_category)? $this->load->view($form_edit_category) : '';
 	?>
 </div>
-<div id="category-table" class="table-menu">
+<div id="category-table" class="table-menu" style="border: none;">
 	<div class="search">
 	</div>
 	<div class="paging">
@@ -53,8 +53,8 @@
 		</thead>
 		<tbody>
 		<?php
-			$No = 1;
 			$this->load->helper('text');
+			$no = 0 + $start;
 			foreach ($category_table as $column) {
 				$deleteLink = anchor(
 					'admin/manage_category/delete_category/'.$column->id_category,
@@ -67,19 +67,26 @@
 					array('class'=>'btn-edit-category')
 				);
 				
-				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
+				($no%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
-						<td class='center'>$No</td>
+						<td class='center'>$no</td>
 						<td id='id-category'>$column->id_category</td>
 						<td>$column->category_name</td>
 						<td class='center'>$editLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>
 				";
-				$No++;
+				$no++;
 			}
 		?>
 		</tbody>
 	</table>
+	<div class="table-menu" style="background-color: #A7C942;">
+		<div class="paging">
+		<?php
+			echo "<p>Showing ".$start." to ".$finish." of ".$total." categories</p>" ; 
+		?>
+		</div>
+	</div>
 </div>

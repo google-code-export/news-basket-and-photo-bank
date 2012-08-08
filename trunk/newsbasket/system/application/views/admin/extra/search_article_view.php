@@ -1,8 +1,8 @@
 <h2>
 	<a href="<?php echo site_url('admin/manage_article');?>" style="color: white;">Manage Article</a> > Search Article
-	<?php echo "> keyword '$key' shows result ($first_result - $last_result dari $count) :";?>
+	<?php echo ($key != null)? "> keyword '$key' shows result ($first_result - $last_result dari $count)" : "";?>
 </h2>
-<div id="article-table" class="table-menu">
+<div id="article-table" class="table-menu" style="border: none;">
 	<div class="search">
 		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
 			Enter keywords : <input type="text" name="key" id="key" required="required" />
@@ -10,13 +10,21 @@
 		</form>
 	</div>
 	<div class="paging">
+	<?php
+		if (!empty($pagination) && $key != null) {
+			echo '<p>Page : '.$pagination. "</p>" ; 
+		}
+		else {
+			echo 'Page : <a style="cursor:auto; color:black;"><strong>1</strong></a>';
+		}
+	?>
 	</div>
 </div>
-<div id="search-result" style="height: 500px; overflow-y:auto;">
+<div id="search-result" style="height: 480px; overflow-y:auto;">
 	<?php
 		$this->load->helper('text');
 		$this->load->helper('search');
-		if (!empty($result) && $count != 0) {
+		if (!empty($result) && $count != 0 && $key != null) {
 			$no = 1;
 			foreach($result as $column) {
 				$headline = anchor(
@@ -30,7 +38,7 @@
 				$class = ($no%2 == 1)? 'result' : '';
 				echo "
 					<div class='$class' style='padding: 5px 10px 10px; height: 70px;'>
-						<table style='float: right; font-size: 12px; line-height: 12px; margin-right: 20px; width: 160px'>
+						<table style='float: right; font-size: 12px; line-height: 12px; margin-right: 10px; width: 270px'>
 							<tr>
 								<td>Article Date</td>
 								<td>$article_date</td>

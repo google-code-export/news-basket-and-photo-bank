@@ -26,7 +26,7 @@
 		!empty($form_edit_tag)? $this->load->view($form_edit_tag) : '';
 	?>
 </div>
-<div id="tag-table" class="table-menu">
+<div id="tag-table" class="table-menu" style="border: none;">
 	<div class="search">
 	</div>
 	<div class="paging">
@@ -53,8 +53,8 @@
 		</thead>
 		<tbody>
 		<?php
-			$No = 1;
 			$this->load->helper('text');
+			$no = 0 + $start;
 			foreach ($tag_table as $column) {
 				$deleteLink = anchor(
 					'admin/manage_tag/delete_tag/'.$column->id_tag,
@@ -67,19 +67,26 @@
 					array('class'=>'btn-edit-tag')
 				);
 				
-				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
+				($no%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
-						<td class='center'>$No</td>
+						<td class='center'>$no</td>
 						<td id='id-tag'>$column->id_tag</td>
 						<td>$column->tag_name</td>
 						<td class='center'>$editLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>
 				";
-				$No++;
+				$no++;
 			}
 		?>
 		</tbody>
 	</table>
+	<div class="table-menu" style="background-color: #A7C942;">
+		<div class="paging">
+		<?php
+			echo "<p>Showing ".$start." to ".$finish." of ".$total." tags</p>" ; 
+		?>
+		</div>
+	</div>
 </div>

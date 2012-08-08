@@ -30,7 +30,7 @@
 		!empty($form_edit_source)? $this->load->view($form_edit_source) : '';
 	?>
 </div>
-<div id="source-table" class="table-menu">
+<div id="source-table" class="table-menu" style="border: none;">
 	<div class="search">
 	</div>
 	<div class="paging">
@@ -55,7 +55,7 @@
 		</thead>
 		<tbody>
 		<?php
-			$No = 1;
+			$no = 0 + $start; 
 			foreach ($source_table as $column) {
 				$deleteLink = anchor(
 					'admin/manage_source/delete_source/'.$column->id_source,
@@ -68,7 +68,7 @@
 					array('class'=>'btn-edit-source')
 				);
 				
-				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
+				($no%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
 						<td id='id-source' class='center'>$column->id_source</td>
@@ -78,14 +78,16 @@
 						<td class='center'>$deleteLink</td>
 					</tr>
 				";
-				$No++;
+				$no++;
 			}
 		?>
 		</tbody>
 	</table>
-</div>
-<div id="pagination">
-	<?php
-		echo $pagination;
-	?>
+	<div class="table-menu" style="background-color: #A7C942;">
+		<div class="paging">
+		<?php
+			echo "<p>Showing ".$start." to ".$finish." of ".$total." sources</p>" ; 
+		?>
+		</div>
+	</div>
 </div>
