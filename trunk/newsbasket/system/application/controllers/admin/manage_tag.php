@@ -38,6 +38,11 @@ class Manage_tag extends Controller {
 		$num_rows 	= $this->Tag_model->countAll();
 		$data_tag['tag_table'] = $tags;
 		
+		// untuk penomoran dan menampilkan hasil
+		$data_tag['start'] 	= $offset + 1; // untuk penomoran tabel
+		$data_tag['finish'] = min($data_tag['start'] + $this->limit - 1, $data_tag['start'] + ($num_rows - $data_tag['start']));
+		$data_tag['total']  = $num_rows;
+		
 		// Membuat pagination			
 		$config['base_url']    		= site_url('admin/manage_tag/load_tags');
 		$config['total_rows']		= $num_rows;
@@ -89,6 +94,11 @@ class Manage_tag extends Controller {
 		$tags 		= $this->Tag_model->getAllTag($this->limit, $offset);
 		$num_rows 	= $this->Tag_model->countAll();
 		$data_tag['tag_table'] = $tags;
+		
+		// untuk penomoran dan menampilkan hasil
+		$data_tag['start'] 	= $offset + 1; // untuk penomoran tabel
+		$data_tag['finish'] = min($data_tag['start'] + $this->limit - 1, $data_tag['start'] + ($num_rows - $data_tag['start']));
+		$data_tag['total']  = $num_rows;
 		
 		// ambil data tag dari ID nya
 		$tag = $this->Tag_model->getTagByID($id_tag)->row();

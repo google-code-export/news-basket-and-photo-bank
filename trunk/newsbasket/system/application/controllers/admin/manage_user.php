@@ -3,7 +3,7 @@
 class Manage_user extends Controller {
 	
 	//limitasi tabel
-	var $limit = 13;
+	var $limit = 10;
 	public $swfCharts;
  
 	function Manage_user() {
@@ -46,6 +46,11 @@ class Manage_user extends Controller {
 		$users  	= $this->Users_model->getAllUser($this->limit, $offset, $username);
 		$num_rows 	= $this->Users_model->countAll() - 1;
 		$data_user['user_table'] = $users;
+		
+		// untuk penomoran dan menampilkan hasil
+		$data_user['start']  = $offset + 1; // untuk penomoran tabel
+		$data_user['finish'] = min($data_user['start'] + $this->limit - 1, $data_user['start'] + ($num_rows - $data_user['start']));
+		$data_user['total']  = $num_rows;
 	
 		// Membuat pagination
 		$config['base_url']    		= site_url('admin/manage_user/load_users');
@@ -114,12 +119,25 @@ class Manage_user extends Controller {
 		$uri_segment = 4;
 		$offset      = $this->uri->segment($uri_segment);
 
-		$key = $this->input->get('key');
+		// kata kunci pencarian
+		$key = $this->input->post('key');
+		if (empty($key)) { // jika kata kunci pencarian tidak ada
+			$key = $this->session->userdata('key'); // ambil dari session
+		}
+		else {
+			$this->session->set_userdata('key', $key); // set kata kunci pencarian ke dalam session
+		}
 		$data_user['key'] = $key;
 		
 		$this->load->model('Users_model','',TRUE);
 		$data_user['result'] = $this->Users_model->searchUser($this->limit, $offset, $key);
 		$data_user['count']  = $this->Users_model->countSearch($key);
+		$num_rows			 = $data_user['count'];
+		
+		// untuk penomoran dan menampilkan hasil
+		$data_user['start']  = $offset + 1; // untuk penomoran tabel
+		$data_user['finish'] = min($data_user['start'] + $this->limit - 1, $data_user['start'] + ($num_rows - $data_user['start']));
+		$data_user['total']  = $num_rows;
 		
 		// Membuat pagination			
 		$config['base_url']    = site_url('admin/manage_user/search_user');
@@ -242,25 +260,35 @@ class Manage_user extends Controller {
 	
 	function edit_user_process() {
 		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
+			$this->load->helper('security');
 			
 			// kondisi password
-			$new_password = $this->input->post('new-password');
+			$new_password = $this->input->post('password');
 			if(!empty($new_password)) {
 				$password = $new_password;
+				// Prepare data untuk disimpan di tabel
+				$user  = array(
+					'name'		=> $this->input->post('name'),
+					'id_source'	=> $this->input->post('publisher'),
+					'password'  => dohash($password),
+					'email'     => $this->input->post('email'),
+					'phone'     => $this->input->post('phone'),
+					'user_level'=> $this->input->post('user-level')
+				);
 			}
 			else {
 				$password = $this->input->post('old-password');
+				// Prepare data untuk disimpan di tabel
+				$user  = array(
+					'name'		=> $this->input->post('name'),
+					'id_source'	=> $this->input->post('publisher'),
+					'password'  => $password,
+					'email'     => $this->input->post('email'),
+					'phone'     => $this->input->post('phone'),
+					'user_level'=> $this->input->post('user-level')
+				);
 			}
 			
-			// Prepare data untuk disimpan di tabel
-			$user  = array(
-				'name'		=> $this->input->post('name'),
-				'id_source'	=> $this->input->post('publisher'),
-				'password'  => $password,
-				'email'     => $this->input->post('email'),
-				'phone'     => $this->input->post('phone'),
-				'user_level'=> $this->input->post('user-level')
-			);
 			
 			// Proses simpan data
 			$id_user = $this->session->userdata('id_user');
@@ -270,13 +298,12 @@ class Manage_user extends Controller {
 			$message = 'User '.$id_user.' has been updated!'; 
 			$this->session->set_flashdata('message_success', $message);
 			//$key = $this->session->userdata('current_table');
-			redirect('admin/manage_user');
+			redirect('admin/manage_user/detail_user'.'/'.$id_user);
 		}
 		else {
 			$message = 'Update user '.$id_user.' failed!'; 
 			$this->session->set_flashdata('message_failed', $message);
-			//$key = $this->session->userdata('current_table');
-			redirect('admin/manage_user');
+			redirect('admin/manage_user/detail_user'.'/'.$id_user);
 		}
 	}
 	
