@@ -3,7 +3,7 @@
 class Manage_article extends Controller {
 	
 	//limitasi tabel
-	var $limit = 13;
+	var $limit = 50;
 	
 	function Manage_article() {
 		parent::Controller();	
@@ -31,23 +31,28 @@ class Manage_article extends Controller {
 		
 		// Siapa yang login dan membuat navigasi aktif
 		$username  = $this->session->userdata('username'); // username dari saat login
-		$data_article['username']	= $username;
-		$data_article['active'] 	= 'article';
+		$data_article['username'] = $username;
+		$data_article['active']	  = 'article';
 		
 		// Offset
-		$uri_segment 		= 4;
-		$offset 			= $this->uri->segment($uri_segment);
+		$uri_segment = 4;
+		$offset 	 = $this->uri->segment($uri_segment);
 		
 		$this->load->model('Article_model','',TRUE);
 		$articles  	= $this->Article_model->getAllArticle($this->limit, $offset);
 		$num_rows 	= $this->Article_model->countAll();
 		$data_article['article_table'] = $articles;
-		$data_article['no'] 		   = $offset + 1; // untuk penomoran tabel
+		
+		// untuk penomoran dan menampilkan hasil
+		$data_article['start'] 	= $offset + 1; // untuk penomoran tabel
+		$data_article['finish'] = min($data_article['start'] + $this->limit - 1, $data_article['start'] + ($num_rows - $data_article['start']));
+		$data_article['total']  = $num_rows;
 		
 		// Membuat pagination			
 		$config['base_url']    		= site_url('admin/manage_article/load_article/');
 		$config['total_rows']		= $num_rows;
 		$config['per_page']     	= $this->limit;
+		$config['num_links']     	= 5;
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
 		$data_article['pagination'] = $this->pagination->create_links();
@@ -211,23 +216,26 @@ class Manage_article extends Controller {
 			$this->Article_model->addArticleVersion($article_version);
 			
 			// Pecah input tag
-			$tag_pieces = explode(", ", $this->input->post('tag'));
-			
-			// Prepare data sekaligus proses simpan ke tabel tag
-			$this->load->model('Tag_model','',TRUE);
-			for ($i=0; $i<sizeof($tag_pieces); $i++) {
-				// jika tag belum ada maka di tambahkan
-				if ($this->Tag_model->checkTag($tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ') {
-					$tag   = array('id_tag' => $tag_pieces[$i], 'tag_name' => $tag_pieces[$i]);
-					$this->Tag_model->addTag($tag);
+			$tags = $this->input->post('tag');
+			if (!empty($tags)) {
+				$tag_pieces = explode(", ", $tags);
+				
+				// Prepare data sekaligus proses simpan ke tabel tag
+				$this->load->model('Tag_model','',TRUE);
+				for ($i=0; $i<sizeof($tag_pieces); $i++) {
+					// jika tag belum ada maka di tambahkan
+					if ($this->Tag_model->checkTag(strtolower($tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ')) {
+						$tag   = array('id_tag' => strtolower($tag_pieces[$i]), 'tag_name' => $tag_pieces[$i]);
+						$this->Tag_model->addTag($tag);
+					}
 				}
-			}
-			
-			// Prepare data sekaligus proses simpan ke tabel tag_article
-			for ($i=0; $i<sizeof($tag_pieces); $i++) {
-				if ($this->Tag_model->checkTagArticle($id_article, $tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ') { // jika tag belum ada maka di tambahkan
-					$tag_article = array('id_article'=> $id_article, 'id_tag' => $tag_pieces[$i]);
-					$this->Tag_model->addTagArticle($tag_article);
+				
+				// Prepare data sekaligus proses simpan ke tabel tag_article
+				for ($i=0; $i<sizeof($tag_pieces); $i++) {
+					if ($this->Tag_model->checkTagArticle($id_article, strtolower($tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ')) { // jika tag belum ada maka di tambahkan
+						$tag_article = array('id_article'=> $id_article, 'id_tag' => strtolower($tag_pieces[$i]));
+						$this->Tag_model->addTagArticle($tag_article);
+					}
 				}
 			}
 			
@@ -251,6 +259,45 @@ class Manage_article extends Controller {
 			$message = 'Update article '.$id_article.' failed!'; 
 			$this->session->set_flashdata('message_failed', $message);
 			redirect('admin/manage_article/detail_article'.'/'.$id_article);
+		}
+	}
+	
+	function edit_multiple_flag() {
+		if (($this->session->userdata('user_level') == 'administrator') && $this->session->userdata('login') == TRUE) {
+			
+			$id_user  		  = $this->session->userdata('username'); // username dari saat login
+			$id_article_array = $this->input->post('checkbox');
+			$article_flag 	  = $this->input->post('article-flag');
+			$sum 			  = 0;
+			
+			if (!empty($id_article_array)) {
+				foreach ($id_article_array as $checked_id) {
+					
+					// update flag sekaligus
+					$new_flag = array('article_flag' => $article_flag);
+					$this->load->model('Article_model','',TRUE);
+					$this->Article_model->changeArticleFlag($new_flag, $checked_id);
+					
+					// untuk activity log
+					$activity_log = array(
+						'id_article'	=> $checked_id,
+						'id_user'   	=> $this->session->userdata('username'), //siapa yang login saat itu
+						'flag'  		=> $article_flag,
+						'process_date' 	=> date('Y-m-d G:i:s')
+					);
+					$this->Article_model->AddUserArticle($activity_log);
+					
+					$sum++;
+				}
+				$message = $sum.' article flag has been updated!'; 
+				$this->session->set_flashdata('message_success', $message);
+				redirect('admin/manage_article');
+			}
+			else {
+				$message = 'Update article flag has been failed!'; 
+				$this->session->set_flashdata('message_failed', $message);
+				redirect('admin/manage_article');
+			}
 		}
 	}
 	
@@ -278,8 +325,15 @@ class Manage_article extends Controller {
 		// Limit & Offset
 		$uri_segment = 4;
 		$offset      = $this->uri->segment($uri_segment);
-
+		
+		// kata kunci pencarian
 		$key = $this->input->get('key');
+		if (empty($key)) { // jika kata kunci pencarian tidak ada
+			$key = $this->session->userdata('key'); // ambil dari session
+		}
+		else {
+			$this->session->set_userdata('key', $key); // set kata kunci pencarian ke dalam session
+		}
 		$data_article['key'] = $key;
 		
 		$this->load->model('Article_model','',TRUE);
@@ -290,6 +344,7 @@ class Manage_article extends Controller {
 		$config['base_url']    = site_url('admin/manage_article/search_article');
 		$config['total_rows']  = $data_article['count'];
 		$config['per_page']    = $this->limit;
+		$config['num_links']   = 5;
 		$config['uri_segment'] = $uri_segment;
 		$this->pagination->initialize($config);
 		$data_article['pagination']    = $this->pagination->create_links();
@@ -303,17 +358,19 @@ class Manage_article extends Controller {
 	}
 	
 	function retrieve_email() {
-		/*$config['type'] = 'imap';
-		$config['host'] = 'mail.google.com';
+		/*
+		$config['type'] = 'imap';
+		$config['host'] = 'gmail.com';
 		$config['username'] = 'andrefadila@gmail.com';
 		$config['password'] = 'p72412714';
-		$config['port'] = 993;
+		$config['port'] = 465;
 		//$config['secure'] = TRUE;
-		$config['timeout'] = 15;
+		$config['timeout'] = 60;
 		$this->load->library('mailbox', $config);
 		
 		//$mailbox  = new Mailbox('imap', 'imap.gmail.com', 'andrefadila@gmail.com', 'p72412714', 993);
 		$messages = $this->mailbox->listMessages(5);
+		echo $message->uid;
 		*/
 		
 		$this->load->helper('imapmailbox');
@@ -322,7 +379,7 @@ class Manage_article extends Controller {
 		define('GMAIL_PASSWORD', 'p72412714');
 		
 		//$mailbox = new ImapMailbox('{imap.gmail.com:993/imap/novalidate-cert/ssl}imap', GMAIL_EMAIL, GMAIL_PASSWORD,'','utf-8');
-		$mailbox = new ImapMailbox('{imap.gmail.com:993/imap/novalidate-cert/ssl}', GMAIL_EMAIL, GMAIL_PASSWORD,'','utf-8');
+		$mailbox = new ImapMailbox('{imap.gmail.com:993/imap/novalidate-cert/ssl}INBOX', GMAIL_EMAIL, GMAIL_PASSWORD,'','utf-8');
 		$mails = array();
 		foreach($mailbox->searchMails('UNSEEN') as $mailId) { // mencari email yang belum terbaca
 			$mail = $mailbox->getMail($mailId, 1);
@@ -334,37 +391,259 @@ class Manage_article extends Controller {
 		$this->load->model('Article_model','',TRUE);
 		
 		// proses loop simpan ke database
-		$sum = 0;
-		foreach($mails as $key => $value) {
-			$new_author = array(
-				'id_author' => $value->fromAddress,
-				'id_source'	=> 1,
-				'name' 		=> $value->fromName,
-				'email' 	=> $value->fromAddress
-			);
+		if(!empty($mails)) {
+			$sum = 0;
+			foreach($mails as $key => $value) {
+				
+				// cek author sudah ada atau belum, jika belum tambahkan
+				if ($this->Author_model->checkAuthorAvailability($value->fromAddress) == FALSE) { // jika author belum ada maka di tambahkan
+					$new_author = array(
+						'id_author' => $value->fromAddress,
+						'id_source'	=> 1,
+						'name' 		=> $value->fromName,
+						'email' 	=> $value->fromAddress
+					);
+				
+					$this->Author_model->addAuthor($new_author);
+				}
+				
+				// proses memasukan artikel ke dalam database
+				$new_article = array(
+					'id_source'		=> 1,
+					'id_category'	=> 'tes',
+					'author'		=> $value->fromName,
+					'created_on'	=> $value->date,
+					'headline'		=> $value->subject,
+					'slug'			=> str_replace(" ", "-", $value->subject),
+					'body_article'	=> strip_tags($value->textHtml),
+					'article_flag'	=> 'row_article',
+					'locked'		=> 'no'
+				);
+				
+				$this->Article_model->addArticle($new_article);
+				
+				$sum++;
+				
+				$message = 'Add '. $sum .' new article from email successfull!'; 
+				$this->session->set_flashdata('message_success', $message);
+			}
+			redirect('admin/manage_article');
+		}
+		else {
+			$message = 'Retrieve article from email failed!'; // bisa karena max execution time atau email udah terbaca semua
+			$this->session->set_flashdata('message_failed', $message);
+			redirect('admin/manage_article');
+		}
+	}
+	
+	function retrieve_afp() {
+		$this->load->model('Author_model','',TRUE);
+		$this->load->model('Article_model','',TRUE);
+		$this->load->helper('directory');
+		
+		// ---------- untuk xml dari AFP ----------- //
+		$afp	= directory_map("./xml_wires/Afp/");
+		$sum    = 0;
+		foreach ($afp as $filename) {
+			$xml 	= simplexml_load_file(base_url()."xml_wires/Afp/".$filename); // baca file nya
 			
-			if ($this->Author_model->checkAuthorAvailability($new_author['id_author']) == FALSE) { // jika author belum ada maka di tambahkan
-				$this->Author_model->addAuthor($new_author);
+			// siapkan headline, slugline, author
+			$newsline 	  = $xml->xpath("//NewsLines");
+			foreach ($newsline as $content) {
+				$headline = $content->HeadLine;
+				$slugline = $content->SlugLine;
+				$author	  = substr($content->ByLine, 3);
+				//echo $content->DateLine."<br><br>";
 			}
 			
+			// siapkan body_article
+			$body 		  = $xml->xpath("//body.content");
+			$body_array	  = array();
+			foreach ($body[0] as $content) {
+				$body_array[] = $content;
+			}
+			$body_article = implode("\n", $body_array);
+			
+			if ($this->Author_model->checkAuthorAvailability($author) == FALSE) { // jika author belum ada maka di tambahkan
+				$new_author = array(
+					'id_author' => $author,
+					'id_source'	=> 3,
+					'name' 		=> $author
+				);
+				$this->Author_model->addAuthor($new_author);
+			}
+				
+			// proses memasukan artikel ke dalam database
 			$new_article = array(
-				'id_source'		=> 1,
+				'id_source'		=> 3,
 				'id_category'	=> 'tes',
-				'author'		=> $value->fromName,
-				'created_on'	=> $value->date,
-				'headline'		=> $value->subject,
-				'body_article'	=> strip_tags($value->textHtml),
+				'author'		=> $author,
+				'created_on'	=> date('Y-m-d G:i:s'),
+				'headline'		=> (string)$headline,
+				'slug'			=> str_replace(" ", "-", $headline),
+				'body_article'	=> $body_article,
 				'article_flag'	=> 'row_article',
 				'locked'		=> 'no'
 			);
 			
 			$this->Article_model->addArticle($new_article);
-			
-			$sum++;
-			
-			$message = 'Add '. $sum .' new article successfull!'; 
-			$this->session->set_flashdata('message_success', $message);
+				
+			$sum++; // counter
 		}
+		$message = 'Add '. $sum .' new article from AFP successfull!'; 
+		$this->session->set_flashdata('message_success', $message);
+		redirect('admin/manage_article');
+	}
+	
+	function retrieve_asianwire() {
+		$this->load->model('Author_model','',TRUE);
+		$this->load->model('Article_model','',TRUE);
+		$this->load->helper('directory');
+		
+		// ---------- untuk xml dari AsianWire ----------- //
+		$asianwire  = directory_map("./xml_wires/AsianWire/");
+		foreach ($asianwire as $filename) {
+			$xml 	= simplexml_load_file(base_url()."xml_wires/AsianWire/".$filename); // baca file nya
+			
+			// siapkan headline
+			$headline_array = $xml->xpath("//hl1");
+			foreach ($headline_array as $content) {
+				$headline = $content;
+			}
+			
+			// siapkan body_article
+			$body 		  = $xml->xpath("//block");
+			$body_array	  = array();
+			
+			foreach ($body as $content) {
+				foreach ($content as $paragraph) {
+					$body_array[] = $paragraph;
+				}
+			}
+			$body_article = implode("\n", $body_array);
+			
+			// proses memasukan artikel ke dalam database
+			$new_article = array(
+				'id_source'		=> 5,
+				'id_category'	=> 'tes',
+				'created_on'	=> date('Y-m-d G:i:s'),
+				'headline'		=> (string)$headline,
+				'slug'			=> str_replace(" ", "-", $headline),
+				'body_article'	=> $body_article,
+				'article_flag'	=> 'row_article',
+				'locked'		=> 'no'
+			);
+			
+			$this->Article_model->addArticle($new_article);
+				
+			$sum++; // counter
+		}
+		
+		$message = 'Add '. $sum .' new article from Asian Wire successfull!'; 
+		$this->session->set_flashdata('message_success', $message);
+		redirect('admin/manage_article');
+	}
+	
+	function retrieve_dpa() {
+		$this->load->model('Author_model','',TRUE);
+		$this->load->model('Article_model','',TRUE);
+		$this->load->helper('directory');
+		
+		// ---------- untuk xml dari DPA ----------- //
+		$dpa	= directory_map("./xml_wires/DPA/");
+		$sum    = 0;
+		foreach ($dpa as $filename) {
+			$xml 	= simplexml_load_file(base_url()."xml_wires/DPA/".$filename); // baca file nya
+			
+			// siapkan headline
+			$headline_array = $xml->xpath("//hl1");
+			//print_r($headline_array);
+			foreach ($headline_array as $content) {
+				$headline = $content;
+			}
+			
+			// siapkan body_article
+			$body 		  = $xml->xpath("//body.content");
+			$body_array	  = array();
+			foreach ($body[0] as $content) {
+				$body_array[] = $content;
+			}
+			$body_article = implode("\n", $body_array);
+			
+			// proses memasukan artikel ke dalam database
+			$new_article = array(
+				'id_source'		=> 6,
+				'id_category'	=> 'tes',
+				'created_on'	=> date('Y-m-d G:i:s'),
+				'headline'		=> (string)$headline,
+				'slug'			=> str_replace(" ", "-", $headline),
+				'body_article'	=> $body_article,
+				'article_flag'	=> 'row_article',
+				'locked'		=> 'no'
+			);
+			
+			$this->Article_model->addArticle($new_article);
+				
+			$sum++;
+		}
+		
+		$message = 'Add '. $sum .' new article from DPA successfull!'; 
+		$this->session->set_flashdata('message_success', $message);
+		redirect('admin/manage_article');
+	}
+	
+	function retrieve_nyt() {
+		$this->load->model('Author_model','',TRUE);
+		$this->load->model('Article_model','',TRUE);
+		$this->load->helper('directory');
+		
+		// ---------- untuk xml dari NYT ----------- //
+		$asianwire  = directory_map("./xml_wires/NYT/");
+		foreach ($asianwire as $filename) {
+			$xml 	= simplexml_load_file(base_url()."xml_wires/NYT/".$filename); // baca file nya
+			
+			// siapkan headline
+			$headline_array = $xml->xpath("//hl1");
+			foreach ($headline_array as $content) {
+				$headline = $content;
+			}
+			
+			// siapkan author
+			$author_array = $xml->xpath("//byline");
+			foreach ($author_array as $content) {
+				$author = (string)$content;
+			}
+			
+			// siapkan body_article
+			$body 		  = $xml->xpath("//block");
+			$body_array	  = array();
+			
+			foreach ($body as $content) {
+				foreach ($content as $paragraph) {
+					$body_array[] = $paragraph;
+				}
+			}
+			$body_article = implode("\n", $body_array);
+				
+			// proses memasukan artikel ke dalam database
+			$new_article = array(
+				'id_source'		=> 4,
+				'id_category'	=> 'tes',
+				'created_on'	=> date('Y-m-d G:i:s'),
+				'headline'		=> (string)$headline,
+				'slug'			=> str_replace(" ", "-", $headline),
+				'body_article'	=> $body_article,
+				'article_flag'	=> 'row_article',
+				'locked'		=> 'no'
+			);
+			
+			$this->Article_model->addArticle($new_article);
+				
+			$sum++; // counter
+		}
+		
+		$message = 'Add '. $sum .' new article from NYT successfull!'; 
+		$this->session->set_flashdata('message_success', $message);
 		redirect('admin/manage_article');
 	}
 }

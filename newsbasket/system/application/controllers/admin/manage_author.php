@@ -3,7 +3,7 @@
 class Manage_author extends Controller {
 	
 	//limitasi tabel
-	var $limit = 13;
+	var $limit = 10;
 	
 	function Manage_author() {
 		parent::Controller();	
@@ -42,6 +42,11 @@ class Manage_author extends Controller {
 		$authors  	= $this->Author_model->getAllAuthor($this->limit, $offset);
 		$num_rows 	= $this->Author_model->countAll();
 		$data_author['author_table'] = $authors;
+		
+		// untuk penomoran dan menampilkan hasil
+		$data_author['start']  = $offset + 1; // untuk penomoran tabel
+		$data_author['finish'] = min($data_author['start'] + $this->limit - 1, $data_author['start'] + ($num_rows - $data_author['start']));
+		$data_author['total']  = $num_rows;
 
 		// Membuat pagination			
 		$config['base_url']    		= site_url('admin/manage_author/load_author');
@@ -106,6 +111,11 @@ class Manage_author extends Controller {
 		$authors  	= $this->Author_model->getAllAuthor($this->limit, $offset);
 		$num_rows 	= $this->Author_model->countAll();
 		$data_author['author_table'] = $authors;
+		
+		// untuk penomoran dan menampilkan hasil
+		$data_author['start']  = $offset + 1; // untuk penomoran tabel
+		$data_author['finish'] = min($data_author['start'] + $this->limit - 1, $data_author['start'] + ($num_rows - $data_author['start']));
+		$data_author['total']  = $num_rows;
 		
 		// ambil data author dari ID nya
 		$author = $this->Author_model->getAuthorByID($id_author)->row();
@@ -176,12 +186,25 @@ class Manage_author extends Controller {
 		$uri_segment = 4;
 		$offset      = $this->uri->segment($uri_segment);
 
-		$key = $this->input->get('key');
+		// kata kunci pencarian
+		$key = $this->input->post('key');
+		if (empty($key)) { // jika kata kunci pencarian tidak ada
+			$key = $this->session->userdata('key'); // ambil dari session
+		}
+		else {
+			$this->session->set_userdata('key', $key); // set kata kunci pencarian ke dalam session
+		}
 		$data_author['key'] = $key;
 		
 		$this->load->model('Author_model','',TRUE);
 		$data_author['result'] = $this->Author_model->searchAuthor($this->limit, $offset, $key);
 		$data_author['count']  = $this->Author_model->countSearch($key);
+		$num_rows			   = $data_author['count'];
+		
+		// untuk penomoran dan menampilkan hasil
+		$data_author['start']  = $offset + 1; // untuk penomoran tabel
+		$data_author['finish'] = min($data_author['start'] + $this->limit - 1, $data_author['start'] + ($num_rows - $data_author['start']));
+		$data_author['total']  = $num_rows;
 		
 		// Membuat pagination			
 		$config['base_url']    = site_url('admin/manage_author/search_author');

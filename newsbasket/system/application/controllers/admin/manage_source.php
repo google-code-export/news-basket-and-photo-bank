@@ -37,6 +37,11 @@ class Manage_source extends Controller {
 		$sources 	= $this->Source_model->getAllSource($this->limit, $offset);
 		$num_rows 	= $this->Source_model->countAll();
 		$data_source['source_table'] = $sources;
+		
+		// untuk penomoran dan menampilkan hasil
+		$data_source['start']  = $offset + 1; // untuk penomoran tabel
+		$data_source['finish'] = min($data_source['start'] + $this->limit - 1, $data_source['start'] + ($num_rows - $data_source['start']));
+		$data_source['total']  = $num_rows;
 			
 		// Membuat pagination			
 		$config['base_url']    		= site_url('admin/manage_source/load_sources');
@@ -91,7 +96,12 @@ class Manage_source extends Controller {
 		$this->load->model('Source_model','',TRUE);	
 		$sources  	= $this->Source_model->getAllSource($this->limit, $offset);
 		$num_rows 	= $this->Source_model->countAll();
-		$data_source['source_table'] = $sources;
+		$data_source['source_table'] = $sources;;
+		
+		// untuk penomoran dan menampilkan hasil
+		$data_source['start']  = $offset + 1; // untuk penomoran tabel
+		$data_source['finish'] = min($data_source['start'] + $this->limit - 1, $data_source['start'] + ($num_rows - $data_source['start']));
+		$data_source['total']  = $num_rows;
 		
 		// Membuat pagination			
 		$config['base_url']    		= site_url('admin/manage_source/load_sources');
