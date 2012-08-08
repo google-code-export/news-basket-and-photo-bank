@@ -3,6 +3,13 @@
 		<button style="float: right; margin-top: -5px;" >Edit User</button>
 	</a>
 </p>
+<?php
+	$message_success = $this->session->flashdata('message_success');
+	echo !empty($message_success) ? "<p class='success'>" . $message_success . "</p>": "";
+	$message_failed = $this->session->flashdata('message_failed');
+	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
+?>
+<br />
 <table style="margin-left: 3px;">
 	<tr>
 		<td class="bold"><label for="id-user">ID User</label></td>

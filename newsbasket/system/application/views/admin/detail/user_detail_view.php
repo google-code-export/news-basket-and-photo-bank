@@ -9,6 +9,7 @@
 		<br />
 		<p class='flip'><strong><?php echo $user['id_user']?> statistic</strong></p>
 		<div style="height: 330px; overflow-y: auto;">
+		<br />
 		<table style="margin-left: 3px;">
 			<tr>
 				<td class="bold">Create Article</td>

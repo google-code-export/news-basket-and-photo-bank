@@ -54,9 +54,9 @@
 		!empty($form_edit_author)? $this->load->view($form_edit_author) : '';
 	?>
 </div>
-<div id="author-table" class="table-menu">
+<div id="author-table" class="table-menu" style="border: none;">
 	<div class="search">
-		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
+		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="POST">
 			Search by name : <input type="text" name="key" id="key" value="" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>
@@ -87,8 +87,8 @@
 		</thead>
 		<tbody>
 		<?php
-			$No = 1;
 			$this->load->helper('text');
+			$no = 0 + $start;
 			foreach ($author_table as $column) {
 				$deleteLink = anchor(
 					'admin/manage_author/delete_author/'.$column->id_author,
@@ -101,10 +101,10 @@
 					array('class'=>'btn-edit-author')
 				);
 				
-				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
+				($no%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class=$class_tr>
-						<td class='center'>$No</td>
+						<td class='center'>$no</td>
 						<td id='id-author'>$column->id_author</td>
 						<td>$column->source_name</td>
 						<td>$column->name</td>
@@ -114,9 +114,16 @@
 						<td class='center'>$deleteLink</td>
 					</tr>
 				";
-				$No++;
+				$no++;
 			}
 		?>
 		</tbody>
 	</table>
+	<div class="table-menu" style="background-color: #A7C942;">
+		<div class="paging">
+		<?php
+			echo "<p>Showing ".$start." to ".$finish." of ".$total." authors</p>" ; 
+		?>
+		</div>
+	</div>
 </div>

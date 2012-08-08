@@ -7,10 +7,6 @@
 			<td class="label"><input type="text" id="name" name="name" size="40px;" style="margin-left: 3px;" required="required" autofocus="autofocus" value="<?php echo $default['name']; ?>"/></td>
 		</tr>
 		<tr>
-			<td class="bold"><label for="old-password">Old Password</label></td>
-			<td class="label"><input type="text" id="old-password" name="old-password" size="40px;" style="margin-left: 3px;" required="required" value="<?php echo $default['password']; ?>"/></td>
-		</tr>
-		<tr>
 			<td class="bold"><label for="phone">Phone</label></td>
 			<td class="label"><input type="text" id="phone" name="phone" size="40px;" style="margin-left: 3px;" required="required" value="<?php echo $default['phone']; ?>" /></td>
 			<td><span id="check-numeric" style="display: none;"></span></td>
@@ -35,8 +31,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="bold"><label for="new-password">New Password</label></td>
-			<td class="label"><input type="password" id="new-password" name="new-password" size="40px;" style="margin-left: 3px;" /></td>
+			<td class="bold"><label for="password">New Password</label></td>
+			<td class="label"><input type="password" id="password" name="password" size="40px;" style="margin-left: 3px;" /></td>
 		</tr>
 		<tr>
 			<td class="bold"><label for="confirm-password">Retype Password</label></td>
@@ -73,4 +69,5 @@
 			</td>
 		</tr>
 	</table>
+	<input type="hidden" id="old-password" name="old-password" size="40px;" style="margin-left: 3px;" required="required" value="<?php echo $default['password']; ?>"/>
 </form>

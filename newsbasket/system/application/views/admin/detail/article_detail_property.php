@@ -9,6 +9,7 @@
 	$message_failed = $this->session->flashdata('message_failed');
 	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
 ?>
+<br />
 <table style="margin-left: 3px; border-collapse:collapse;">
 	<tr class="alternate">
 		<td class="bold">Headline</td>

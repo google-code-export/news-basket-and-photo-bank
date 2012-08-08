@@ -4,7 +4,7 @@
 </h2>
 <div id="user-table" class="table-menu">
 	<div class="search">
-		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
+		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="POST">
 			Search by name : <input type="text" name="key" id="key" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>
@@ -65,4 +65,11 @@
 	?>
 		</tbody>
 	</table>
+	<div class="table-menu" style="background-color: #98bf21;">
+		<div class="paging">
+		<?php
+			echo "<p>Showing ".$start." to ".$finish." of ".$total." users</p>" ; 
+		?>
+		</div>
+	</div>
 </div>

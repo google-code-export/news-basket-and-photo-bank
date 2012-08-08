@@ -1,4 +1,4 @@
-<p class='flip'><strong>Edit Article</strong></p>
+<p class='flip'><strong>Edit Article</strong><a href="<?php echo site_url('admin/manage_article/detail_article').'/'.$article['id_article'];?>"><button style="float: right; margin-top: -5px;">Cancel</button></a></p>
 <form id="edit-article-form" method="post" action="<?php echo $form_action_edit;?>" >
 	<br />
 	<table style="margin-left: 3px;">
@@ -9,13 +9,13 @@
 		<tr>
 			<td class="bold"><label for="lead-article">Lead Article</label></td>
 			<td class="label">
-				<textarea name="lead-article" rows="5" cols="50"><?php echo $article['lead_article']?></textarea>
+				<textarea name="lead-article" rows="5" cols="50" wrap="off"><?php echo $article['lead_article']?></textarea>
 			</td>
 		</tr>	
 		<tr class="alternate">
 			<td class="bold"><label for="body-article">Body Article</label></td>
 			<td class="label">
-				<textarea name="body-article" rows="10" cols="50"><?php echo $article['body_article']?></textarea>
+				<textarea name="body-article" rows="10" cols="50" wrap="off"><?php echo $article['body_article']?></textarea>
 			</td>
 		</tr>
 		<tr>
@@ -66,18 +66,18 @@
 			</td>
 		</tr>
 		<tr>
-			<td>&nbsp;</td>
+			<td>
+				<!-- data untuk membuat article_version -->
+				<input type="hidden" style="display: none;" name="headline-version" value="<?php echo $article['headline']?>"/>
+				<input type="hidden" style="display: none;" name="lead-article-version" value="<?php echo $article['lead_article']?>"/>
+				<input type="hidden" style="display: none;" name="body-article-version" value="<?php echo $article['body_article']?>"/>
+			</td>
 			<td>
 				<span style="float: right;">
 					<input type="submit" value="Save Article" />
-					<a id="edit-article" href="<?php echo site_url('admin/manage_article/detail_article').'/'.$article['id_article'];?>"><button>Cancel</button></a>
 				</span>
 			</td>
 		</tr>
 	</table>
-	<!-- data untuk membuat article_version -->
-	<input type="hidden" style="display: none;" name="headline-version" value="<?php echo $article['headline']?>"/>
-	<input type="hidden" style="display: none;" name="lead-article-version" value="<?php echo $article['lead_article']?>"/>
-	<input type="hidden" style="display: none;" name="body-article-version" value="<?php echo $article['body_article']?>"/>
 </form>
 	

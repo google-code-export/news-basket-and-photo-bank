@@ -76,9 +76,9 @@
 		</table>
 	</form>
 </div>
-<div id="user-table" class="table-menu">
+<div id="user-table" class="table-menu" style="border: none;">
 	<div class="search">
-		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
+		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="POST">
 			Search by name : <input type="text" name="key" id="key" value="" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>
@@ -106,13 +106,13 @@
 			<th>Phone</th>
 			<th>Email</th>
 			<th>Level</th>
-			<th class="center" colspan="2">Action</th>
+			<th class="center">Action</th>
 		</tr>
 		</thead>
 		<tbody>
 		<?php
-			$No = 1;
 			$this->load->helper('text');
+			$no = 0 + $start;
 			foreach ($user_table as $column) {
 				$deleteLink = anchor(
 					'admin/manage_user/delete_user/'.$column->id_user,
@@ -121,27 +121,33 @@
 				);
 				$detailLink = anchor(
 					'admin/manage_user/detail_user/'.$column->id_user,
-					'<button>Detail</button>',
+					$column->id_user,
 					array('class'=>'btn-detail-user')
 				);
 				
-				($No%2 == 1) ? $class_tr='odd' : $class_tr = '';
+				($no%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
 					<tr class='$class_tr'>
-						<td class='center'>$No</td>
-						<td id='id-user'>$column->id_user</td>
+						<td class='center'>$no</td>
+						<td id='id-user'>$detailLink</td>
 						<td>$column->source_name</td>
 						<td>$column->name</td>
 						<td>$column->phone</td>
 						<td>$column->email</td>
 						<td>$column->user_level</td>
-						<td class='center'>$detailLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>
 				";
-				$No++;
+				$no++;
 			}
 		?>
 		</tbody>
 	</table>
+	<div class="table-menu" style="background-color: #A7C942;">
+		<div class="paging">
+		<?php
+			echo "<p>Showing ".$start." to ".$finish." of ".$total." users</p>" ; 
+		?>
+		</div>
+	</div>
 </div>
