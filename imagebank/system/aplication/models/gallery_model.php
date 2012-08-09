@@ -5,12 +5,17 @@ class Gallery_model extends Model {
 		parent::Model();
 	}
 
-	function tampil_foto() {
+	function tampil_foto($limit, $offset) {
 		$this -> db -> select('*');
 		$this -> db -> from('images');
-		return $this -> db -> get() -> result();
+		$this -> db -> limit($limit, $offset);
+        return $this -> db -> get() -> result();
 	}
-
+	
+	function count_foto() {
+		return $this->db->count_all('images');
+	}
+	
 	function tampil_wire() {
 		$this -> db -> select('*');
 		$this -> db -> from('images');
@@ -50,6 +55,15 @@ class Gallery_model extends Model {
 
 	}
 
+	function countSearch($key){
+		$this -> db -> select('*');
+		$this -> db -> from('imagetag');
+		$this -> db -> where('id_tag', $key);
+		$this -> db -> join('images', 'imagetag.id_image=images.id_images');
+		return $this->db->get()->num_rows(); 
+		
+	}
+
 	function searchCategory($id_categories) {
 
 		$this -> db -> select('*');
@@ -78,5 +92,5 @@ class Gallery_model extends Model {
 		return $this -> db -> get_where('images', array('id_images' => $id)) -> result();
 
 	}
-
+	
 }
