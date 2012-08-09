@@ -4,7 +4,7 @@
 </h2>
 <div id="article-table" class="table-menu" style="border: none;">
 	<div class="search">
-		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
+		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET" style="float: right;">
 			Enter keywords : <input type="text" name="key" id="key" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>

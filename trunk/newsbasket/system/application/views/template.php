@@ -11,10 +11,10 @@
 </head>
 <?php flush();?>
 <body>
-	<div class="header-bar-login">
-		<?php $this->load->view('header_login'); ?>
-	</div>
 	<div class="container">
+		<div class="header-bar-login">
+			<?php $this->load->view('header_login'); ?>
+		</div>
 		<div id="main" class="main-login">
 			<?php $this->load->view($main_content); ?>
 		</div>

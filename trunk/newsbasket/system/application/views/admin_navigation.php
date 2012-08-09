@@ -4,31 +4,35 @@
 	switch($active) {
 		case 'dashboard':
 			$dashboard = 'active';
+			$article = $author  = $category = $user = $source = $tag = $profile = '';
+			break;
+		case 'profile':
+			$dashboard = $profile = 'active';
 			$article = $author  = $category = $user = $source = $tag = '';
 			break;
 		case 'article':
 			$article = 'active';
-			$dashboard = $author  = $category = $user = $source = $tag = '';
+			$dashboard = $author  = $category = $user = $source = $tag = $profile = '';
 			break;
 		case 'author':
 			$author  = 'active';
-			$dashboard = $article = $category = $user = $source = $tag = '';
+			$dashboard = $article = $category = $user = $source = $tag = $profile = '';
 			break;
 		case 'category':
 			$category = 'active';
-			$dashboard = $author = $article = $user = $source = $tag = '';
+			$dashboard = $author = $article = $user = $source = $tag = $profile = '';
 			break;
 		case 'user':
 			$user = 'active';
-			$dashboard = $author = $category = $article = $source = $tag = '';
+			$dashboard = $author = $category = $article = $source = $tag = $profile = '';
 			break;
 		case 'source':
 			$source = 'active';
-			$dashboard = $author = $category = $user = $article = $tag = '';
+			$dashboard = $author = $category = $user = $article = $tag = $profile = '';
 			break;
 		case 'tag':
 			$tag = 'active';
-			$dashboard = $author = $category = $user = $source = $article = '';
+			$dashboard = $author = $category = $user = $source = $article = $profile = '';
 			break;
 	}
 ?>
@@ -37,8 +41,7 @@
 	<ul class="menu">
 		<li id="dashboard"><?php echo anchor('admin/dashboard', 'Dashboard', array('class'=>$dashboard));?></li>
 		<ul>
-			<li class="child"><a href="<?php echo site_url('admin/manage_user/detail_user').'/'.$username;?>">My Profile</a></li>
-			<li class="child"><a href="<?php echo site_url('login/logoutProcess');?>">Logout</a></li>
+			<li class="child"><?php echo anchor('admin/dashboard/myprofile', 'My Profile', array('class'=>$profile));?></li>
 		</ul>
 	</ul>
 </div>
