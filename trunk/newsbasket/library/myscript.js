@@ -1,3 +1,47 @@
+/* XPATH XML
+function loadXMLDoc(dname) {
+	if (window.XMLHttpRequest) {
+		xhttp=new XMLHttpRequest();
+	}
+	else {
+		xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xhttp.open("GET",dname,false);
+	xhttp.send("");
+	return xhttp.responseXML;
+}
+
+xml=loadXMLDoc("books.xml");
+path="/bookstore/book/title";
+
+// code for IE
+if (window.ActiveXObject) {
+	var nodes=xml.selectNodes(path);
+
+	for (i=0;i<nodes.length;i++) {
+		document.write(nodes[i].childNodes[0].nodeValue);
+		document.write("<br />");
+	}
+}
+// code for Mozilla, Firefox, Opera, etc.
+else if (document.implementation && document.implementation.createDocument) {
+	var nodes=xml.evaluate(path, xml, null, XPathResult.ANY_TYPE,null);
+	var result=nodes.iterateNext();
+
+	while(result) {
+		document.write(result.childNodes[0].nodeValue);
+		document.write("<br />");
+		result=nodes.iterateNext();
+	}
+}*/
+
+// MULTIPLE CHECKBOX
+var MyCheckboxes=$("#table-list :checkbox");
+
+MyCheckboxes.change(function() {
+  $("#change-flag").toggle(MyCheckboxes.is(":checked"));
+});
+
 // TABLE SORTER
 $(document).ready(function() { 
 		$("#article").tablesorter({sortList: [[0,0]], headers: {6:{sorter: false}}});
@@ -8,7 +52,6 @@ $(document).ready(function() {
 		$("#tag").tablesorter({sortList: [[0,0]], headers: {3:{sorter: false}}});
     } 
 );  
-
 
 //MENGECEK USERNAME YANG ADA
 $(document).ready(function() {
