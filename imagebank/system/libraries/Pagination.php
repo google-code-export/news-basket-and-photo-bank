@@ -32,8 +32,8 @@ class CI_Pagination {
 	var $num_links			=  2; // Number of "digit" links to show before/after the currently viewed page
 	var $cur_page	 		=  0; // The current page being viewed
 	var $first_link   		= '&lsaquo; First';
-	var $next_link			= '&gt;';
-	var $prev_link			= '&lt;';
+	var $next_link			= 'Next &gt;';
+	var $prev_link			= '&lt; Prev';
 	var $last_link			= 'Last &rsaquo;';
 	var $uri_segment		= 3;
 	var $full_tag_open		= '';
