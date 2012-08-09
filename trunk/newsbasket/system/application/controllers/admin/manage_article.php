@@ -52,7 +52,7 @@ class Manage_article extends Controller {
 		$config['base_url']    		= site_url('admin/manage_article/load_article/');
 		$config['total_rows']		= $num_rows;
 		$config['per_page']     	= $this->limit;
-		$config['num_links']     	= 5;
+		$config['num_links']     	= 3;
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
 		$data_article['pagination'] = $this->pagination->create_links();

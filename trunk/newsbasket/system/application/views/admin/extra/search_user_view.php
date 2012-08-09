@@ -4,7 +4,7 @@
 </h2>
 <div id="user-table" class="table-menu">
 	<div class="search">
-		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="POST">
+		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET" style="float: right;">
 			Search by name : <input type="text" name="key" id="key" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>
@@ -12,7 +12,7 @@
 	<div class="paging">
 	</div>
 </div>
-<div id="search-result" style="height: 500px; overflow-y:auto;">
+<div id="search-result">
 	<table id="user" class="tablesorter">
 		<thead> 
 		<tr>
@@ -65,11 +65,11 @@
 	?>
 		</tbody>
 	</table>
-	<div class="table-menu" style="background-color: #98bf21;">
-		<div class="paging">
-		<?php
-			echo "<p>Showing ".$start." to ".$finish." of ".$total." users</p>" ; 
-		?>
-		</div>
+</div>
+<div class="table-bottom">
+	<div class="paging">
+	<?php
+		echo "<p>Showing ".$start." to ".$finish." of ".$total." users</p>" ; 
+	?>
 	</div>
 </div>
