@@ -14,7 +14,10 @@
 			");
 </style>
       
-        
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/base/jquery-ui.css" type="text/css" media="all" />
+<link rel="stylesheet" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css" type="text/   css" media="all" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js" type="text/javascript"></script>
 </head>
 <?php flush(); ?>
 <body>
@@ -38,14 +41,10 @@
                         <?php $this -> load -> view($main_view); ?>
                          
                 </div>
-                <div class="footer-bar">
-                        <?php $this -> load -> view('footer'); ?>
-                </div>
+                
         </div>
         
-        <script type="text/javascript" src="<?php echo base_url() . '/library/jquery.js'; ?>"></script> 
-        <script type="text/javascript" src="<?php echo base_url() . '/library/tablesorter/jquery.tablesorter.js'; ?>"></script>
-        <script  type="text/javascript" src="<?php echo base_url() . '/library/myscript.js'; ?>"></script>
+       
 </body>
 
 </html>

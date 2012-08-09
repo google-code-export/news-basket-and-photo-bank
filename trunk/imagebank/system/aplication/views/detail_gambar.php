@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>CI Gallery</title>
+<title>Image Detail</title>
 	        <style>
 				@import url("../../css/table.css");
 
@@ -59,14 +59,12 @@
 		}
 
 		/* This rule is read by Galleria to define the gallery height: */
-		#galleria {
-			height: 700px
-		}
+
 
 		#action {
 		}
 		.action {
-			font-family: "Courier New", Courier, monospace;
+			font-family: "Lucida Sans Unicode", Courier, monospace;
 			height: 40px;
 			width: 450px;
 			top: 30px;
@@ -100,8 +98,9 @@
 		 <div class="action" id="action" align="center">
              <table width="81%" border="0">
                <tr>
-                 <td ><img src="../../images/download.jpg" width="18" height="18" alt="download"><a href="<?php echo site_url("gallery/download/$row->id_images"); ?>">download</a></td>
-                 <td width="34%"><img src="../../images/edit_image.png" width="16" height="16" alt="edit"><a href="<?php echo site_url("gallery/updateImage/$row->id_images"); ?>"> edit properties</td>
+               	 <td ><img src="../../images/gallery.gif" width="25" height="25" alt="download"><a href="<?php echo site_url("gallery"); ?>">Back To Gallery</a></td>
+                 <td ><img src="../../images/download.jpg" width="20" height="18" alt="download"><a href="<?php echo site_url("gallery/download/$row->id_images"); ?>">download</a></td>
+                 <td width="34%"><img src="../../images/edit_image.png" width="20" height="16" alt="edit"><a href="<?php echo site_url("gallery/updateImage/$row->id_images"); ?>"> edit properties</td>
                  
                </tr>
              </table>
@@ -155,12 +154,7 @@
 <p>&nbsp; </p>
 <p>&nbsp; </p>
 
-<script>
-	Galleria.loadTheme('../../themes/classic/galleria.classic.min.js');
 
-	// Initialize Galleria
-	Galleria.run('#galleria');
-		  </script>
 </body>
 	
 
