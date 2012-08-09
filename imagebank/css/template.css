@@ -9,13 +9,15 @@ body {
 	font-size: 12px;
 	line-height: 1.4em;
 	height: 100%;
-	overflow: hidden;
+	
 }
 img {
 	margin: 8px;
 	padding: 5px;
 	border: 0px;
 }
+
+
 
 ul {
 	list-style: none outside none;
@@ -129,7 +131,93 @@ label {
 input[type="checkbox"] {
 	width: 35px;
 }
+/*------------------------------UNTUK gallery ----------------------*/
+#container {
+		margin: 0 auto;
+		width: 1100px;
+		border: 1px solid rgb(43,102,165);
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		font-family: Verdana, Geneva, sans-serif;
+		text-align: center;
+		
+	}
 
+	hovergallery img {
+		-webkit-transform: scale(0.8); /*Webkit: Scale down image to 0.8x original size*/
+		-moz-transform: scale(0.8); /*Mozilla scale version*/
+		-webkit-transition-duration: 0.5s; /*Webkit: Animation duration*/
+		-moz-transition-duration: 0.5s; /*Mozilla duration version*/
+		-o-transition-duration: 0.5s; /*Opera duration version*/
+		opacity: 0.7; /*initial opacity of images*/
+		margin: 0 10px 20px 0; /*margin between images*/
+		margin: 8px;
+		padding: 5px;
+		border: 5px solid #444;
+		-webkit-border-radius: 10px;
+	}
+
+	.hovergallery img:hover {
+		-webkit-transform: scale(1.1); /*Webkit: Scale up image to 1.2x original size*/
+		-moz-transform: scale(1.1); /*Mozilla scale version*/
+		-o-transform: scale(1.1); /*Opera scale version*/
+		box-shadow: 0px 0px 30px gray; /*CSS3 shadow: 30px blurred shadow all around image*/
+		-webkit-box-shadow: 0px 0px 30px gray; /*Safari shadow version*/
+		-moz-box-shadow: 0px 0px 30px gray; /*Mozilla shadow version*/
+		opacity: 1;
+		border-color: #555;
+		-moz-box-shadow: 0px 0px 10px #111;
+		-webkit-box-shadow: 0px 0px 10px #111;
+	}
+	
+/*------------------------pagination----------------------*/
+
+.pagination{
+	padding:2px;
+}
+
+.pagination ul{
+	margin:0;
+	padding:0;
+	text-align:left;
+	font-size:16px;
+}
+
+.pagination li{
+	list-style-type:none;
+	display:inline;
+	padding-bottom:1px;
+}
+
+.pagination a, .pagination a:visited{
+	padding: 0 5px;
+	border: 1px solid #9aafe5;
+	text-decoration:none;
+	color:#2e6ab1;
+}
+.pagination a:hover,.pagination a:active{
+	border: 1px solid #2b66a5;
+	color: #000;
+	background-color: #FFFF80;
+}
+.pagination a.currentpage{
+	background-color: #2E6AB1;
+	color: #FFF;
+	border-color: #2B66A5;
+	font-weight: bold;
+	cursor:default;
+}
+.pagination a.disablelink,.pagination a.disablelink:hover{
+	backgroudn-color:white;
+	cursor:default;
+	color: #929292;
+	border-color: #929292;
+	font-weight:normal;
+}
+
+.pagination a.prevnext{
+	font-weight:bold;
+}
 /*-------------------------class well---------------------*/
 .well {
 
@@ -209,7 +297,7 @@ input[type="checkbox"] {
 }
 #tab_search{
 	position:absolute;
-	margin-left: 850px;
+	margin-left: 800px;
 	height: 35px;
 	weight:100px;
 	margin-bottom:10px;
@@ -282,7 +370,7 @@ form{
 	float: left;
 	top: 30px;
 	left: 0px;
-	bottom: 20px;
+	
 	overflow-y: auto;
 	overflow-x: hidden;
 	background-color: rgb(245, 245, 245);
@@ -292,6 +380,7 @@ form{
 	border-style: solid;
 	list-style: none outside none;
 }
+
 
 .navigation-inner {
 	padding: 15px;
