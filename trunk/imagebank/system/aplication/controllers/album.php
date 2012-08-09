@@ -13,7 +13,11 @@ class Album extends Controller {
 
 		$data['username'] = $username;
 		$data['user_level'] = $user_level;
-		$this -> load -> view('template', $data);
+			if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
+			$this -> load -> view('template', $data);
+		} else {
+			$this -> load -> view('user/template', $data);
+		}
 
 	}
 

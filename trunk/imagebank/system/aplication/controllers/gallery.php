@@ -22,10 +22,28 @@ class Gallery extends Controller {
 		$this -> load -> model('UploadModel', '', TRUE);
 		$data['dropdown'] = $this -> UploadModel -> getAllCategory();
 		$data['page_title'] = 'Gallery Image Bank';
-		$data['images'] = $this -> Gallery_model -> tampil_foto();
 		$data['main_view'] = 'gallery';
 		$data['username'] = $username;
 		$data['user_level'] = $user_level;
+
+		// Membuat pagination
+		$limit = 30;
+		$uri_segment = 3;
+		$offset = $this -> uri -> segment($uri_segment);
+
+		$data['images'] = $this -> Gallery_model -> tampil_foto($limit, $offset);
+		$num_rows = $this -> Gallery_model -> count_foto();
+
+		$this -> load -> library('pagination');
+		$config['last_link'] = 'Last';
+		$config['cur_tag_open'] = '<b>';
+		$config['use_page_numbers'] = TRUE;
+		$config['base_url'] = site_url('gallery/tampil_foto');
+		$config['total_rows'] = $num_rows;
+		$config['per_page'] = $limit;
+		$config['uri_segment'] = $uri_segment;
+		$this -> pagination -> initialize($config);
+		$data['pagination'] = $this -> pagination -> create_links();
 
 		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
 			$this -> load -> view('templateSearch', $data);
@@ -48,6 +66,19 @@ class Gallery extends Controller {
 		$data['username'] = $username;
 		$data['user_level'] = $user_level;
 
+		// Membuat pagination
+		$limit = 20;
+		$uri_segment = 3;
+		$offset = $this -> uri -> segment($uri_segment);
+		$num_rows = $this -> Gallery_model -> count_foto();
+		$this -> load -> library('pagination');
+		$config['base_url'] = site_url('gallery/tampil_wire');
+		$config['total_rows'] = $num_rows;
+		$config['per_page'] = $limit;
+		$config['uri_segment'] = $uri_segment;
+		$this -> pagination -> initialize($config);
+		$data['pagination'] = $this -> pagination -> create_links();
+
 		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
 			$this -> load -> view('templateSearch', $data);
 		} else {
@@ -67,7 +98,18 @@ class Gallery extends Controller {
 		$data['main_view'] = 'gallery';
 		$data['username'] = $username;
 		$data['user_level'] = $user_level;
-
+		//pagination
+		$limit = 20;
+		$uri_segment = 3;
+		$offset = $this -> uri -> segment($uri_segment);
+		$num_rows = $this -> Gallery_model -> count_foto();
+		$this -> load -> library('pagination');
+		$config['base_url'] = site_url('gallery/tampil_publisher');
+		$config['total_rows'] = $num_rows;
+		$config['per_page'] = $limit;
+		$config['uri_segment'] = $uri_segment;
+		$this -> pagination -> initialize($config);
+		$data['pagination'] = $this -> pagination -> create_links();
 		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
 			$this -> load -> view('templateSearch', $data);
 		} else {
@@ -79,6 +121,13 @@ class Gallery extends Controller {
 
 		$data['images'] = $this -> Gallery_model -> detail_foto($id);
 		$this -> load -> view('detail_gambar', $data);
+
+	}
+
+	function detail_foto_user($id) {
+
+		$data['images'] = $this -> Gallery_model -> detail_foto($id);
+		$this -> load -> view('detail_gambar_user', $data);
 
 	}
 
@@ -153,7 +202,7 @@ class Gallery extends Controller {
 
 	}
 
-	function searchImage() {
+	function searchImage($start = 0) {
 		$username = $this -> session -> userdata('username');
 		$user_level = $this -> session -> userdata('user_level');
 		$data['username'] = $username;
@@ -169,14 +218,37 @@ class Gallery extends Controller {
 		if (($key != '') && ($key != 'enter keyword')) {
 			$this -> load -> model('gallery_model', '', TRUE);
 			$data['images'] = $this -> gallery_model -> searchImage($key);
+
+			
+			//pagination
+			$limit = 20;
+			$uri_segment = 3;
+			$offset = $this -> uri -> segment($uri_segment);
+			$num_rows = $this -> Gallery_model -> countSearch($key);
+			$this -> load -> library('pagination');
+			$config['base_url'] = site_url('gallery/getCategories');
+			$config['total_rows'] = $num_rows;
+			$config['per_page'] = $limit;
+			$config['uri_segment'] = $uri_segment;
+			$this -> pagination -> initialize($config);
+			$data['pagination'] = $this -> pagination -> create_links();
+			$data['images'] = $this -> Gallery_model -> searchImage($key);
+			
+			
+			
+			//$news['first_result'] = $start + 1;
+			//$news['last_result'] = min($start + $this -> limit, $num_rows);
 			if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
 				$this -> load -> view('templateSearch', $data);
 			} else {
 				$this -> load -> view('user/templateSearch', $data);
 			}
-			//$num_rows = $this->image_model->countSearch('key');
-			//$image['count']  = $num_rows;
 
+		} else {//pencarian tanpa input
+			$data['key'] = '';
+			$data['images'] = '';
+			$num_rows = 0;
+			$data['count'] = $num_rows;
 		}
 
 	}
@@ -195,6 +267,18 @@ class Gallery extends Controller {
 		$id_categories = $this -> input -> post('id_categories');
 		$data['id_categories'] = $id_categories;
 		$this -> load -> model('gallery_model', '', TRUE);
+		//pagination
+		$limit = 20;
+		$uri_segment = 3;
+		$offset = $this -> uri -> segment($uri_segment);
+		$num_rows = $this -> Gallery_model -> count_foto();
+		$this -> load -> library('pagination');
+		$config['base_url'] = site_url('gallery/getCategories');
+		$config['total_rows'] = $num_rows;
+		$config['per_page'] = $limit;
+		$config['uri_segment'] = $uri_segment;
+		$this -> pagination -> initialize($config);
+		$data['pagination'] = $this -> pagination -> create_links();
 		$data['images'] = $this -> gallery_model -> searchCategory($id_categories);
 		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
 			$this -> load -> view('templateSearch', $data);
