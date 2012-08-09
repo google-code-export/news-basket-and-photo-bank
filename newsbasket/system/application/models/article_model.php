@@ -17,14 +17,6 @@ class Article_model extends Model {
         return $this->db->get()->result();
     }
 	
-	function getArticle($limit, $offset) {
-        $this->db->from($this->table); //tabel article
-		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
-		$this->db->order_by('created_on');
-        $this->db->limit($limit, $offset);
-        return $this->db->get()->result();
-    }
-	
 	function getAllArticleBySource($limit, $offset, $key) {
         $this->db->from($this->table); //tabel article
 		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
@@ -36,6 +28,11 @@ class Article_model extends Model {
 	
 	function countAll() {
 		return $this->db->count_all($this->table);
+    }
+	
+	function countArticleByFlag($key) {
+		$this->db->where('article_flag',  $key);
+		return $this->db->get($this->table)->num_rows();
     }
 	
 	function countArticleByPublisher($key) {
@@ -91,7 +88,8 @@ class Article_model extends Model {
     
     function countSearch($key) {
         $this->db->from('article');
-		$this->db->like('body_article', $key);
+		$this->db->like('headline', $key);
+        $this->db->or_like('body_article', $key);
         return $this->db->get()->num_rows();
     }
 	
@@ -103,6 +101,11 @@ class Article_model extends Model {
         $this->db->where('id_article', $id_article);
         $this->db->update($this->table, $new_article);
     }
+	
+	function changeArticleFlag($new_flag, $id_article) {
+		$this->db->where('id_article', $id_article);
+        $this->db->update($this->table, $new_flag);
+	}
 	
 	function AddUserArticle($new_users_article) {
 		$this->db->insert('users_article', $new_users_article);

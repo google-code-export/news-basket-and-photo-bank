@@ -52,6 +52,18 @@ class Source_model extends Model {
 		return $this->db->count_all($this->table);
     }
 	
+	function countSourceByType($key) {
+		$this->db->where('source_type',  $key);
+		return $this->db->get($this->table)->num_rows();
+    }
+	
+	function countArticleBySource() {
+		$this->db->select('source_name, count(article.id_source) as total_article');
+		$this->db->join('article', 'source.id_source = article.id_source'); //join sama tabel article
+		$this->db->group_by('article.id_source');
+		return $this->db->get($this->table)->result();
+    }	
+	
 	function addSource($new_source){
 		$this->db->insert($this->table, $new_source);
     }

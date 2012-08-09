@@ -13,19 +13,19 @@
 		<table style="margin-left: 3px;">
 			<tr>
 				<td class="bold">Create Article</td>
-				<td class="label"><?php echo $user['create']?></td>
+				<td class="label"><?php echo $user['create']?> articles</td>
 			</tr>	
 			<tr>	
 				<td class="bold">Edit Article</td>
-				<td class="label"><?php echo $user['edit']?></td>
+				<td class="label"><?php echo $user['edit']?> articles</td>
 			</tr>
 			<tr>
 				<td class="bold">Publish Article</td>
-				<td class="label"><?php echo $user['publish']?></td>
+				<td class="label"><?php echo $user['publish']?> articles</td>
 			</tr>	
 			<tr>
 				<td class="bold">Delete Article</td>
-				<td class="label"><?php echo $user['delete']?></td>
+				<td class="label"><?php echo $user['delete']?> articles</td>
 			</tr>
 		</table>
 		<?php

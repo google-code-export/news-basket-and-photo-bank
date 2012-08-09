@@ -95,13 +95,18 @@ class Manage_category extends Controller {
 		$num_rows 	= $this->Category_model->countAll();
 		$data_category['category_table'] = $categories;
 		
+		// untuk penomoran dan menampilkan hasil
+		$data_category['start']	 = $offset + 1; // untuk penomoran tabel
+		$data_category['finish'] = min($data_category['start'] + $this->limit - 1, $data_category['start'] + ($num_rows - $data_category['start']));
+		$data_category['total']  = $num_rows;
+		
 		// ambil data category dari ID nya
 		$category = $this->Category_model->getCategoryByID($id_category)->row();
 		
 		//simpan session username yang ingin di edit
 		$this->session->set_userdata('id_category', $category->id_category);
 			
-		$data_category['default']['category_name'] 	= $category->category_name;
+		$data_category['default']['category_name'] = $category->category_name;
 	
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_category);

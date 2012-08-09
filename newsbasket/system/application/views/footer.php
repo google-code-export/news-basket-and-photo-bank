@@ -1,5 +1,5 @@
 <div class="footer content clearfix">
 <ul>
-	<li>2012 BeritaSatu Media Holdings</li>
+	<li></li>
 </ul>
 </div>
