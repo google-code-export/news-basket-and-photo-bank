@@ -20,7 +20,6 @@
 .main .table-menu {
 	height: 30px;
 	padding: 5px 5px;
-    background: none repeat scroll 0% 0% rgb(240, 240, 240);
 	background: url(../images/nav.png) repeat scroll 0% 0%;
 }
 

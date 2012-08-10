@@ -33,12 +33,13 @@
 
 .main {
 	position: absolute;
-	top: 30px;
+	top: 32px;
 	left: 201px;
 	right: 0px;
-	bottom: 20px;
-	padding: 5px;
-	box-shadow: -10px 0px 10px -5px rgba(200, 200, 200, 0.7);
+	min-height: 88%;
+	padding: 5px 5px 40px 5px;
+	z-index: 1;
+	box-shadow: 0px 0px 15px rgb(150, 150, 150);
 }
 
 .main h2{
@@ -52,59 +53,48 @@
 .main .table-menu {
 	height: 30px;
 	padding: 5px 5px;
-    background: none repeat scroll 0% 0% rgb(240, 240, 240);
+	background: url(../images/nav.png) repeat scroll 0% 0%;
     overflow: hidden;
 }
 
-.main .table-menu .paging {
-	padding: 5px 5px;
-    float: left;
-}
-
-.main .table-menu .paging {
+.main .table-bottom {
+	height: 30px;
+	position: absolute; 
+	bottom: 0px; 
+	right: 5px; 
+	left: 5px;
 	padding: 5px;
-	margin: 2px;
-    float: left;
+	background: url(../images/nav.png) repeat scroll 0% 0%;
 }
 
-.main .table-menu .paging  a{
-	padding: 2px 2px;
+.main .paging  a{
 	margin-right: 2px;
     text-decoration: none;
-	color: #98bf21;
+	color: blue;
+	border: 1px solid black;
+	padding: 5px 10px;
 }
 
-.main .table-menu .paging  a:hover{
-}
-
-.main .table-menu .paging  a.disabled{
-	cursor: default;
-}
-
-.main .table-menu .paging  span.current{
-	padding: 2px 2px 2px 8px;
+.main .paging  a:hover{
 	margin-right: 2px;
-	border: 1px solid #000000;
-	font-weight: bold;
-	color: #FFFFFF;
+    text-decoration: none;
+	color: blue;
+	background-color: #A7C942;
+	padding: 5px 10px;
 }
 
-.main .table-menu .paging  span.disabled{
-	padding: 2px 2px 2px 8px;
+.main .paging  .current-page{
 	margin-right: 2px;
-	border: 1px solid #999999;
-	color: #999999;
-	cursor: default;
-}
-
-.main .table-menu .paging  span.prevnext{
-	border: 1px solid #000000;
-	padding: 2px 2px 2px 8px;
+    text-decoration: none;
+	color: black;
 	font-weight: bold;
+	border: 2px solid #A7C942;
+	background-color: #A7C942;
+	padding: 5px 10px;
 }
 
 .main .table-menu .search {
-	margin-top: -2px;
+	margin-top: -5px;
 	padding: 5px 5px;
     float: right;
 }
