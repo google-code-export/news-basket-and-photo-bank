@@ -75,7 +75,7 @@ input[type="email"], input[type="number"], input[type="password"], input[type="t
     height: 30px;
 	width: 100%;
     background: url(../images/header.png) repeat-x top left;
-	z-index: 1;
+	z-index: 2;
 	box-shadow: 0px 3px 15px black;
 }
 
@@ -116,9 +116,7 @@ div#login_logout {
 	left: 0px;
 	bottom: 0px;
 	overflow-y: auto;
-	background: url(../images/nav-top.png) no-repeat #F0F0F0;
 	list-style: none outside none;
-	z-index: 1;
 }
 
 .navigation-inner {
@@ -147,24 +145,27 @@ div#login_logout {
 
 .navigation .menu a{
 	color: white;
-	width: 145px;
+	width: 130px;
 	font-size: 14px;
 	font-weight: bold;
 	padding: 10px 20px;
 	line-height: 24px;
+	margin: 5px 0px 0px;
 	background: url(../images/menu-nonactive.png) no-repeat center left rgb(175, 0, 0);
 	cursor: pointer;
 	height: 25px;
+	box-shadow: 0px 0px 15px rgb(150, 150, 150);
 }
 
 .navigation .menu a:hover {
-	width: 145px;
+	width: 130px;
 	color: black;
 	background:  url(../images/menu-active.png) no-repeat center left white;
+	box-shadow: 0px 0px 15px rgb(150, 150, 150);
 }
 
 .navigation .menu a.active {
-	width: 145px;
+	width: 130px;
 	color: black;
 	background:  url(../images/menu-active.png) no-repeat center left white; 
 	box-shadow: 0px 0px 15px rgb(150, 150, 150);
@@ -178,14 +179,15 @@ div#login_logout {
 	height: 10px;
 	width: 130px;
 	padding: 10px 20px;
+	margin: 0px !important;
 	line-height: 10px;
+	box-shadow: 0px 0px 0px;
 }
 
 .navigation .menu .child a:hover{
 	background: none repeat scroll 0% 0% #A7C942;
 	font-size: 12px;
 	width: 130px;
-	margin-right: 10px;
 	color: black;
 	font-weight: normal;
 }
@@ -193,7 +195,6 @@ div#login_logout {
 .navigation .menu .child a.active{
 	background: none repeat scroll 0% 0% #A7C942;
 	font-size: 12px;
-	margin-right: 10px;
 	color: black;
 	font-weight: normal;
 	box-shadow: 0px 0px 0px rgb(150, 150, 150);

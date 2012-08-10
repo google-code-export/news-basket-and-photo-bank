@@ -11,7 +11,8 @@ legend, mark, menu, meter, nav, output, progress, section, summary, time, audio,
 html, body {
     position: absolute;
     height: 100%;
-    min-width: 100%;
+    width: 100%;
+	background-color: #efefef;
 }
 
 html {
@@ -127,7 +128,7 @@ input[type="email"], input[type="number"], input[type="password"], input[type="t
     color: white;
 	margin-top: -375px;
     padding: 20px 25px;
-    background: none repeat scroll 0% 0%  #95312f;
+    background:  url(../images/box-login.png) no-repeat top left #95312f;
 	box-shadow: 0px 0px 15px rgb(150, 150, 150);
 }
 
@@ -257,8 +258,8 @@ button.nb-button, input.nb-button[type="submit"] {
 	left: 0px;
 	bottom: 0px;
 	right: 0px;
-    background: url(../images/brands-logo.png) no-repeat top center #95312f;
-	box-shadow: 0px -3px 10px black;
+    background: url(../images/brands-logo.png) no-repeat top center rgb(100, 0, 0);
+	box-shadow: 0px -1px 5px black;
 }
 
 .footer {
