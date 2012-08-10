@@ -3,7 +3,7 @@
 class Manage_article extends Controller {
 	
 	//limitasi tabel
-	var $limit = 13;
+	var $limit = 50;
 	
 	function Manage_article() {
 		parent::Controller();	
@@ -116,7 +116,7 @@ class Manage_article extends Controller {
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_article['username'] = $username;
-		$data_article['active']   = 'article';
+		$data_article['active']   = 'add_article';
 						
 		// ambil data category
 		$this->load->model('Category_model','',TRUE);

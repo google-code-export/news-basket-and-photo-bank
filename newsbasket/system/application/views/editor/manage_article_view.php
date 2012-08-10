@@ -67,9 +67,9 @@
 		?>
 		</tbody>
 	</table>
-	<div id="article-table" class="table-menu">
-	<div class="paging">
-		<?php echo (!empty($pagination))? 'Page : '.$pagination : 'Page : <a style="cursor:auto; color:black;"><strong>1</strong></a>';?>
+	<div id="article-table" class="table-bottom">
+		<div class="paging" style="margin: 7px;">
+			<?php echo (!empty($pagination))? 'Page : '.$pagination : 'Page : <a style="cursor:auto; color:black;"><strong>1</strong></a>';?>
+		</div>
 	</div>
-</div>
 </div>

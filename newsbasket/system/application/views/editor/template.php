@@ -25,9 +25,6 @@
 		<div id="main" class="main">
 			<?php $this->load->view($main_view); ?>
 		</div>
-		<div class="footer-bar">
-			<?php $this->load->view('footer'); ?>
-		</div>
 	</div>
 	
 	<script type="text/javascript" src="<?php echo base_url().'/library/jquery-1.7.2.min.js'; ?>"></script> 
