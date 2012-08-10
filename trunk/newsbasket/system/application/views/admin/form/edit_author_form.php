@@ -1,4 +1,4 @@
-<form id="edit-author-form" class="edit-form" method="post" action="<?php echo $form_action_edit; ?>">
+<form id="edit-author-form" method="post" action="<?php echo $form_action_edit; ?>">
 	<table id="table-edit-author" class="table-form">
 		<tr>			
 			<td><label for="name">Full Name</label></td>
@@ -8,12 +8,12 @@
 			
 			<td class="label"><label for="email">Email</label></td>
 			<td>:</td>
-			<td><input type="email" id="email" name="email" value="<?php echo $default['email']; ?>"/></td>
+			<td><input type="email" id="email" name="email" required="required" value="<?php echo $default['email']; ?>"/></td>
 			<td>&nbsp;</td>
 			
 			<td class="label"><label for="phone">Phone</label></td>
 			<td>:</td>
-			<td><input type="text" id="phone" name="phone" value="<?php echo $default['phone']; ?>" /></td>
+			<td><input type="text" id="phone" name="phone" required="required" value="<?php echo $default['phone']; ?>" /></td>
 			<td><span id="check-numeric" style="display: none;"></span></td>
 			
 			<td class="label"><label for="publisher">Publisher</label></td>

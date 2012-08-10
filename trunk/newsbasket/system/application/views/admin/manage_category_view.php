@@ -35,11 +35,12 @@
 </div>
 <?php
 	$message_success = $this->session->flashdata('message_success');
-	echo !empty($message_success) ? "<p class='success'>" . $message_success . "</p>": "";
+	echo !empty($message_success) ? "<p class='success'>" . $message_success . "</p>" : "";
 	$message_failed = $this->session->flashdata('message_failed');
-	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
+	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>" : "";
 ?>
-<div id="table-list" class="table-list2">
+		
+<div>
 	<?php //echo ! empty($table) ? $table : ''; ?>
 	<table id="category" class="tablesorter">
 		<thead> 
@@ -81,11 +82,11 @@
 		?>
 		</tbody>
 	</table>
-</div>
-<div class="table-bottom">
-	<div class="paging">
-	<?php
-		echo "<p>Showing ".$start." to ".$finish." of ".$total." categories</p>" ; 
-	?>
+	<div class="table-menu" style="background-color: #A7C942;">
+		<div class="paging">
+		<?php
+			echo "<p>Showing ".$start." to ".$finish." of ".$total." categories</p>" ; 
+		?>
+		</div>
 	</div>
 </div>

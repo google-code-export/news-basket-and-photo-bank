@@ -1,47 +1,3 @@
-/* XPATH XML
-function loadXMLDoc(dname) {
-	if (window.XMLHttpRequest) {
-		xhttp=new XMLHttpRequest();
-	}
-	else {
-		xhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xhttp.open("GET",dname,false);
-	xhttp.send("");
-	return xhttp.responseXML;
-}
-
-xml=loadXMLDoc("books.xml");
-path="/bookstore/book/title";
-
-// code for IE
-if (window.ActiveXObject) {
-	var nodes=xml.selectNodes(path);
-
-	for (i=0;i<nodes.length;i++) {
-		document.write(nodes[i].childNodes[0].nodeValue);
-		document.write("<br />");
-	}
-}
-// code for Mozilla, Firefox, Opera, etc.
-else if (document.implementation && document.implementation.createDocument) {
-	var nodes=xml.evaluate(path, xml, null, XPathResult.ANY_TYPE,null);
-	var result=nodes.iterateNext();
-
-	while(result) {
-		document.write(result.childNodes[0].nodeValue);
-		document.write("<br />");
-		result=nodes.iterateNext();
-	}
-}*/
-
-// MULTIPLE CHECKBOX
-var MyCheckboxes=$("#table-list :checkbox");
-
-MyCheckboxes.change(function() {
-  $("#change-flag").toggle(MyCheckboxes.is(":checked"));
-});
-
 // TABLE SORTER
 $(document).ready(function() { 
 		$("#article").tablesorter({sortList: [[0,0]], headers: {6:{sorter: false}}});
@@ -52,6 +8,7 @@ $(document).ready(function() {
 		$("#tag").tablesorter({sortList: [[0,0]], headers: {3:{sorter: false}}});
     } 
 );  
+
 
 //MENGECEK USERNAME YANG ADA
 $(document).ready(function() {
@@ -68,29 +25,6 @@ $(document).ready(function() {
 			}
 			else {
 				$("#check-user").fadeTo(200,0.1,function() { //start fading the messagebox
-					//add message and change the class of the box and start fading
-					$(this).html('AA').removeClass().addClass('image-yes').fadeTo(900,1); //AA kontem html sembarang
-				});
-			}		
-		});
-	});
-});
-
-//MENGECEK KONFIRMASI PASSWORD
-$(document).ready(function() {
-	$("#confirm-password").blur(function() {
-		//remove all the class, add new classes and start fading
-		$("#check-password").removeClass().addClass('image-load').text('AA').fadeIn("fast");
-		//check the username exists or not from ajax
-		$.post("http://localhost/newsbasket/admin/manage_user/checkConfirmationPassword",{ password:$("#password").val(), confirm_password:$("#confirm-password").val() } ,function(data) {
-			if(data=='no') { //if password not same
-				$("#check-password").fadeTo(200,0.1,function() { //start fading the messagebox
-					//add message and change the class of the box and start fading
-					$(this).html('AA').removeClass().addClass('image-no').fadeTo(900,1); //AA kontem html sembarang
-				});		
-			}
-			else {
-				$("#check-password").fadeTo(200,0.1,function() { //start fading the messagebox
 					//add message and change the class of the box and start fading
 					$(this).html('AA').removeClass().addClass('image-yes').fadeTo(900,1); //AA kontem html sembarang
 				});

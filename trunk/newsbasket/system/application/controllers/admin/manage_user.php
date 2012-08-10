@@ -120,7 +120,7 @@ class Manage_user extends Controller {
 		$offset      = $this->uri->segment($uri_segment);
 
 		// kata kunci pencarian
-		$key = $this->input->get('key');
+		$key = $this->input->post('key');
 		if (empty($key)) { // jika kata kunci pencarian tidak ada
 			$key = $this->session->userdata('key'); // ambil dari session
 		}

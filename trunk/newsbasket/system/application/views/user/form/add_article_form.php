@@ -41,7 +41,7 @@
 		</tr>
 		<tr>
 			<td class="bold">&nbsp;</td>
-			<td class="label"><span style="margin-left: 3px;"><i>how to write tag, e.g. : Life, Love</i></span></td>
+			<td class="label"><span style="margin-left: 3px;"><i>Example : Life, Love, Long, Live</i></span></td>
 		</tr>
 		<tr>
 			<td class="bold">Tag</td>

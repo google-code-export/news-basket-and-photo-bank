@@ -43,7 +43,7 @@
 	$message_failed = $this->session->flashdata('message_failed');
 	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
 ?>
-<div id="table-list" class="table-list2">
+<div>
 	<table id="source" class="tablesorter">
 		<thead> 
 		<tr>
@@ -83,11 +83,11 @@
 		?>
 		</tbody>
 	</table>
-</div>
-<div class="table-bottom">
-	<div class="paging">
-	<?php
-		echo "<p>Showing ".$start." to ".$finish." of ".$total." sources</p>" ; 
-	?>
+	<div class="table-menu" style="background-color: #A7C942;">
+		<div class="paging">
+		<?php
+			echo "<p>Showing ".$start." to ".$finish." of ".$total." sources</p>" ; 
+		?>
+		</div>
 	</div>
 </div>

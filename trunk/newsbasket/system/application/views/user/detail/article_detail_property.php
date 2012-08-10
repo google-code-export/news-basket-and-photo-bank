@@ -1,4 +1,8 @@
-<p class='flip'><strong>Last Version Article</strong></p>
+<p class='flip'><strong>Last Version Article</strong>
+	<a id="edit-article" href="<?php echo $form_action_edit;?>">
+		<button class="button" style="float: right; margin-top: -5px;" >Edit Article</button>
+	</a>
+</p>
 <?php
 	$message_success = $this->session->flashdata('message_success');
 	echo !empty($message_success) ? "<p class='success'>" . $message_success . "</p>": "";

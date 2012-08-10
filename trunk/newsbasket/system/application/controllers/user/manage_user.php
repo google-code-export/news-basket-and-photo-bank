@@ -11,7 +11,7 @@ class Manage_user extends Controller {
 	}
 	
 	function index() {
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'publisher' || 'viewer') {
 			$this->load_users(0);
 		}
 		else {
@@ -93,7 +93,7 @@ class Manage_user extends Controller {
 		$data_user['user']['publish']	= $this->Users_model->countStatistic($id_user, 'published');
 		$data_user['user']['delete']	= $this->Users_model->countStatistic($id_user, 'deleted');
 		
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'publisher' || 'viewer') {
 			$this->load->view('user/template', $data_user);
 		}
 	}
@@ -160,13 +160,14 @@ class Manage_user extends Controller {
 		$data_user['user']['publish']	= $this->Users_model->countStatistic($id_user, 'published');
 		$data_user['user']['delete']	= $this->Users_model->countStatistic($id_user, 'deleted');
 		
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'publisher' || 'viewer') {
 			$this->load->view('user/template', $data_user);
 		}
 	}
 	
 	function edit_user_process() {
-		if ($this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer' && $this->session->userdata('login') == TRUE) {
+		if ($this->session->userdata('user_level') == 'publisher' || 'viewer' && $this->session->userdata('login') == TRUE) {
+			$this->load->helper('security');
 			
 			// kondisi password
 			$new_password = $this->input->post('new-password');
@@ -180,7 +181,7 @@ class Manage_user extends Controller {
 			// Prepare data untuk disimpan di tabel
 			$user  = array(
 				'name'		=> $this->input->post('name'),
-				'password'  => $password,
+				'password'  => dohash($password),
 				'email'     => $this->input->post('email'),
 				'phone'     => $this->input->post('phone')
 			);
@@ -192,14 +193,14 @@ class Manage_user extends Controller {
 			
 			$message = 'User '.$id_user.' has been updated!'; 
 			$this->session->set_flashdata('message_success', $message);
-			//$key = $this->session->userdata('current_table');
-			redirect('user/manage_user');
+			//$key = $this->session->userdata('current_table');			
+			redirect('user/manage_user/detail_user'.'/'.$id_user);
 		}
 		else {
 			$message = 'Update user '.$id_user.' failed!'; 
 			$this->session->set_flashdata('message_failed', $message);
 			//$key = $this->session->userdata('current_table');
-			redirect('user/manage_user');
+			redirect('user/manage_user/detail_user'.'/'.$id_user);
 		}
 	}
 		

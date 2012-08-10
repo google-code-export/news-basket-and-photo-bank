@@ -4,7 +4,6 @@
 <div id="edit-article" class="edit-form">
 </div>
 <div id="article-table" class="table-menu">
-	<input type=button class="button" onClick="location.href='<?php echo site_url('user/manage_article/add_article'); ?>'" value='+ Add New Article'>
 	<div class="search">
 		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET">
 			Enter keywords : <input type="text" name="key" id="key" required="required" />
