@@ -4,15 +4,19 @@
 	switch($active) {
 		case 'dashboard':
 			$dashboard = 'active';
-			$article = $author  = $category = $reporter = $source = $tag = '';
+			$article = $add_article = $profile = '';
 			break;
 		case 'article':
 			$article = 'active';
-			$dashboard = $author  = $category = $reporter = $source = $tag = '';
+			$dashboard = $add_article = $profile = '';
+			break;
+		case 'add_article':
+			$article = $add_article = 'active';
+			$dashboard = $profile = '';
 			break;
 		case 'editor':
-			$reporter = 'active';
-			$dashboard = $author = $category = $article = $source = $tag = '';
+			$profile = $dashboard = 'active';
+			$article = $add_article = '';
 			break;
 	}
 ?>
@@ -21,7 +25,7 @@
 	<ul class="menu">
 		<li id="dashboard"><?php echo anchor('editor/dashboard', 'Dashboard', array('class'=>$dashboard));?></li>
 		<ul>
-			<li class="child"><a href="<?php echo site_url('editor/manage_editor/detail_editor').'/'.$username;?>">My Profile</a></li>
+			<li class="child"><?php echo anchor('editor/manage_editor/detail_editor/'.$username, 'My Profile', array('class'=>$profile));?></li>
 		</ul>
 	</ul>
 </div>
@@ -30,7 +34,7 @@
 	<ul class="menu">
 		<li id="menu-article"><?php echo anchor('editor/manage_article', 'Article', array('class'=>$article));?></li>
 		<ul>
-			<li class="child"><a href="<?php echo site_url('editor/manage_article/add_article');?>">Add New Article</a></li>
+			<li class="child"><?php echo anchor('editor/manage_article/add_article', 'Add New Article', array('class'=>$add_article));?></li>
 		</ul>
 	</ul>
 </div>
