@@ -47,6 +47,11 @@ class Article_model extends Model {
 		return $this->db->count_all($this->table);
     }
 	
+	function countArticleByFlag($key) {
+		$this->db->where('article_flag',  $key);
+		return $this->db->get($this->table)->num_rows();
+    }
+	
 	function countArticleByPublisher($key) {
 		$this->db->where('id_source',  $key);
 		return $this->db->get($this->table)->num_rows();
