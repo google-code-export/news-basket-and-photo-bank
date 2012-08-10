@@ -12,10 +12,16 @@ class Manage_tag extends Controller {
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load_tags();
-		}
+		} 
 		else {
-			redirect('login');
-        }
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function load_tags() {
@@ -51,7 +57,18 @@ class Manage_tag extends Controller {
 		$this->pagination->initialize($config);
 		$data_tag['pagination']   	= $this->pagination->create_links();
 
-		$this->load->view('admin/template', $data_tag);
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_tag);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function add_tag() {
@@ -110,6 +127,15 @@ class Manage_tag extends Controller {
 	
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_tag);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
 	
@@ -144,6 +170,15 @@ class Manage_tag extends Controller {
 			$this->session->set_flashdata('message_success', 'Delete tag successfull!');
 
 			redirect('admin/manage_tag');
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}  
 	}
 }

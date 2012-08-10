@@ -1,6 +1,6 @@
 <p class='flip'><strong><?php echo $user['id_user']?> profile</strong>
 	<a id="edit-article" href="<?php echo $form_action_edit;?>">
-		<button style="float: right; margin-top: -5px;" >Edit User</button>
+		<button style="float: right; margin-top: -4px;" >Edit User</button>
 	</a>
 </p>
 <?php

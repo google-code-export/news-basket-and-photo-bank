@@ -11,11 +11,17 @@ class Manage_article extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->load_article();
-		}
+			$this->load_article(50);
+		} 
 		else {
-			redirect('login');
-        }
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function load_article() {
@@ -57,7 +63,18 @@ class Manage_article extends Controller {
 		$this->pagination->initialize($config);
 		$data_article['pagination'] = $this->pagination->create_links();
 		
-		$this->load->view('admin/template', $data_article);
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_article);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function detail_article($id_article) {
@@ -104,36 +121,17 @@ class Manage_article extends Controller {
 		
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_article);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
-	/*
-	function add_article() {
-		$this->load->helper('security');
-		if ($this->session->userdata('user_level') == 'administrator' && $this->session->userdata('login') == TRUE) {
-			$new_article  = array(
-				'id_article'	=> $this->input->post('id-article'),
-				'id_source'		=> $this->input->post('publisher'),
-				'password'		=> dohash($this->input->post('password')),
-				'name'      	=> $this->input->post('name'),
-				'phone'       	=> $this->input->post('phone'),
-				'email'   		=> $this->input->post('email'),
-				'date_created'	=> date('Y-m-d G:i:s')
-			);
-			// Proses simpan data absensi
-			$this->load->model('Article_model','',TRUE);
-			$this->Article_model->addUrticle($new_article);
-			
-			$message = 'Add new article '.$new_article['id_article'].' successfull!'; 
-			$this->session->set_flashdata('message_success', $message);
-			redirect('admin/manage_article');
-		}
-		
-		else {
-			$message = 'Add new article '.$new_article['id_article'].' failed!'; 
-			$this->session->set_flashdata('message_failed', $message);
-			redirect('admin/manage_article');
-		}
-	}*/
 	
 	function edit_article($id_article) { 
 		$data_article['page_title']	 		= 'Edit Article | Admin News Basket';
@@ -182,6 +180,15 @@ class Manage_article extends Controller {
 		
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_article);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
 	
@@ -298,19 +305,17 @@ class Manage_article extends Controller {
 				$this->session->set_flashdata('message_failed', $message);
 				redirect('admin/manage_article');
 			}
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
-	
-	/*
-	function delete_article($id_article) {
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->load->model('Article_model','',TRUE);
-			$this->Article_model->deleteArticle($id_article);
-			$this->session->set_flashdata('message_success', 'Delete article successfull!');
-
-			redirect('admin/manage_article');
-		}  
-	}*/
 	
 	function search_article($start = 0) {
 		$data_article['page_title']			= 'Search Article | Admin News Basket';
@@ -354,297 +359,346 @@ class Manage_article extends Controller {
 
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_article);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
 	
 	function retrieve_email() {
-		/*
-		$config['type'] = 'imap';
-		$config['host'] = 'gmail.com';
-		$config['username'] = 'andrefadila@gmail.com';
-		$config['password'] = 'p72412714';
-		$config['port'] = 465;
-		//$config['secure'] = TRUE;
-		$config['timeout'] = 60;
-		$this->load->library('mailbox', $config);
-		
-		//$mailbox  = new Mailbox('imap', 'imap.gmail.com', 'andrefadila@gmail.com', 'p72412714', 993);
-		$messages = $this->mailbox->listMessages(5);
-		echo $message->uid;
-		*/
-		
-		$this->load->helper('imapmailbox');
-		
-		define('GMAIL_EMAIL', 'andrefadila@gmail.com');
-		define('GMAIL_PASSWORD', 'p72412714');
-		
-		//$mailbox = new ImapMailbox('{imap.gmail.com:993/imap/novalidate-cert/ssl}imap', GMAIL_EMAIL, GMAIL_PASSWORD,'','utf-8');
-		$mailbox = new ImapMailbox('{imap.gmail.com:993/imap/novalidate-cert/ssl}INBOX', GMAIL_EMAIL, GMAIL_PASSWORD,'','utf-8');
-		$mails = array();
-		foreach($mailbox->searchMails('UNSEEN') as $mailId) { // mencari email yang belum terbaca
-			$mail = $mailbox->getMail($mailId, 1);
-			$mails[] = $mail; // simpan semuanya kedalam array
-		}
-		
-		// load model author dan article
-		$this->load->model('Author_model','',TRUE);
-		$this->load->model('Article_model','',TRUE);
-		
-		// proses loop simpan ke database
-		if(!empty($mails)) {
-			$sum = 0;
-			foreach($mails as $key => $value) {
-				
-				// cek author sudah ada atau belum, jika belum tambahkan
-				if ($this->Author_model->checkAuthorAvailability($value->fromAddress) == FALSE) { // jika author belum ada maka di tambahkan
-					$new_author = array(
-						'id_author' => $value->fromAddress,
-						'id_source'	=> 1,
-						'name' 		=> $value->fromName,
-						'email' 	=> $value->fromAddress
+		if (($this->session->userdata('user_level') == 'administrator') && $this->session->userdata('login') == TRUE) {
+			$this->load->helper('imapmailbox');
+			
+			define('GMAIL_EMAIL', 'andrefadila@gmail.com');
+			define('GMAIL_PASSWORD', 'p72412714');
+			
+			//$mailbox = new ImapMailbox('{imap.gmail.com:993/imap/novalidate-cert/ssl}imap', GMAIL_EMAIL, GMAIL_PASSWORD,'','utf-8');
+			$mailbox = new ImapMailbox('{imap.gmail.com:993/imap/novalidate-cert/ssl}INBOX', GMAIL_EMAIL, GMAIL_PASSWORD,'','utf-8');
+			$mails = array();
+			foreach($mailbox->searchMails('UNSEEN') as $mailId) { // mencari email yang belum terbaca
+				$mail = $mailbox->getMail($mailId, 1);
+				$mails[] = $mail; // simpan semuanya kedalam array
+			}
+			
+			// load model author dan article
+			$this->load->model('Author_model','',TRUE);
+			$this->load->model('Article_model','',TRUE);
+			
+			// proses loop simpan ke database
+			if(!empty($mails)) {
+				$sum = 0;
+				foreach($mails as $key => $value) {
+					
+					// cek author sudah ada atau belum, jika belum tambahkan
+					if ($this->Author_model->checkAuthorAvailability($value->fromAddress) == FALSE) { // jika author belum ada maka di tambahkan
+						$new_author = array(
+							'id_author' => $value->fromAddress,
+							'id_source'	=> 1,
+							'name' 		=> $value->fromName,
+							'email' 	=> $value->fromAddress
+						);
+					
+						$this->Author_model->addAuthor($new_author);
+					}
+					
+					// proses memasukan artikel ke dalam database
+					$new_article = array(
+						'id_source'		=> 1,
+						'id_category'	=> 'tes',
+						'author'		=> $value->fromName,
+						'created_on'	=> $value->date,
+						'headline'		=> $value->subject,
+						'slug'			=> str_replace(" ", "-", $value->subject),
+						'body_article'	=> strip_tags($value->textHtml),
+						'article_flag'	=> 'row_article',
+						'locked'		=> 'no'
 					);
+					
+					$this->Article_model->addArticle($new_article);
+					
+					$sum++;
+					
+					$message = 'Add '. $sum .' new article from email successfull!'; 
+					$this->session->set_flashdata('message_success', $message);
+				}
+				redirect('admin/manage_article');
+			}
+			else {
+				$message = 'Retrieve article from email failed!'; // bisa karena max execution time atau email udah terbaca semua
+				$this->session->set_flashdata('message_failed', $message);
+				redirect('admin/manage_article');
+			}
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
+	}
+	
+	function retrieve_afp() {
+		if (($this->session->userdata('user_level') == 'administrator') && $this->session->userdata('login') == TRUE) {
+			$this->load->model('Author_model','',TRUE);
+			$this->load->model('Article_model','',TRUE);
+			$this->load->helper('directory');
+			
+			// ---------- untuk xml dari AFP ----------- //
+			$afp	= directory_map("./xml_wires/Afp/");
+			$sum    = 0;
+			foreach ($afp as $filename) {
+				$xml 	= simplexml_load_file(base_url()."xml_wires/Afp/".$filename); // baca file nya
 				
-					$this->Author_model->addAuthor($new_author);
+				// siapkan headline, slugline, author
+				$newsline 	  = $xml->xpath("//NewsLines");
+				foreach ($newsline as $content) {
+					$headline = $content->HeadLine;
+					$slugline = $content->SlugLine;
+					$author	  = substr($content->ByLine, 3);
+					//echo $content->DateLine."<br><br>";
 				}
 				
+				// siapkan body_article
+				$body 		  = $xml->xpath("//body.content");
+				$body_array	  = array();
+				foreach ($body[0] as $content) {
+					$body_array[] = $content;
+				}
+				$body_article = implode("\n", $body_array);
+				
+				if ($this->Author_model->checkAuthorAvailability($author) == FALSE) { // jika author belum ada maka di tambahkan
+					$new_author = array(
+						'id_author' => $author,
+						'id_source'	=> 3,
+						'name' 		=> $author
+					);
+					$this->Author_model->addAuthor($new_author);
+				}
+					
 				// proses memasukan artikel ke dalam database
 				$new_article = array(
-					'id_source'		=> 1,
+					'id_source'		=> 3,
 					'id_category'	=> 'tes',
-					'author'		=> $value->fromName,
-					'created_on'	=> $value->date,
-					'headline'		=> $value->subject,
-					'slug'			=> str_replace(" ", "-", $value->subject),
-					'body_article'	=> strip_tags($value->textHtml),
+					'author'		=> $author,
+					'created_on'	=> date('Y-m-d G:i:s'),
+					'headline'		=> (string)$headline,
+					'slug'			=> str_replace(" ", "-", $headline),
+					'body_article'	=> $body_article,
 					'article_flag'	=> 'row_article',
 					'locked'		=> 'no'
 				);
 				
 				$this->Article_model->addArticle($new_article);
-				
-				$sum++;
-				
-				$message = 'Add '. $sum .' new article from email successfull!'; 
-				$this->session->set_flashdata('message_success', $message);
+					
+				$sum++; // counter
 			}
+			$message = 'Add '. $sum .' new article from AFP successfull!'; 
+			$this->session->set_flashdata('message_success', $message);
 			redirect('admin/manage_article');
-		}
+		} 
 		else {
-			$message = 'Retrieve article from email failed!'; // bisa karena max execution time atau email udah terbaca semua
-			$this->session->set_flashdata('message_failed', $message);
-			redirect('admin/manage_article');
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
-	}
-	
-	function retrieve_afp() {
-		$this->load->model('Author_model','',TRUE);
-		$this->load->model('Article_model','',TRUE);
-		$this->load->helper('directory');
-		
-		// ---------- untuk xml dari AFP ----------- //
-		$afp	= directory_map("./xml_wires/Afp/");
-		$sum    = 0;
-		foreach ($afp as $filename) {
-			$xml 	= simplexml_load_file(base_url()."xml_wires/Afp/".$filename); // baca file nya
-			
-			// siapkan headline, slugline, author
-			$newsline 	  = $xml->xpath("//NewsLines");
-			foreach ($newsline as $content) {
-				$headline = $content->HeadLine;
-				$slugline = $content->SlugLine;
-				$author	  = substr($content->ByLine, 3);
-				//echo $content->DateLine."<br><br>";
-			}
-			
-			// siapkan body_article
-			$body 		  = $xml->xpath("//body.content");
-			$body_array	  = array();
-			foreach ($body[0] as $content) {
-				$body_array[] = $content;
-			}
-			$body_article = implode("\n", $body_array);
-			
-			if ($this->Author_model->checkAuthorAvailability($author) == FALSE) { // jika author belum ada maka di tambahkan
-				$new_author = array(
-					'id_author' => $author,
-					'id_source'	=> 3,
-					'name' 		=> $author
-				);
-				$this->Author_model->addAuthor($new_author);
-			}
-				
-			// proses memasukan artikel ke dalam database
-			$new_article = array(
-				'id_source'		=> 3,
-				'id_category'	=> 'tes',
-				'author'		=> $author,
-				'created_on'	=> date('Y-m-d G:i:s'),
-				'headline'		=> (string)$headline,
-				'slug'			=> str_replace(" ", "-", $headline),
-				'body_article'	=> $body_article,
-				'article_flag'	=> 'row_article',
-				'locked'		=> 'no'
-			);
-			
-			$this->Article_model->addArticle($new_article);
-				
-			$sum++; // counter
-		}
-		$message = 'Add '. $sum .' new article from AFP successfull!'; 
-		$this->session->set_flashdata('message_success', $message);
-		redirect('admin/manage_article');
 	}
 	
 	function retrieve_asianwire() {
-		$this->load->model('Author_model','',TRUE);
-		$this->load->model('Article_model','',TRUE);
-		$this->load->helper('directory');
-		
-		// ---------- untuk xml dari AsianWire ----------- //
-		$asianwire  = directory_map("./xml_wires/AsianWire/");
-		foreach ($asianwire as $filename) {
-			$xml 	= simplexml_load_file(base_url()."xml_wires/AsianWire/".$filename); // baca file nya
+		if (($this->session->userdata('user_level') == 'administrator') && $this->session->userdata('login') == TRUE) {
+			$this->load->model('Author_model','',TRUE);
+			$this->load->model('Article_model','',TRUE);
+			$this->load->helper('directory');
 			
-			// siapkan headline
-			$headline_array = $xml->xpath("//hl1");
-			foreach ($headline_array as $content) {
-				$headline = $content;
-			}
-			
-			// siapkan body_article
-			$body 		  = $xml->xpath("//block");
-			$body_array	  = array();
-			
-			foreach ($body as $content) {
-				foreach ($content as $paragraph) {
-					$body_array[] = $paragraph;
-				}
-			}
-			$body_article = implode("\n", $body_array);
-			
-			// proses memasukan artikel ke dalam database
-			$new_article = array(
-				'id_source'		=> 5,
-				'id_category'	=> 'tes',
-				'created_on'	=> date('Y-m-d G:i:s'),
-				'headline'		=> (string)$headline,
-				'slug'			=> str_replace(" ", "-", $headline),
-				'body_article'	=> $body_article,
-				'article_flag'	=> 'row_article',
-				'locked'		=> 'no'
-			);
-			
-			$this->Article_model->addArticle($new_article);
+			// ---------- untuk xml dari AsianWire ----------- //
+			$asianwire  = directory_map("./xml_wires/AsianWire/");
+			foreach ($asianwire as $filename) {
+				$xml 	= simplexml_load_file(base_url()."xml_wires/AsianWire/".$filename); // baca file nya
 				
-			$sum++; // counter
+				// siapkan headline
+				$headline_array = $xml->xpath("//hl1");
+				foreach ($headline_array as $content) {
+					$headline = $content;
+				}
+				
+				// siapkan body_article
+				$body 		  = $xml->xpath("//block");
+				$body_array	  = array();
+				
+				foreach ($body as $content) {
+					foreach ($content as $paragraph) {
+						$body_array[] = $paragraph;
+					}
+				}
+				$body_article = implode("\n", $body_array);
+				
+				// proses memasukan artikel ke dalam database
+				$new_article = array(
+					'id_source'		=> 5,
+					'id_category'	=> 'tes',
+					'created_on'	=> date('Y-m-d G:i:s'),
+					'headline'		=> (string)$headline,
+					'slug'			=> str_replace(" ", "-", $headline),
+					'body_article'	=> $body_article,
+					'article_flag'	=> 'row_article',
+					'locked'		=> 'no'
+				);
+				
+				$this->Article_model->addArticle($new_article);
+					
+				$sum++; // counter
+			}
+			
+			$message = 'Add '. $sum .' new article from Asian Wire successfull!'; 
+			$this->session->set_flashdata('message_success', $message);
+			redirect('admin/manage_article');
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
-		
-		$message = 'Add '. $sum .' new article from Asian Wire successfull!'; 
-		$this->session->set_flashdata('message_success', $message);
-		redirect('admin/manage_article');
 	}
 	
 	function retrieve_dpa() {
-		$this->load->model('Author_model','',TRUE);
-		$this->load->model('Article_model','',TRUE);
-		$this->load->helper('directory');
-		
-		// ---------- untuk xml dari DPA ----------- //
-		$dpa	= directory_map("./xml_wires/DPA/");
-		$sum    = 0;
-		foreach ($dpa as $filename) {
-			$xml 	= simplexml_load_file(base_url()."xml_wires/DPA/".$filename); // baca file nya
+		if (($this->session->userdata('user_level') == 'administrator') && $this->session->userdata('login') == TRUE) {
+			$this->load->model('Author_model','',TRUE);
+			$this->load->model('Article_model','',TRUE);
+			$this->load->helper('directory');
 			
-			// siapkan headline
-			$headline_array = $xml->xpath("//hl1");
-			//print_r($headline_array);
-			foreach ($headline_array as $content) {
-				$headline = $content;
-			}
-			
-			// siapkan body_article
-			$body 		  = $xml->xpath("//body.content");
-			$body_array	  = array();
-			foreach ($body[0] as $content) {
-				$body_array[] = $content;
-			}
-			$body_article = implode("\n", $body_array);
-			
-			// proses memasukan artikel ke dalam database
-			$new_article = array(
-				'id_source'		=> 6,
-				'id_category'	=> 'tes',
-				'created_on'	=> date('Y-m-d G:i:s'),
-				'headline'		=> (string)$headline,
-				'slug'			=> str_replace(" ", "-", $headline),
-				'body_article'	=> $body_article,
-				'article_flag'	=> 'row_article',
-				'locked'		=> 'no'
-			);
-			
-			$this->Article_model->addArticle($new_article);
+			// ---------- untuk xml dari DPA ----------- //
+			$dpa	= directory_map("./xml_wires/DPA/");
+			$sum    = 0;
+			foreach ($dpa as $filename) {
+				$xml 	= simplexml_load_file(base_url()."xml_wires/DPA/".$filename); // baca file nya
 				
-			$sum++;
+				// siapkan headline
+				$headline_array = $xml->xpath("//hl1");
+				//print_r($headline_array);
+				foreach ($headline_array as $content) {
+					$headline = $content;
+				}
+				
+				// siapkan body_article
+				$body 		  = $xml->xpath("//body.content");
+				$body_array	  = array();
+				foreach ($body[0] as $content) {
+					$body_array[] = $content;
+				}
+				$body_article = implode("\n", $body_array);
+				
+				// proses memasukan artikel ke dalam database
+				$new_article = array(
+					'id_source'		=> 6,
+					'id_category'	=> 'tes',
+					'created_on'	=> date('Y-m-d G:i:s'),
+					'headline'		=> (string)$headline,
+					'slug'			=> str_replace(" ", "-", $headline),
+					'body_article'	=> $body_article,
+					'article_flag'	=> 'row_article',
+					'locked'		=> 'no'
+				);
+				
+				$this->Article_model->addArticle($new_article);
+					
+				$sum++;
+			}
+			
+			$message = 'Add '. $sum .' new article from DPA successfull!'; 
+			$this->session->set_flashdata('message_success', $message);
+			redirect('admin/manage_article');
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
-		
-		$message = 'Add '. $sum .' new article from DPA successfull!'; 
-		$this->session->set_flashdata('message_success', $message);
-		redirect('admin/manage_article');
 	}
 	
 	function retrieve_nyt() {
-		$this->load->model('Author_model','',TRUE);
-		$this->load->model('Article_model','',TRUE);
-		$this->load->helper('directory');
-		
-		// ---------- untuk xml dari NYT ----------- //
-		$asianwire  = directory_map("./xml_wires/NYT/");
-		foreach ($asianwire as $filename) {
-			$xml 	= simplexml_load_file(base_url()."xml_wires/NYT/".$filename); // baca file nya
+		if (($this->session->userdata('user_level') == 'administrator') && $this->session->userdata('login') == TRUE) {
+			$this->load->model('Author_model','',TRUE);
+			$this->load->model('Article_model','',TRUE);
+			$this->load->helper('directory');
 			
-			// siapkan headline
-			$headline_array = $xml->xpath("//hl1");
-			foreach ($headline_array as $content) {
-				$headline = $content;
-			}
-			
-			// siapkan author
-			$author_array = $xml->xpath("//byline");
-			foreach ($author_array as $content) {
-				$author = (string)$content;
-			}
-			
-			// siapkan body_article
-			$body 		  = $xml->xpath("//block");
-			$body_array	  = array();
-			
-			foreach ($body as $content) {
-				foreach ($content as $paragraph) {
-					$body_array[] = $paragraph;
+			// ---------- untuk xml dari NYT ----------- //
+			$asianwire  = directory_map("./xml_wires/NYT/");
+			foreach ($asianwire as $filename) {
+				$xml 	= simplexml_load_file(base_url()."xml_wires/NYT/".$filename); // baca file nya
+				
+				// siapkan headline
+				$headline_array = $xml->xpath("//hl1");
+				foreach ($headline_array as $content) {
+					$headline = $content;
 				}
+				
+				// siapkan author
+				$author_array = $xml->xpath("//byline");
+				foreach ($author_array as $content) {
+					$author = (string)$content;
+				}
+				
+				// siapkan body_article
+				$body 		  = $xml->xpath("//block");
+				$body_array	  = array();
+				
+				foreach ($body as $content) {
+					foreach ($content as $paragraph) {
+						$body_array[] = $paragraph;
+					}
+				}
+				$body_article = implode("\n", $body_array);
+					
+				// proses memasukan artikel ke dalam database
+				$new_article = array(
+					'id_source'		=> 4,
+					'id_category'	=> 'tes',
+					'created_on'	=> date('Y-m-d G:i:s'),
+					'headline'		=> (string)$headline,
+					'slug'			=> str_replace(" ", "-", $headline),
+					'body_article'	=> $body_article,
+					'article_flag'	=> 'row_article',
+					'locked'		=> 'no'
+				);
+				
+				$this->Article_model->addArticle($new_article);
+					
+				$sum++; // counter
 			}
-			$body_article = implode("\n", $body_array);
-				
-			// proses memasukan artikel ke dalam database
-			$new_article = array(
-				'id_source'		=> 4,
-				'id_category'	=> 'tes',
-				'created_on'	=> date('Y-m-d G:i:s'),
-				'headline'		=> (string)$headline,
-				'slug'			=> str_replace(" ", "-", $headline),
-				'body_article'	=> $body_article,
-				'article_flag'	=> 'row_article',
-				'locked'		=> 'no'
-			);
 			
-			$this->Article_model->addArticle($new_article);
-				
-			$sum++; // counter
+			$message = 'Add '. $sum .' new article from NYT successfull!'; 
+			$this->session->set_flashdata('message_success', $message);
+			redirect('admin/manage_article');
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
-		
-		$message = 'Add '. $sum .' new article from NYT successfull!'; 
-		$this->session->set_flashdata('message_success', $message);
-		redirect('admin/manage_article');
 	}
 }
 

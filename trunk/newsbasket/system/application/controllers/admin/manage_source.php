@@ -12,10 +12,16 @@ class Manage_source extends Controller {
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load_sources();
-		}
+		} 
 		else {
-			redirect('login');
-        }
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function load_sources() {
@@ -50,8 +56,19 @@ class Manage_source extends Controller {
 		$config['uri_segment']  	= $uri_segment;
 		$this->pagination->initialize($config);
 		$data_source['pagination']   = $this->pagination->create_links();
-
-		$this->load->view('admin/template', $data_source);
+		
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_source);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function add_source() {
@@ -123,6 +140,15 @@ class Manage_source extends Controller {
 	
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_source);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
 	
@@ -158,6 +184,15 @@ class Manage_source extends Controller {
 			$this->session->set_flashdata('message_success', 'Delete source successfull!');
 
 			redirect('admin/manage_source');
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}  
 	}
 }
