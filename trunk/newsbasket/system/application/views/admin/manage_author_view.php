@@ -49,14 +49,14 @@
 		</table>
 	</form>
 </div>
-<div id="edit-author" class="edit-form">
+<div id="edit-author">
 	<?php
 		!empty($form_edit_author)? $this->load->view($form_edit_author) : '';
 	?>
 </div>
 <div id="author-table" class="table-menu" style="border: none;">
 	<div class="search">
-		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="POST">
+		<form id="search-by" name="search-by" action="<?php echo $form_action_search;?>" method="GET" style="float: right;">
 			Search by name : <input type="text" name="key" id="key" value="" required="required" />
 			<input type="submit" name="search" id="search" value="Search" />
 		</form>
@@ -70,9 +70,8 @@
 	echo !empty($message_success) ? "<p class='success'>" . $message_success . "</p>": "";
 	$message_failed = $this->session->flashdata('message_failed');
 	echo !empty($message_failed) ? "<p class='failed'>" . $message_failed . "</p>": "";
-?>		
-<div>
-	<?php //echo ! empty($table) ? $table : ''; ?>
+?>
+<div id="table-list" class="table-list2">
 	<table id="author" class="tablesorter">
 		<thead> 
 		<tr>
@@ -119,11 +118,11 @@
 		?>
 		</tbody>
 	</table>
-	<div class="table-menu" style="background-color: #A7C942;">
-		<div class="paging">
-		<?php
-			echo "<p>Showing ".$start." to ".$finish." of ".$total." authors</p>" ; 
-		?>
-		</div>
+</div>
+<div class="table-bottom">
+	<div class="paging">
+	<?php
+		echo "<p>Showing ".$start." to ".$finish." of ".$total." authors</p>" ; 
+	?>
 	</div>
 </div>
