@@ -76,6 +76,13 @@ class Users_model extends Model {
 		return $this->db->count_all($this->table);
     }
 	
+	function countUserBySource() {
+		$this->db->select('source_name, count(users.id_source) as total_user');
+		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
+		$this->db->group_by('users.id_source');
+		return $this->db->get($this->table)->result();
+    }	
+	
 	function countUserByPublisher($key) {
 		$this->db->where('id_source',  $key);
 		return $this->db->get($this->table)->num_rows();
