@@ -1,54 +1,20 @@
 <br />
-<br />
-<?php
-	switch($active) {
-		case 'dashboard':
-			$dashboard = 'active';
-			$article = $author  = $category = $user = $source = $tag = '';
-			break;
-		case 'article':
-			$article = 'active';
-			$dashboard = $author  = $category = $user = $source = $tag = '';
-			break;
-		case 'author':
-			$author  = 'active';
-			$dashboard = $article = $category = $user = $source = $tag = '';
-			break;
-		case 'category':
-			$category = 'active';
-			$dashboard = $author = $article = $user = $source = $tag = '';
-			break;
-		case 'user':
-			$user = 'active';
-			$dashboard = $author = $category = $article = $source = $tag = '';
-			break;
-		case 'source':
-			$source = 'active';
-			$dashboard = $author = $category = $user = $article = $tag = '';
-			break;
-		case 'tag':
-			$tag = 'active';
-			$dashboard = $author = $category = $user = $source = $article = '';
-			break;
-	}
-?>
-		
 <div class="dashboard">
 	<ul class="menu">
-		<li id="dashboard"><?php echo anchor('admin/dashboard', 'Dashboard', array('class'=>$dashboard));?></li>
+		<li id="dashboard"><?php echo ($active == 'dashboard' || $active == 'profile')? anchor('admin/dashboard', 'Dashboard', array('class'=>'active')) : anchor('admin/dashboard', 'Dashboard');?></li>
 		<ul>
-			<li class="child"><a href="<?php echo site_url('admin/manage_user/detail_user').'/'.$username;?>">My Profile</a></li>
+			<li class="child"><?php echo ($active == 'profile')? anchor('admin/dashboard/myprofile', 'My Profile', array('class'=>'active')) : anchor('admin/dashboard/myprofile', 'My Profile');?></li>
 		</ul>
 	</ul>
 </div>
 <br />
 <div class="user-menu">
 	<ul class="menu">
-		<li id="menu-article"><?php echo anchor('admin/manage_article', 'Article', array('class'=>$article));?></li>
-		<li id="menu-author"><?php echo anchor('admin/manage_author', 'Author', array('class'=>$author));?></li>
-		<li id="menu-category"><?php echo anchor('admin/manage_category', 'Category', array('class'=>$category));?></li>
-		<li id="menu-user"><?php echo anchor('admin/manage_user', 'User', array('class'=>$user));?></li>
-		<li id="menu-source"><?php echo anchor('admin/manage_source', 'Source', array('class'=>$source));?></li>
-		<li id="menu-tag"><?php echo anchor('admin/manage_tag', 'Tag', array('class'=>$tag));?></li>
+		<li id="menu-article"><?php echo ($active == 'article')? anchor('admin/manage_article', 'Article', array('class'=>'active')) : anchor('admin/manage_article', 'Article');?></li>
+		<li id="menu-author"><?php echo ($active == 'author')? anchor('admin/manage_author', 'Author', array('class'=>'active')) : anchor('admin/manage_author', 'Author');?></li>
+		<li id="menu-category"><?php echo ($active == 'category')? anchor('admin/manage_category', 'Category', array('class'=>'active')) : anchor('admin/manage_category', 'Category');?></li>
+		<li id="menu-user"><?php echo ($active == 'user')? anchor('admin/manage_user', 'User', array('class'=>'active')) : anchor('admin/manage_user', 'User');?></li>
+		<li id="menu-source"><?php echo ($active == 'source')? anchor('admin/manage_source', 'Source', array('class'=>'active')) : anchor('admin/manage_source', 'Source');?></li>
+		<li id="menu-tag"><?php echo ($active == 'tag')? anchor('admin/manage_tag', 'Tag', array('class'=>'active')) : anchor('admin/manage_tag', 'Tag');?></li>
 	</ul>
 </div>

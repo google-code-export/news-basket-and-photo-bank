@@ -17,14 +17,14 @@
 		<input type="submit" name="change" value="Change Status" />
 	</div>
 	<div class="paging">
-	<?php
-		if (!empty($pagination)) {
-			echo '<p>Page : '.$pagination. "</p>" ; 
-		}
-		else {
-			echo 'Page : <a style="cursor:auto; color:black;"><strong>1</strong></a>';
-		}
-	?>
+		<?php
+			if (!empty($pagination)) {
+				echo '<p>Page : '.$pagination. "</p>" ; 
+			}
+			else {
+				echo 'Page : <a style="cursor:auto; color:black;"><strong>1</strong></a>';
+			}
+		?>
 	</div>
 </div>
 <?php

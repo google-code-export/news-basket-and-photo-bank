@@ -1,6 +1,6 @@
 <p class='flip'><strong>Last Version Article</strong>
 	<a id="edit-article" href="<?php echo $form_action_edit;?>">
-		<button style="float: right; margin-top: -5px;" >Edit Article</button>
+		<button style="float: right; margin-top: -4px;" >Edit Article</button>
 	</a>
 </p>
 <?php

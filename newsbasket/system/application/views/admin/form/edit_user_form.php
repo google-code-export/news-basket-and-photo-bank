@@ -31,13 +31,23 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="bold"><label for="password">New Password</label></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td class="label"><small>* Leave empty, if you don't want to change it</small></td>
+		</tr>
+		<tr>
+			<td class="bold"><label for="password">New Password*</label></td>
 			<td class="label"><input type="password" id="password" name="password" size="40px;" style="margin-left: 3px;" /></td>
 		</tr>
 		<tr>
-			<td class="bold"><label for="confirm-password">Retype Password</label></td>
+			<td class="bold"><label for="confirm-password">Retype Password*</label></td>
 			<td class="label"><input type="password" id="confirm-password" name="confirm-password" size="40px;" style="margin-left: 3px;" /></td>
 			<td><span id="check-password" style="display: none;"></span></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="bold"><label for="email">Email</label></td>
@@ -71,3 +81,27 @@
 	</table>
 	<input type="hidden" id="old-password" name="old-password" size="40px;" style="margin-left: 3px;" required="required" value="<?php echo $default['password']; ?>"/>
 </form>
+<script>
+//MENGECEK KONFIRMASI PASSWORD
+$(document).ready(function() {
+	$("#confirm-password").blur(function() {
+		//remove all the class, add new classes and start fading
+		$("#check-password").removeClass().addClass('image-load').text('AA').fadeIn("fast");
+		//check the username exists or not from ajax
+		$.post("<?php echo site_url('admin/manage_user/checkConfirmationPassword');?>",{ password:$("#password").val(), confirm_password:$("#confirm-password").val() } ,function(data) {
+			if(data=='no') { //if password not same
+				$("#check-password").fadeTo(200,0.1,function() { //start fading the messagebox
+					//add message and change the class of the box and start fading
+					$(this).html('AA').removeClass().addClass('image-no').fadeTo(900,1); //AA kontem html sembarang
+				});		
+			}
+			else {
+				$("#check-password").fadeTo(200,0.1,function() { //start fading the messagebox
+					//add message and change the class of the box and start fading
+					$(this).html('AA').removeClass().addClass('image-yes').fadeTo(900,1); //AA kontem html sembarang
+				});
+			}		
+		});
+	});
+});
+</script>

@@ -1,6 +1,6 @@
 <div class="main content clearfix">
 	<div class="signin-box">
-		<h2>News Basket Login<strong></strong></h2>
+		<h2>Login<strong></strong></h2>
 		<form id="newsbasket-login" name="newsbasket_login" action="<?php echo $form_action; ?>" method="post">
 		<div class="username">
 			<label for="username"><strong>Username</strong></label>

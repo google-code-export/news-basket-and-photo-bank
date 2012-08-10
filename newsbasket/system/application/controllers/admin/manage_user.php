@@ -15,10 +15,16 @@ class Manage_user extends Controller {
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load_users(0);
-		}
+		} 
 		else {
-			redirect('login');
-        }
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function load_users($offset = 0) {
@@ -60,7 +66,18 @@ class Manage_user extends Controller {
 		$this->pagination->initialize($config);
 		$data_user['pagination']   	= $this->pagination->create_links();
 		
-		$this->load->view('admin/template', $data_user);
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_user);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function detail_user($id_user) {
@@ -183,7 +200,6 @@ class Manage_user extends Controller {
 			$this->session->set_flashdata('message_success', $message);
 			redirect('admin/manage_user');
 		}
-		
 		else {
 			$message = 'Add new user '.$new_user['id_user'].' failed!'; 
 			$this->session->set_flashdata('message_failed', $message);
@@ -255,6 +271,15 @@ class Manage_user extends Controller {
 		
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_user);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
 	
@@ -264,6 +289,7 @@ class Manage_user extends Controller {
 			
 			// kondisi password
 			$new_password = $this->input->post('password');
+			
 			if(!empty($new_password)) {
 				$password = $new_password;
 				// Prepare data untuk disimpan di tabel
@@ -314,7 +340,16 @@ class Manage_user extends Controller {
 			$this->session->set_flashdata('message_success', 'Delete user successfull!');
 
 			redirect('admin/manage_user');
-		}  
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	// validasi dengan AJAX

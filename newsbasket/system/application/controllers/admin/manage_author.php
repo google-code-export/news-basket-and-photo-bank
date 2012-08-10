@@ -12,10 +12,16 @@ class Manage_author extends Controller {
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load_author();
-		}
+		} 
 		else {
-			redirect('login');
-        }
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function load_author() {
@@ -56,7 +62,18 @@ class Manage_author extends Controller {
 		$this->pagination->initialize($config);
 		$data_author['pagination']   	= $this->pagination->create_links();
 		
-		$this->load->view('admin/template', $data_author);
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_author);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function add_author() {
@@ -77,7 +94,6 @@ class Manage_author extends Controller {
 			$this->session->set_flashdata('message_success', $message);
 			redirect('admin/manage_author');
 		}
-		
 		else {
 			$message = 'Add new author '.$new_author['id_author'].' failed!'; 
 			$this->session->set_flashdata('message_failed', $message);
@@ -130,6 +146,15 @@ class Manage_author extends Controller {
 		
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_author);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
 	
@@ -169,7 +194,16 @@ class Manage_author extends Controller {
 			$this->session->set_flashdata('message_success', 'Delete author successfull!');
 
 			redirect('admin/manage_author');
-		}  
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function search_author($start = 0) {
@@ -219,6 +253,15 @@ class Manage_author extends Controller {
 
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_author);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
 	

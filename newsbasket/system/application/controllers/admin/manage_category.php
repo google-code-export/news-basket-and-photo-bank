@@ -12,10 +12,16 @@ class Manage_category extends Controller {
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load_categories();
-		}
+		} 
 		else {
-			redirect('login');
-        }
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function load_categories() {
@@ -51,7 +57,18 @@ class Manage_category extends Controller {
 		$this->pagination->initialize($config);
 		$data_category['pagination']   	= $this->pagination->create_links();
 
-		$this->load->view('admin/template', $data_category);
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->load->view('admin/template', $data_category);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
 	
 	function add_category() {
@@ -105,6 +122,15 @@ class Manage_category extends Controller {
 	
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
 			$this->load->view('admin/template', $data_category);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
 	
@@ -139,6 +165,15 @@ class Manage_category extends Controller {
 			$this->session->set_flashdata('message_success', 'Delete category successfull!');
 
 			redirect('admin/manage_category');
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}  
 	}
 }
