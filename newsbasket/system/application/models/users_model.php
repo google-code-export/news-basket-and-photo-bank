@@ -29,6 +29,18 @@ class Users_model extends Model {
 		return $this->db->get($this->table);
 	}
 	
+	function getSourceUser($username) {
+		$this->db->select('id_source');
+		$this->db->where('id_user', $username);
+		return $this->db->get($this->table)->row()->id_source;
+	}
+	
+	function getNameUser($username) {
+		$this->db->select('name');
+		$this->db->where('id_user', $username);
+		return $this->db->get($this->table)->row()->name;
+	}
+		
 	function getAllUser($limit, $offset, $username) {
         $this->db->select('*');
         $this->db->from($this->table); //tabel user
@@ -63,13 +75,6 @@ class Users_model extends Model {
 	function countAll() {
 		return $this->db->count_all($this->table);
     }
-	
-	function countUserBySource() {
-		$this->db->select('source_name, count(users.id_source) as total_user');
-		$this->db->join('source', 'source.id_source = users.id_source'); //join sama tabel source
-		$this->db->group_by('users.id_source');
-		return $this->db->get($this->table)->result();
-    }	
 	
 	function countUserByPublisher($key) {
 		$this->db->where('id_source',  $key);
@@ -132,7 +137,7 @@ class Users_model extends Model {
     function updateUser($id_user, $new_user) {
         $this->db->where('id_user', $id_user);
         $this->db->update($this->table, $new_user);
-    }
+    }	
     
     function deleteUser($id_user) {
 		$this->db->where('id_user', $id_user);

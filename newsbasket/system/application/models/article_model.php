@@ -26,13 +26,25 @@ class Article_model extends Model {
         return $this->db->get()->result();
     }
 	
-	function countAll() {
-		return $this->db->count_all($this->table);
+	function getAllArticleByUser($id_user, $limit, $offset) {
+        $this->db->from('users_article');
+		$this->db->where('id_user', $id_user);
+        $this->db->join('article', 'users_article.id_article = article.id_article');
+        $this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
+		$this->db->limit($limit, $offset);
+        return $this->db->get()->result();
     }
 	
-	function countArticleByFlag($key) {
-		$this->db->where('article_flag',  $key);
-		return $this->db->get($this->table)->num_rows();
+	function countAllArticleByUser($id_user) {
+        $this->db->from('users_article');
+		$this->db->where('id_user', $id_user);
+        $this->db->join('article', 'users_article.id_article = article.id_article');
+        $this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
+		return $this->db->get()->num_rows();
+    }
+	
+	function countAll() {
+		return $this->db->count_all($this->table);
     }
 	
 	function countArticleByPublisher($key) {
@@ -88,8 +100,7 @@ class Article_model extends Model {
     
     function countSearch($key) {
         $this->db->from('article');
-		$this->db->like('headline', $key);
-        $this->db->or_like('body_article', $key);
+		$this->db->like('body_article', $key);
         return $this->db->get()->num_rows();
     }
 	
@@ -101,11 +112,6 @@ class Article_model extends Model {
         $this->db->where('id_article', $id_article);
         $this->db->update($this->table, $new_article);
     }
-	
-	function changeArticleFlag($new_flag, $id_article) {
-		$this->db->where('id_article', $id_article);
-        $this->db->update($this->table, $new_flag);
-	}
 	
 	function AddUserArticle($new_users_article) {
 		$this->db->insert('users_article', $new_users_article);
@@ -119,6 +125,30 @@ class Article_model extends Model {
 	function addArticleVersion($new_article_version){
 		$this->db->insert('article_version', $new_article_version);
     }
+	
+	function lockArticle($id_article){
+		$this->db->where('id_article', $id_article);
+		$this->db->update($this->table, array('locked' => 'yes'));
+	}
+	
+	function unlockArticle($id_article){
+		$this->db->where('id_article', $id_article);
+		$this->db->update($this->table, array('locked' => 'no'));
+	}
+	
+	function checkLockArticle($id_article){
+		$this->db->select('locked');
+		$this->db->where('id_article', $id_article);
+		$query = $this->db->get($this->table)->row()->locked;
+		
+		if ($query == 'no') {
+			return TRUE; // not locked
+		}
+		else {
+			return FALSE; // locked
+		}
+		
+	}
 }
 
 ?>

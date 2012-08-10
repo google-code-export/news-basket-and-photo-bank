@@ -10,7 +10,7 @@ class Manage_article extends Controller {
 	}
 	
 	function index() {
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'publisher') {
 			$this->load_article();
 		}
 		else {
@@ -43,6 +43,9 @@ class Manage_article extends Controller {
 		$num_rows 	= $this->Article_model->countAll();
 		$data_article['article_table'] = $articles;
 		$data_article['no'] 		   = $offset + 1; // untuk penomoran tabel
+		
+		// unlock article yang sudah atau tidak jadi di edit
+		$this->Article_model->unlockArticle($this->session->userdata('id_article'));
 		
 		// Membuat pagination			
 		$config['base_url']    		= site_url('user/manage_article/load_article/');
@@ -97,7 +100,7 @@ class Manage_article extends Controller {
 		// ambil data author
 		$data_article['article']['author'] = $this->Article_model->getUserArticleByIDArticle($id_article, 'row_article');
 		
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'publisher') {
 			$this->load->view('user/template', $data_article);
 		}
 	}
@@ -119,13 +122,13 @@ class Manage_article extends Controller {
 		$this->load->model('Category_model','',TRUE);
 		$data_article['categories']			 = $this->Category_model->getAllCategories();
 		
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'publisher') {
 			$this->load->view('user/template', $data_article);
 		}
 	}
 	
 		function add_article_process() {
-		if ((($this->session->userdata('user_level') == 'editor') || ($this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer')) && $this->session->userdata('login') == TRUE) {
+		if ((($this->session->userdata('user_level') == 'editor') || ($this->session->userdata('user_level') == 'publisher')) && $this->session->userdata('login') == TRUE) {
 			
 			$this->load->model('Users_model','', TRUE);
 			$id_source = $this->Users_model->getSourceUser($this->session->userdata('username'));
@@ -139,7 +142,7 @@ class Manage_article extends Controller {
 				'body_article'  => $this->input->post('body-article'),
 				'id_category'   => $this->input->post('id-category'),
 				'article_flag'  => 'row_article',
-				'created_on'	=> date('Y-m-d'),
+				'created_on'	=> date('Y-m-d G:i:s'),
 				'locked'		=> 'no',
 				'author'		=> $name
 			);
@@ -224,6 +227,7 @@ class Manage_article extends Controller {
 		$data_article['article']['id_category'] 	= $article->id_category;
 		$data_article['article']['article_flag'] 	= $article->article_flag;
 		
+		
 		// ambil tag artikel
 		$tag_article = $this->Article_model->getTagArticle($id_article);
 		$tagstr = array();
@@ -239,13 +243,22 @@ class Manage_article extends Controller {
 		$this->load->model('Category_model','',TRUE);
 		$data_article['categories']			 = $this->Category_model->getAllCategories();
 		
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'publisher' && $this->Article_model->checkLockArticle($id_article) == TRUE) {
+			//lock article
+			$this->Article_model->lockArticle($id_article);
 			$this->load->view('user/template', $data_article);
+		}else{
+		?>
+			<script>
+			alert('The article is being edited');
+			document.location='<?php echo site_url('user/manage_article')?>';
+			</script>
+			<?php
 		}
 	}
 	
 	function edit_article_process() {
-		if ((($this->session->userdata('user_level') == 'editor') || ($this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer')) && $this->session->userdata('login') == TRUE) {
+		if ((($this->session->userdata('user_level') == 'editor') || ($this->session->userdata('user_level') == 'publisher')) && $this->session->userdata('login') == TRUE) {
 		
 			// Prepare data untuk disimpan di tabel article
 			$article  = array(
@@ -297,7 +310,7 @@ class Manage_article extends Controller {
 			
 			// update tabel user article untuk log activity
 			$id_user  = $this->session->userdata('username'); // username dari saat login
-			if ($this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+			if ($this->session->userdata('user_level') == 'publisher') {
 				$activity_log = array(
 					'id_article'	=> $id_article,
 					'id_user'   	=> $this->session->userdata('username'), //siapa yang login saat itu
@@ -306,6 +319,9 @@ class Manage_article extends Controller {
 				);
 				$this->Article_model->AddUserArticle($activity_log);
 			}
+			
+			// unlock article
+			$this->Article_model->unlockArticle($id_article);
 			
 			$message = 'Article '.$id_article.' has been updated!'; 
 			$this->session->set_flashdata('message_success', $message);
@@ -320,7 +336,7 @@ class Manage_article extends Controller {
 	
 	
 	function delete_article($id_article) {
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'publisher') {
 			$this->load->model('Article_model','',TRUE);
 			$this->Article_model->deleteArticle($id_article);
 			$this->session->set_flashdata('message_success', 'Delete article successfull!');
@@ -361,7 +377,7 @@ class Manage_article extends Controller {
 		$data_article['first_result'] = $start + 1;
 		$data_article['last_result']  = min($start + $this->limit, $data_article['count']);
 
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter' || 'publisher' || 'viewer') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'publisher') {
 			$this->load->view('user/template', $data_article);
 		}
 	}

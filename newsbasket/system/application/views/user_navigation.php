@@ -1,34 +1,36 @@
-<div class="dashboard">
-	<h3 class="menu">Dashboard</h3>
-	<ul>
-		<li><a href="http://csandre.wordpress.com/category/belajar/">Home</a></li>
-		<li><a href="<?php echo site_url('login/logoutProcess');?>">Logout</a></li>
-	</ul>
-</div>
-<div class="user-menu">
-	<h3 class="menu">My Profile</h3>
-	<ul>
-		<li><a href="http://csandre.wordpress.com/category/belajar/">Change Profile</a></li>
-		<li><a href="http://csandre.wordpress.com/category/belajar/">My Article</a></li>
-	</ul>
-</div>
-<div class="source">
-	<h3 class="menu">Articles Source</h3>
-	<ul>
-		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Wires</a>
-		<!--<li class="children"><a href="http://csandre.wordpress.com/category/belajar/">AFP</a></li>
-		<li class="children"><a href="http://csandre.wordpress.com/category/belajar/">ANTARA</a></li>-->
+<br />
+<br />
+<?php
+	switch($active) {
+		case 'dashboard':
+			$dashboard = 'active';
+			$article = $author  = $category = $user = $source = $tag = '';
+			break;
+		case 'article':
+			$article = 'active';
+			$dashboard = $author  = $category = $user = $source = $tag = '';
+			break;
+		case 'user':
+			$user = 'active';
+			$dashboard = $author = $category = $article = $source = $tag = '';
+			break;
+	}
+?>
 		
-		<li class="parent"><a href="http://csandre.wordpress.com/category/belajar/">Publisher</a>
-		<!--<li class="children"><a href="http://csandre.wordpress.com/category/belajar/">beritasatu.com</a></li>-->
+<div class="dashboard">
+	<ul class="menu">
+		<li id="dashboard"><?php echo anchor('user/dashboard', 'Dashboard', array('class'=>$dashboard));?></li>
+		<ul>
+			<li class="child"><a href="<?php echo site_url('user/manage_user/detail_user').'/'.$username;?>">My Profile</a></li>
+		</ul>
 	</ul>
-</div
-<div class="category">
-	<h3 class="menu">Articles Category</h3>
-	<ul>
-		<li><a href="http://csandre.wordpress.com/category/belajar/">Economy</a></li>
-		<li><a href="http://csandre.wordpress.com/category/belajar/">Politic</a></li>
-		<li><a href="http://csandre.wordpress.com/category/belajar/">Sport</a></li>
-		<li><a href="http://csandre.wordpress.com/category/belajar/">Technology</a></li>
+</div>
+<br />
+<div class="user-menu">
+	<ul class="menu">
+		<li id="menu-article"><?php echo anchor('user/manage_article', 'Article', array('class'=>$article));?></li>
+		<ul>
+			<li class="child"><a href="<?php echo site_url('user/manage_article/add_article');?>">Add New Article</a></li>
+		</ul>
 	</ul>
 </div>

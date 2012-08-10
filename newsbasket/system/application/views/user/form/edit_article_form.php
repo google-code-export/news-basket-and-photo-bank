@@ -70,14 +70,15 @@
 			<td>
 				<span style="float: right;">
 					<input type="submit" class="button" value="Save Article" />
-					<a id="edit-article" href="<?php echo site_url('user/manage_article/detail_article').'/'.$article['id_article'];?>"><button class="button">Cancel</button></a>
+					<input type="hidden" style="display: none;" name="headline-version" value="<?php echo $article['headline']?>"/>
+					<input type="hidden" style="display: none;" name="lead-article-version" value="<?php echo $article['lead_article']?>"/>
+					<input type="hidden" style="display: none;" name="body-article-version" value="<?php echo $article['body_article']?>"/>
+				</form>
+					<input type="button" value="cancel" class="button" onclick="window.location='<?php echo site_url('user/manage_article');?>'">
 				</span>
 			</td>
 		</tr>
 	</table>
 	<!-- data untuk membuat article_version -->
-	<input type="hidden" style="display: none;" name="headline-version" value="<?php echo $article['headline']?>"/>
-	<input type="hidden" style="display: none;" name="lead-article-version" value="<?php echo $article['lead_article']?>"/>
-	<input type="hidden" style="display: none;" name="body-article-version" value="<?php echo $article['body_article']?>"/>
-</form>
+	
 	

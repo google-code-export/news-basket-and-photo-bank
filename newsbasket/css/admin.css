@@ -1,12 +1,12 @@
 /*------------------------- tengah --------------------------*/
 .main {
 	position: absolute;
-	top: 32px;
+	top: 30px;
 	left: 201px;
 	right: 0px;
-	min-height: 88%;
-	padding: 5px 5px 40px 5px;
-	z-index: -1;
+	bottom: 20px;
+	padding: 5px;
+	box-shadow: -10px 0px 10px -5px rgba(200, 200, 200, 0.7);
 }
 
 .main h2{
@@ -20,9 +20,10 @@
 	height: 30px;
 	padding: 5px 5px;
     background: none repeat scroll 0% 0% rgb(240, 240, 240);
+	border:1px solid #98bf21;
 }
 
-.main .paging {
+.main .table-menu .paging {
 	padding: 5px;
 	margin: 2px;
     float: left;
@@ -35,30 +36,23 @@
 	color: blue;
 }
 
-.main .search {
+.main .table-menu .search {
 	margin-top: -2px;
 	padding: 5px 5px;
     float: right;
 }
 
-.main .table-bottom {
-	height: 30px;
-	position: absolute; 
-	bottom: 0px; 
-	right: 5px; 
-	left: 5px;
-	padding: 5px;
-    background: none repeat scroll 0% 0% rgb(240, 240, 240);
+.main .table-list {
+	height: 450px;
+	width: 100%;
+	overflow-y: auto;
 }
 
-.main .table-list {
-	position: absolute; 
-	top: 90px;
-	bottom: 40px; 
-	right: 5px; 
-	left: 0px;
-	padding: 5px;
-	overflow-y: auto;
+.add-form {
+	width: 100%;
+	display: none;
+	background-color: #A7C942;
+	border-bottom: solid 1px rgb(150, 0, 0);
 }
 
 .table-form {
@@ -66,15 +60,10 @@
 	padding: 10px 0px;
 }
 
-.add-form {
-	display: none;
-	background-color: #F0F0F0;
-	border: solid 1px rgb(175, 0, 0);
-}
-
 .edit-form {
-	background-color: #F0F0F0;
-	border: solid 1px rgb(175, 0, 0);
+	width: 100%;
+	background-color: #A7C942;
+	border-bottom: solid 1px rgb(150, 0, 0);
 }
 
 tr.alternate {
@@ -120,7 +109,7 @@ td.bold{
 	float: left;
 	right: 15px;
 	left: 475px;
-	height: 90%;
+	height: 530px;
 	padding: 0px 10px 0px;
 	overflow-y: auto;
 }
@@ -173,6 +162,11 @@ span.right {
 	color:#ffffff;
 }
 
+/*.tablesorter tr.odd td 
+{
+	background-color:#EAF2D3;
+}*/
+
 .tablesorter td.center, .tablesorter th.center {
 	text-align: center;
 }
@@ -206,7 +200,6 @@ p.success {
 	font-size:1.2em;
 	font-weight: bold;
 	width: 100%;
-	margin-right: 20px;
 	text-align: center;
 	color: white;
 	padding: 5px 0px;
@@ -217,7 +210,6 @@ p.failed {
 	font-size:1.2em;
 	font-weight: bold;
 	width: 100%;
-	margin-right: 20px;
 	text-align: center;
 	color: white;
 	padding: 5px 0px;

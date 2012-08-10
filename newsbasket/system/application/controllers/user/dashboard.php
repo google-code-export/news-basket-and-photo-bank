@@ -7,7 +7,7 @@ class Dashboard extends Controller {
 	}
 	
 	function index() {
-		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter'|| 'publisher' || 'viewer') {
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'publisher' || 'viewer') {
 			$this->home();
 		}
 		else {

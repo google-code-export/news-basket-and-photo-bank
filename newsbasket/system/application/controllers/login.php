@@ -33,7 +33,16 @@ class Login extends Controller {
 					redirect('admin/dashboard');
 				}
 				else {
-					redirect('user/home');
+				if ($user_level == 'reporter'){
+					redirect('reporter/dashboard');
+					}
+					else{
+						if ($user_level == 'editor'){
+							redirect('editor/dashboard');
+							}else{
+							redirect('user/dashboard');
+						}
+					}
 				}
 			}
 			else {

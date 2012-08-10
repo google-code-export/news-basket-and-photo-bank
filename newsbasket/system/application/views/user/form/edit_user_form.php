@@ -26,7 +26,9 @@
 		<tr>
 			<td class="bold"><label for="email">Email</label></td>
 			<td class="label"><input type="email" id="email" name="email" size="40px;" style="margin-left: 3px;" required="required" value="<?php echo $default['email']; ?>" /></td>
-		</tr>
+		</tr>		
+		<td>&nbsp;</td>
+		<td class="label"><small>*Leave it empty if you don't want to change it</small></td>
 		<tr>
 			<td>&nbsp;</td>
 			<td align="right">
@@ -37,3 +39,28 @@
 		</tr>
 	</table>
 </form>
+
+<script>
+//MENGECEK KONFIRMASI PASSWORD
+$(document).ready(function() {
+	$("#confirm-password").blur(function() {
+		//remove all the class, add new classes and start fading
+		$("#check-password").removeClass().addClass('image-load').text('AA').fadeIn("fast");
+		//check the username exists or not from ajax
+		$.post("<?php echo site_url('user/manage_user/checkConfirmationPassword');?>",{ password:$("#new-password").val(), confirm_password:$("#confirm-password").val() } ,function(data) {
+			if(data=='no') { //if password not same
+				$("#check-password").fadeTo(200,0.1,function() { //start fading the messagebox
+					//add message and change the class of the box and start fading
+					$(this).html('AA').removeClass().addClass('image-no').fadeTo(900,1); //AA kontem html sembarang
+				});		
+			}
+			else {
+				$("#check-password").fadeTo(200,0.1,function() { //start fading the messagebox
+					//add message and change the class of the box and start fading
+					$(this).html('AA').removeClass().addClass('image-yes').fadeTo(900,1); //AA kontem html sembarang
+				});
+			}		
+		});
+	});
+});
+</script>

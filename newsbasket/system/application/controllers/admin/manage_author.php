@@ -3,7 +3,7 @@
 class Manage_author extends Controller {
 	
 	//limitasi tabel
-	var $limit = 20;
+	var $limit = 10;
 	
 	function Manage_author() {
 		parent::Controller();	
@@ -187,7 +187,7 @@ class Manage_author extends Controller {
 		$offset      = $this->uri->segment($uri_segment);
 
 		// kata kunci pencarian
-		$key = $this->input->get('key');
+		$key = $this->input->post('key');
 		if (empty($key)) { // jika kata kunci pencarian tidak ada
 			$key = $this->session->userdata('key'); // ambil dari session
 		}
