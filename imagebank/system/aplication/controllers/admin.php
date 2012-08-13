@@ -32,7 +32,7 @@ class Admin extends Controller {
 		$crud -> set_table('users');
 		//set table yang akan diproses
 		//$crud->where('id_user',$username);
-		$crud -> set_theme('flexigrid');
+		$crud -> set_theme('datatables');
 		//tema defauult
 		$crud -> columns('id_user', 'name', 'email', 'id_source', 'user_level', 'phone');
 		//colom yang akan ditampilkan dalam melihat pengaturan
@@ -47,6 +47,9 @@ class Admin extends Controller {
 		// set field untuk password
 		$crud -> callback_before_insert(array($this, 'encrypt_pw'));
 		// fungsi password yang nanti diproses pada fungsi enkripsi
+		$crud -> callback_before_update(array($this, 'encrypt_pw'));
+		$crud -> callback_edit_field('password', array($this, 'decrypt_pw'));
+
 		$crud -> set_relation('id_source', 'source', 'source_name');
 		// relasi dua table
 
@@ -62,18 +65,30 @@ class Admin extends Controller {
 	}
 
 	//fungsi buat enkrip password dengan algoritma SHA 1
+
 	function encrypt_pw($post_array) {
+		$this -> load -> library('encrypt');
+
 		if (!empty($post_array['password'])) {
 			$post_array['password'] = SHA1($_POST['password']);
 		}
 		return $post_array;
 	}
 
+	function decrypt_pw($value) {
+		$this -> load -> library('encrypt');
+		$key = 'sha1';
+		$decrypted_password = $this -> encrypt -> decode($value, $key);
+
+		return "<input type='password' name='password' value='$decrypted_password' />";
+
+	}
+
 	public function manageCategory() {
 		$username = $this -> session -> userdata('username');
 		$crud = new grocery_CRUD();
 		$crud -> set_table('category');
-		$crud -> set_theme('flexigrid');
+		$crud -> set_theme('datatables');
 		$crud -> display_as('short_desc', 'Short Description');
 		$crud -> display_as('long_desc', 'Long Description');
 		$output = $crud -> render();
@@ -89,7 +104,7 @@ class Admin extends Controller {
 		$username = $this -> session -> userdata('username');
 		$crud = new grocery_CRUD();
 		$crud -> set_table('source');
-		$crud -> set_theme('flexigrid');
+		$crud -> set_theme('datatables');
 		$crud -> fields('source_name', 'source_type');
 		$output = $crud -> render();
 		$output = (array)$output;

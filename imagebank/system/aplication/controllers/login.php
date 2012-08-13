@@ -33,13 +33,13 @@ class Login extends Controller {
 				$this -> session -> set_userdata($data);
 				if ($user_level == 'administrator') {
 					$data_article['page_title'] = 'Manage Users	| Admin ';
-					$this -> session -> set_flashdata('flash_message', 'You are Logged in.');
+					
 
 					redirect('admin/manageUser');
 				} else {
-					$this -> session -> set_flashdata('flash_message', 'You are Logged in.');
+					
 
-					redirect('gallery');
+					redirect('gallery/tampil_foto');
 				}
 			} else {
 				$this -> session -> set_flashdata('message', 'Wrong username or password!');
