@@ -1,21 +1,23 @@
+<?php
+    echo $this->tinyMce;
+?>
 <p class='flip'><strong>Edit Article</strong></p>
 <form id="edit-article-form" method="post" action="<?php echo $form_action_edit;?>" >
 	<br />
 	<table style="margin-left: 2px;">
 		<tr class="alternate">
 			<td class="bold"><label for="headline">Headline</label></td>
-			<td class="label"><input type="text" name="headline" size="46px;" value="<?php echo $article['headline']?>"/></td>
+			<td class="label"><input type="text" name="headline" size="50px;" value="<?php echo $article['headline']?>"/></td>
 		</tr>
 		<tr>
 			<td class="bold"><label for="lead-article">Lead Article</label></td>
-			<td class="label">
-				<textarea name="lead-article" rows="5" cols="80"><?php echo $article['lead_article']?></textarea>
+				<td class="label"><input type="text" name="lead-article" size="50px;" value="<?php echo $article['lead_article']?>"/></td>
 			</td>
 		</tr>	
 		<tr class="alternate">
 			<td class="bold"><label for="body-article">Body Article</label></td>
 			<td class="label">
-				<textarea name="body-article" rows="10" cols="80"><?php echo $article['body_article']?></textarea>
+				<textarea name="body-article" rows="30" cols="80"><?php echo $article['body_article']?></textarea>
 			</td>
 		</tr>
 		<tr>
@@ -44,7 +46,7 @@
 		</tr>
 		<tr>
 			<td class="bold">Tag</td>
-			<td class="label"><input type="text" name="tag" size="46px;" value="<?php echo $article['tag']?>"/></td>
+			<td class="label"><input type="text" name="tag" size="50px;" value="<?php echo $article['tag']?>"/></td>
 		</tr>
 		<tr>
 			<td class="bold">Status Flag</td>
@@ -55,10 +57,10 @@
 					for ($i=0; $i<=2; $i++) {
 						$value = $i + 1;
 						if ($level[$i] == $article['article_flag']) {
-							echo "<option value='$value' SELECTED>$level[$i]</option>";
+							echo "<option value='$level[$i]' SELECTED>$level[$i]</option>";
 						}
 						else {
-							echo "<option value='$value'>$level[$i]</option>";			
+							echo "<option value='$level[$i]'>$level[$i]</option>";			
 						}
 					}
 					?>
