@@ -34,12 +34,13 @@ class Tag_model extends Model {
 		}
 	}
 
-	function getTagImage($id_image) {
-		$this -> db -> where('id_image', $id_image);
-		$this -> db -> from('imagetag');
-		return $this -> db -> get() -> result();
+	  function getTagImage($id_image) {
+                $this -> db -> where('id_image', $id_image);
+                $this -> db -> from('imagetag');
+                return $this -> db -> get() -> result();
 
-	}
+        }
+
 
 	function getId() {
 		$this -> db -> select('id_images');
