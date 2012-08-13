@@ -53,12 +53,11 @@
 					<?php
 					$level = array('row_article','edited','published','deleted');
 					for ($i=0; $i<=3; $i++) {
-						$value = $i + 1;
 						if ($level[$i] == $article['article_flag']) {
-							echo "<option value='$value' SELECTED>$level[$i]</option>";
+							echo "<option value='$level[$i]' SELECTED>$level[$i]</option>";
 						}
 						else {
-							echo "<option value='$value'>$level[$i]</option>";			
+							echo "<option value='$level[$i]'>$level[$i]</option>";			
 						}
 					}
 					?>

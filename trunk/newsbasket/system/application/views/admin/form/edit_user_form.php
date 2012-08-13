@@ -81,7 +81,9 @@
 	</table>
 	<input type="hidden" id="old-password" name="old-password" size="40px;" style="margin-left: 3px;" required="required" value="<?php echo $default['password']; ?>"/>
 </form>
+
 <script>
+
 //MENGECEK KONFIRMASI PASSWORD
 $(document).ready(function() {
 	$("#confirm-password").blur(function() {
@@ -104,4 +106,28 @@ $(document).ready(function() {
 		});
 	});
 });
+
+//MENGECEK NOMOR TELEPON
+$(document).ready(function() {
+	$("#phone").blur(function() {
+		//remove all the class, add new classes and start fading
+		$("#check-numeric").removeClass().addClass('image-load').text('AA').fadeIn("fast");
+		//check the username exists or not from ajax
+		$.post("<?php echo site_url('admin/manage_user/checkPhoneNumber');?>",{ phone:$("#phone").val() } ,function(data) {
+			if(data=='no') { //if phone not numeric
+				$("#check-numeric").fadeTo(200,0.1,function() { //start fading the messagebox
+					//add message and change the class of the box and start fading
+					$(this).html('AA').removeClass().addClass('image-no').fadeTo(900,1); //AA konten html sembarang
+				});		
+			}
+			else {
+				$("#check-numeric").fadeTo(200,0.1,function() { //start fading the messagebox
+					//add message and change the class of the box and start fading
+					$(this).html('AA').removeClass().addClass('image-yes').fadeTo(900,1); //AA konten html sembarang
+				});
+			}		
+		});
+	});
+});
+
 </script>

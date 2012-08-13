@@ -9,7 +9,9 @@
 	
 	<style type="text/css">@import url("<?php echo base_url().'css/template.css'; ?>");</style>
 	<style type="text/css">@import url("<?php echo base_url().'css/admin.css'; ?>");</style>
+	<style type="text/css">@import url("<?php echo base_url().'css/jquery-ui-1.8.22.custom.css'; ?>");</style>
 	
+	<script type="text/javascript" src="<?php echo base_url().'/library/jquery-1.7.2.min.js'; ?>"></script> 
 </head>
 <?php flush();?>
 <body>
@@ -30,10 +32,9 @@
 		<!--</div>-->
 	</div>
 	
-	<script type="text/javascript" src="<?php echo base_url().'/library/jquery-1.7.2.min.js'; ?>"></script> 
 	<script type="text/javascript" src="<?php echo base_url().'/library/tablesorter/jquery.tablesorter.min.js'; ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url().'/library/myscript.js'; ?>"></script>
-	<script type="text/javascript" src="<?php echo base_url().'/library/FusionCharts.js';?>"></script>
+	<script type="text/javascript" src="<?php echo base_url().'/library/jquery-ui-1.8.22.custom.min.js'; ?>"></script>
 </body>
 
 </html>
