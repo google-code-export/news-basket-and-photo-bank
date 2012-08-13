@@ -13,12 +13,15 @@ class User extends Controller {
 	}
 
 	function upload() {
+		$data['page_title'] = 'upload Image';
+		$data['main_view'] = 'Image/uploadform';
+
+		//siapa yang login
 		$username = $this -> session -> userdata('username');
 		$user_level = $this -> session -> userdata('user_level');
-		$data['page_title'] = 'upload Image';
-		$data['main_view'] = 'uploadform';
 		$data['username'] = $username;
 		$data['user_level'] = $user_level;
+
 		$this -> load -> model('uploadModel', '', TRUE);
 		$data['album'] = $this -> uploadModel -> getAlbumByIdUser($username);
 
@@ -40,47 +43,57 @@ class User extends Controller {
 		$config['max_size'] = '2048';
 		//$config['max_width']  = '1024';
 		// $config['max_height']  = '768';
+		$data['form_action'] = site_url('user/picupload');
+		$this -> form_validation -> set_rules('kat[]', 'categories', 'required');
+		$this -> form_validation -> set_rules('id_album', 'album name', 'required');
+		$id = $this -> db -> insert_id();
+		if (($this -> form_validation -> run() == TRUE) && ($this -> session -> userdata('login') == TRUE)) {
+			$this -> load -> library('upload');
+			
+			//untuk kategori
+			foreach ($_FILES as $key => $value) {
+				if (!empty($key['name'])) {
+					$this -> upload -> initialize($config);
+					if (!$this -> upload -> do_upload($key)) {
+						$errors[] = $this -> upload -> display_errors();
+					} else {
+						$uploads = array($this -> upload -> data());
+						$id_gambar = $this -> uploadModel -> process_pic($uploads, $this -> input -> post('title'), $this -> input -> post('caption'), $this -> input -> post('id_album'));
 
-		$this -> load -> library('upload');
+						foreach ($_POST['kat'] as $k) {
+							$data = array('id_images' => $id_gambar, 'id_category' => $k);
+							$this -> db -> insert('imagescategory', $data);
+						}
+					}
+				}
+			}
+			//untuk tag
 
-		foreach ($_FILES as $key => $value) {
-			if (!empty($key['name'])) {
-				$this -> upload -> initialize($config);
-				if (!$this -> upload -> do_upload($key)) {
-					$errors[] = $this -> upload -> display_errors();
-				} else {
-					$uploads = array($this -> upload -> data());
-					$id_gambar = $this -> uploadModel -> process_pic($uploads, $this -> input -> post('title'), $this -> input -> post('caption'), $this -> input -> post('id_album'));
+			$tag_pieces = explode(", ", $this -> input -> post('tag'));
+
+			$this -> load -> model('Tag_model', '', TRUE);
+			for ($i = 0; $i < sizeof($tag_pieces); $i++) {
+				if ($this -> Tag_model -> checkTag($tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ') {
+					$tag = array('id_tag' => $tag_pieces[$i]);
+					$this -> Tag_model -> addTag($tag);
+					for ($i = 0; $i < sizeof($tag_pieces); $i++) {
+						if ($this -> Tag_model -> checkImageTag($id, $tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ') {
+							$tag_Image = array('id_image' => $id, 'id_tag' => $tag_pieces[$i]);
+							$this -> Tag_model -> addTagImage($tag_Image);
+						}
+					}
 
 				}
 			}
-		}
-		$id = $this -> db -> insert_id();
-		$tag_pieces = explode(", ", $this -> input -> post('tag'));
 
-		$this -> load -> model('Tag_model', '', TRUE);
-		for ($i = 0; $i < sizeof($tag_pieces); $i++) {
-			if ($this -> Tag_model -> checkTag($tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ') {
-				$tag = array('id_tag' => $tag_pieces[$i]);
-				$this -> Tag_model -> addTag($tag);
+			$this -> session -> set_flashdata('message', 'Succesfully Uploaded Photo to Your Album!');
+			redirect('gallery/tampil_foto');
 
-			}
+		} else {
+			$this -> session -> set_flashdata('message', 'all field must be filled');
+			redirect('user/upload');
 		}
 
-		for ($i = 0; $i < sizeof($tag_pieces); $i++) {
-			if ($this -> Tag_model -> checkImageTag($id, $tag_pieces[$i]) == FALSE && !empty($tag_pieces[$i]) && $tag_pieces[$i] != ' ') {
-				$tag_Image = array('id_image' => $id, 'id_tag' => $tag_pieces[$i]);
-				$this -> Tag_model -> addTagImage($tag_Image);
-			}
-		}
-
-		foreach ($_POST['kat'] as $k) {
-			$data = array('id_images' => $id_gambar, 'id_category' => $k);
-			$this -> db -> insert('imagescategory', $data);
-		}
-
-		$this -> session -> set_flashdata('message', 'Succesfully Uploaded Photo to Your Album!');
-		redirect('gallery');
 	}
 
 	function lookup() {
@@ -110,7 +123,6 @@ class User extends Controller {
 			$this -> load -> view('search', $data);
 		}
 	}
-	
 
 }
 ?>
