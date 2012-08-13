@@ -1,15 +1,14 @@
 /*------------------------ konten --------------------------*/
 .main {
-	position:absolute;
+	position: absolute;
 	top: 30px;
 	left: 201px;
 	right: 0px;
-	bottom: 30px;
 	padding: 10px;
 	box-shadow: -10px 0px 10px -5px rgba(200, 200, 200, 0.7);
 }
 
-.main h2{
+.main h2 {
 	color: white;
 	height: 30px;
 	padding: 10px 10px 5px;
@@ -25,7 +24,7 @@
 
 /*------------------------ konten kiri --------------------------*/
 .main-left {
-    position: absolute;
+	position: absolute;
 	width: 400px;
 	padding: 5px;
 	box-shadow: 0px 0px 10px -5px rgba(200, 200, 200, 0.7);
@@ -35,34 +34,34 @@
 .main-left .sort-and-search {
 	height: 30px;
 	padding: 5px 5px;
-    background: none repeat scroll 0% 0% #EAF2D3;
-    /*border-bottom: 1px solid rgb(150, 150, 150);*/
-    overflow: hidden;
+	background: none repeat scroll 0% 0% #EAF2D3;
+	/*border-bottom: 1px solid rgb(150, 150, 150);*/
+	overflow: hidden;
 }
 
 .main-left .sort {
 	padding: 5px 5px;
-    float: left;
+	float: left;
 }
 
 .main-left .search {
 	margin-top: -2px;
 	padding: 5px 5px;
-    float: right;
+	float: right;
 }
 
 .main-left .article-list {
 	height: 475px;
 	padding: 5px 5px;
 	word-wrap: break-word;
-    overflow: scroll;
+	overflow: scroll;
 }
 
 .main-left .article-list div {
 	margin: -5px 0px;
 	padding: 0px 5px;
 	word-wrap: break-word;
-    overflow: hidden;
+	overflow: hidden;
 	background: white;
 	cursor: pointer;
 	transition: background 0.5s;
@@ -71,7 +70,7 @@
 	-o-transition: background 0.5s; /* Opera */
 }
 
-.main-left .article-list div:hover{
+.main-left .article-list div:hover {
 	background: none repeat scroll 0% 0% rgb(225, 225, 225);
 }
 
@@ -80,7 +79,7 @@
 	height: 450px;
 	float: left;
 	left: 610px;
-    position: fixed;
+	position: fixed;
 	right: 0px;
 	padding: 5px;
 	box-shadow: 0px 0px 10px -5px rgba(200, 200, 200, 0.7);
@@ -90,15 +89,15 @@
 .main-right .article-menu-up {
 	height: 30px;
 	padding: 5px 5px;
-    background: none repeat scroll 0% 0% #EAF2D3;
-    overflow: hidden;
+	background: none repeat scroll 0% 0% #EAF2D3;
+	overflow: hidden;
 }
 
 .main-right .article-menu-up-sub {
 	height: 20px;
 	padding: 5px 11px 7px;
-    background: none repeat scroll 0% 0% #EEF9D9;
-    overflow: hidden;
+	background: none repeat scroll 0% 0% #EEF9D9;
+	overflow: hidden;
 }
 
 .main-right .article-menu-up-sub h4.left {
@@ -113,9 +112,9 @@
 	padding-bottom: 7px;
 }
 
-.main-right .article-menu-up button, .main-right .article-menu-up input[type="submit"]{
+.main-right .article-menu-up button, .main-right .article-menu-up input[type="submit"] {
 	margin: 3px 5px;
-	float:right;
+	float: right;
 }
 
 .main-right .article-menu-up h4 {
@@ -126,12 +125,12 @@
 .main-right .article-menu-down-sub {
 	height: 20px;
 	padding: 5px 11px 7px;
-    background: none repeat scroll 0% 0% #EEF9D9;
-    /*border-bottom: 1px solid rgb(150, 150, 150);*/
-    overflow: hidden;
+	background: none repeat scroll 0% 0% #EEF9D9;
+	/*border-bottom: 1px solid rgb(150, 150, 150);*/
+	overflow: hidden;
 }
 
-.main-right .article-body textarea{
+.main-right .article-body textarea {
 	width: 99.7%;
 	white-space: normal;
 	margin: 0px auto;
@@ -152,14 +151,14 @@
 .main-right .article-menu-down {
 	height: 30px;
 	padding: 5px 5px;
-    background: none repeat scroll 0% 0% rgb(175, 0, 0);
-    /*border-bottom: 1px solid rgb(150, 150, 150);*/
-    overflow: hidden;
+	background: none repeat scroll 0% 0% rgb(175, 0, 0);
+	/*border-bottom: 1px solid rgb(150, 150, 150);*/
+	overflow: hidden;
 }
 
-.main-right .article-menu-down button, .main-right .article-menu-down input[type="submit"]{
+.main-right .article-menu-down button, .main-right .article-menu-down input[type="submit"] {
 	margin: 3px 5px;
-	float:right;
+	float: right;
 }
 
 .main-right .article-editor {
@@ -172,8 +171,8 @@
 }
 
 .main-right textarea {
-	font-family: "Lucida Grande","Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;;
-    font-size: 12px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;;
+	font-size: 12px;
 }
 
 .main-right input[type="text"] {
@@ -181,5 +180,5 @@
 	padding: 0px 5px;
 	height: 30px;
 	font-size: 15px;
-    direction: ltr;
+	direction: ltr;
 }
