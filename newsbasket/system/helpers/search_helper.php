@@ -23,7 +23,7 @@ function search_highlight($text, $search_terms, $hl_class = 'hl')
 	// Highlight each of the terms
 	foreach ($search_terms as $term)
 	{
-		$text = preg_replace('/\b(' . preg_quote($term) . ')\b/i', '<span class="' . $hl_class . '">\1</span>', $text);
+		$text = preg_replace('/\b(' . preg_quote($term) . ')\b/i', '<span style="font-weight: bold">\1</span>', $text);
 	}
 	
 	return $text;
