@@ -1,3 +1,17 @@
+// DATE PICKER
+$(function() {
+	$("#from-date").datepicker({ changeMonth: true, changeYear: true, dateFormat: 'yy-mm-dd' });
+	$("#to-date").datepicker({ changeMonth: true, changeYear: true, dateFormat: 'yy-mm-dd' });
+});
+
+
+// MULTIPLE CHECKBOX
+var MyCheckboxes=$("#table-list :checkbox");
+
+MyCheckboxes.change(function() {
+  $("#change-flag").toggle(MyCheckboxes.is(":checked"));
+});
+
 // TABLE SORTER
 $(document).ready(function() { 
 		$("#article").tablesorter({sortList: [[0,0]], headers: {6:{sorter: false}}});
@@ -8,54 +22,6 @@ $(document).ready(function() {
 		$("#tag").tablesorter({sortList: [[0,0]], headers: {3:{sorter: false}}});
     } 
 );  
-
-
-//MENGECEK USERNAME YANG ADA
-$(document).ready(function() {
-	$("#username").blur(function() {
-		//remove all the class, add new classes and start fading
-		$("#check-user").removeClass().addClass('image-load').text('AA').fadeIn("fast");
-		//check the username exists or not from ajax
-		$.post("http://localhost/newsbasket/admin/manage_user/checkUsernameAvailability",{ username:$(this).val() } ,function(data) {
-			if(data=='no') { //if username not avaiable
-				$("#check-user").fadeTo(200,0.1,function() { //start fading the messagebox
-					//add message and change the class of the box and start fading
-					$(this).html('AA').removeClass().addClass('image-no').fadeTo(900,1); //AA kontem html sembarang
-				});		
-			}
-			else {
-				$("#check-user").fadeTo(200,0.1,function() { //start fading the messagebox
-					//add message and change the class of the box and start fading
-					$(this).html('AA').removeClass().addClass('image-yes').fadeTo(900,1); //AA kontem html sembarang
-				});
-			}		
-		});
-	});
-});
-
-//MENGECEK NOMOR TELEPON
-$(document).ready(function() {
-	$("#phone").blur(function() {
-		//remove all the class, add new classes and start fading
-		$("#check-numeric").removeClass().addClass('image-load').text('AA').fadeIn("fast");
-		//check the username exists or not from ajax
-		$.post("http://localhost/newsbasket/admin/manage_user/checkPhoneNumber",{ phone:$("#phone").val() } ,function(data) {
-			if(data=='no') { //if phone not numeric
-				$("#check-numeric").fadeTo(200,0.1,function() { //start fading the messagebox
-					//add message and change the class of the box and start fading
-					$(this).html('AA').removeClass().addClass('image-no').fadeTo(900,1); //AA konten html sembarang
-				});		
-			}
-			else {
-				$("#check-numeric").fadeTo(200,0.1,function() { //start fading the messagebox
-					//add message and change the class of the box and start fading
-					$(this).html('AA').removeClass().addClass('image-yes').fadeTo(900,1); //AA konten html sembarang
-				});
-			}		
-		});
-	});
-});
-
 //VALIDASI FORM TERAKHIR
 function validateForm() {
 	var username = document.forms["add-user-form"]["username"].value;
@@ -73,7 +39,7 @@ function validateForm() {
 	}
 }
 
-//SLIDER DIV ADD NEW USER
+//SLIDER DIV
 $(document).ready(function(){
 	$(".btn-add").click(function(){
 		$("#add-user").slideToggle("fast");
@@ -91,6 +57,13 @@ $(document).ready(function(){
 		$("#add-source").slideToggle("fast");
 		$("#add-author").slideToggle("fast");
 		$("#add-tag").slideToggle("fast");
+		$("#advance-search").slideToggle("fast");
+	});
+});
+
+$(document).ready(function(){
+	$("#btn-advance-search").click(function(){
+		$("#advance-search").slideToggle("fast");
 	});
 });
 
