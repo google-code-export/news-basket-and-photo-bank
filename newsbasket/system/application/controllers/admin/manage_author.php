@@ -223,10 +223,10 @@ class Manage_author extends Controller {
 		// kata kunci pencarian
 		$key = $this->input->get('key');
 		if (empty($key)) { // jika kata kunci pencarian tidak ada
-			$key = $this->session->userdata('key'); // ambil dari session
+			$key = $this->session->userdata('authorkey'); // ambil dari session
 		}
 		else {
-			$this->session->set_userdata('key', $key); // set kata kunci pencarian ke dalam session
+			$this->session->set_userdata('authorkey', $key); // set kata kunci pencarian ke dalam session
 		}
 		$data_author['key'] = $key;
 		
