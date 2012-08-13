@@ -104,19 +104,72 @@ class Article_model extends Model {
 	
 	function searchArticle($limit, $offset, $key) {
         $this->db->from('article');
-        $this->db->like('headline', $key);
-        $this->db->or_like('body_article', $key);
+		if ($key != "") {
+			$this->db->like('body_article', $key);
+		}
 		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
 		$this->db->join('category', 'category.id_category = article.id_category'); //join sama tabel source
         $this->db->order_by('created_on', 'desc');
         $this->db->limit($limit, $offset);
         return $this->db->get()->result();
     }
-    
+	 
     function countSearch($key) {
-        $this->db->from('article');
 		$this->db->like('body_article', $key);
-        return $this->db->get()->num_rows();
+        return $this->db->get($this->table)->num_rows();
+    }
+	
+    function advanceSearch($limit, $offset, $key, $author, $category, $source, $flag, $order, $fromdate, $todate, $date) {
+        $this->db->like('body_article', $key);
+		if ($author != "") {
+			$this->db->like('author', $author);
+        }
+		if ($category != "all") {
+			$this->db->like('article.id_category', $category);
+        }
+		if ($source != "all") {
+			$this->db->like('article.id_source', $source);
+        }
+		if ($flag != "all") {
+			$this->db->like('article_flag', $flag);
+        }
+		if ($date == "" && (!empty($fromdate) && !empty($todate))) {
+			$this->db->where('created_on >=', $fromdate);
+			$this->db->where('created_on <=', $todate);
+		}
+		else if ($date != "") {
+			$this->db->where('created_on =', $date);
+		}
+		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
+		$this->db->join('category', 'category.id_category = article.id_category'); //join sama tabel source
+        $this->db->order_by('created_on', $order);
+        $this->db->limit($limit, $offset);
+        return $this->db->get($this->table)->result();
+    }
+   
+	function countAdvanceSearch($key, $author, $category, $source, $flag, $order, $fromdate, $todate, $date) {
+		$this->db->like('body_article', $key);
+		if ($author != "") {
+			$this->db->like('author', $author);
+        }
+		if ($category != "all") {
+			$this->db->like('article.id_category', $category);
+        }
+		if ($source != "all") {
+			$this->db->like('article.id_source', $source);
+			$this->db->like('article.id_source', $source);
+        }
+		if ($flag != "all") {
+			$this->db->like('article_flag', $flag);
+        }
+		if ($date == "" && (!empty($fromdate) && !empty($todate))) {
+			$this->db->where('created_on >=', $fromdate);
+			$this->db->where('created_on <=', $todate);
+		}
+		else if ($date != "") {
+			$this->db->where('created_on =', $date);
+		}
+		return $this->db->get($this->table)->num_rows();
     }
 	
 	function addArticle($new_article){
@@ -127,6 +180,11 @@ class Article_model extends Model {
         $this->db->where('id_article', $id_article);
         $this->db->update($this->table, $new_article);
     }
+	
+	function changeArticleFlag($new_flag, $id_article) {
+		$this->db->where('id_article', $id_article);
+        $this->db->update($this->table, $new_flag);
+	}
 	
 	function AddUserArticle($new_users_article) {
 		$this->db->insert('users_article', $new_users_article);

@@ -10,40 +10,36 @@ class Source_model extends Model {
 	}
     
 	function getAllSource($limit, $offset) {
-        $this->db->select('*');
-        $this->db->from($this->table); //tabel source
 		$this->db->order_by('id_source');
         $this->db->limit($limit, $offset);
-        return $this->db->get()->result();
+        return $this->db->get($this->table)->result();
+    }
+	
+	function getAllSource2() {
+		$this->db->order_by('source_type');
+        return $this->db->get($this->table)->result();
     }
 	
 	function getAllSourceByType($limit, $offset, $key) {
-        $this->db->select('*');
-        $this->db->from($this->table); //tabel source
 		$this->db->where('source_type', $key);
 		$this->db->order_by('id_source');
         $this->db->limit($limit, $offset);
-        return $this->db->get()->result();
+        return $this->db->get($this->table)->result();
     }
 	
 	function getAllPublisher() {
-        $this->db->select('*');
-        $this->db->from($this->table); //tabel publisher
 		$this->db->where('source_type', 'publisher');
 		$this->db->order_by('id_source');
-        return $this->db->get()->result();
+        return $this->db->get($this->table)->result();
     }
 	
 	function getAllWires() {
-        $this->db->select('*');
-        $this->db->from($this->table); //tabel publisher
 		$this->db->where('source_type', 'wires');
 		$this->db->order_by('id_source');
-        return $this->db->get()->result();
+        return $this->db->get($this->table)->result();
     }
 	
 	function getSourceByID($id_source) {
-		$this->db->select('*');
 		$this->db->where('id_source', $id_source);
 		return $this->db->get($this->table);
 	}
