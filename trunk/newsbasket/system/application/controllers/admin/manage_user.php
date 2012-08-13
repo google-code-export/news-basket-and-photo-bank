@@ -33,7 +33,8 @@ class Manage_user extends Controller {
 		$data_user['form_action']			= site_url('admin/manage_user/add_user');
 		$data_user['form_add_user'] 		= 'admin/form/add_user_form';
 		$data_user['form_action_search']	= site_url('admin/manage_user/search_user');
-
+		
+		// Untuk dropdown publisher
 		$this->load->model('Source_model','',TRUE);
 		$publisher = $this->Source_model->getAllPublisher();
 		$data_user['navigasi']['publisher'] = $publisher;	
@@ -53,7 +54,7 @@ class Manage_user extends Controller {
 		$num_rows 	= $this->Users_model->countAll() - 1;
 		$data_user['user_table'] = $users;
 		
-		// untuk penomoran dan menampilkan hasil
+		// untuk penomoran dan menampilkan hasil pencarian
 		$data_user['start']  = $offset + 1; // untuk penomoran tabel
 		$data_user['finish'] = min($data_user['start'] + $this->limit - 1, $data_user['start'] + ($num_rows - $data_user['start']));
 		$data_user['total']  = $num_rows;
@@ -139,10 +140,10 @@ class Manage_user extends Controller {
 		// kata kunci pencarian
 		$key = $this->input->get('key');
 		if (empty($key)) { // jika kata kunci pencarian tidak ada
-			$key = $this->session->userdata('key'); // ambil dari session
+			$key = $this->session->userdata('userkey'); // ambil dari session
 		}
 		else {
-			$this->session->set_userdata('key', $key); // set kata kunci pencarian ke dalam session
+			$this->session->set_userdata('userkey', $key); // set kata kunci pencarian ke dalam session
 		}
 		$data_user['key'] = $key;
 		
