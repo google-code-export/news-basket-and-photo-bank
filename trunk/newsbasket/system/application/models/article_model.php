@@ -17,6 +17,16 @@ class Article_model extends Model {
         return $this->db->get()->result();
     }
 	
+		function getAllArticleDel($limit, $offset) {
+        $this->db->from($this->table); //tabel article
+		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
+		$article = array('deleted');	
+		$this->db->where_not_in('article_flag', $article);
+		$this->db->order_by('created_on', 'desc');
+        $this->db->limit($limit, $offset);
+        return $this->db->get()->result();
+    }
+	
 	function getAllArticleBySource($limit, $offset, $key) {
         $this->db->from($this->table); //tabel article
 		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source

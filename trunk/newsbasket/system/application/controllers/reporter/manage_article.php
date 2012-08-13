@@ -7,6 +7,31 @@ class Manage_article extends Controller {
 	
 	function Manage_article() {
 		parent::Controller();	
+		$this->load->helper('text');
+            $this->tinyMce =
+                        '
+			<!-- TinyMCE -->
+			<script type="text/javascript" src="'. base_url().'library/tinymcpuk-0.3/tiny_mce.js"</script>
+			<script type="text/javascript">
+                            tinyMCE.init({
+				// General options
+				mode : "textareas",
+				theme : "advanced",
+                                plugins : "fullscreen,searchreplace",
+
+                                // Theme options
+                                theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,cut,copy,paste,|,undo,redo,|,link,unlink,|,search,replace,|,sub,sup,|,fullscreen",
+                                theme_advanced_buttons2 : "",
+                                theme_advanced_buttons3 : "",
+                                theme_advanced_buttons4 : "",
+                                theme_advanced_toolbar_location : "top",
+                                theme_advanced_toolbar_align : "center",
+                                theme_advanced_statusbar_location : "bottom",
+                                theme_advanced_resizing : true
+                            });
+			</script>
+			<!-- /TinyMCE -->
+			';
 	}
 	
 	function index() {
@@ -39,7 +64,7 @@ class Manage_article extends Controller {
 		$offset 			= $this->uri->segment($uri_segment);
 		
 		$this->load->model('Article_model','',TRUE);
-		$articles  	= $this->Article_model->getAllArticle($this->limit, $offset);
+		$articles  	= $this->Article_model->getAllArticleDel($this->limit, $offset);
 		$num_rows 	= $this->Article_model->countAll();
 		$data_article['article_table'] = $articles;
 		$data_article['no'] 		   = $offset + 1; // untuk penomoran tabel

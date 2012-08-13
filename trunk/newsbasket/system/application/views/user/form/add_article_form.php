@@ -2,23 +2,22 @@
 <p class='flip'><strong>Add New Article</strong></p>
 <form id="edit-article-form" action="<?php echo $form_action_add;?>"method="post">
 	<br />
-	<table style="margin-left: 2px;">
+	<table style="margin-left: 120px;">
 		<tr class="alternate">
 			<td class="bold"><label for="headline">Headline</label></td>
-			<td class="label"><input type="text" name="headline" size="46px;"></td>
+			<td class="label"><input type="text" name="headline" size="50px;"></td>
 		</tr>
 		<tr>
 			<td class="bold"><label for="lead-article">Lead Article</label></td>
-			<td class="label">
-				<textarea name="lead-article" rows="5" cols="80"></textarea>
+				<td class="label"><input type="text" name="lead-article" size="50px;"></td>
 			</td>
 		</tr>	
 		<tr class="alternate">
 			<td class="bold"><label for="body-article">Body Article</label></td>
 			<td class="label">
-				<textarea name="body-article" rows="10" cols="80"></textarea>
+				<textarea name="body-article" id="article-body" rows="30" cols="80"></textarea>
 			</td>
-		</tr>
+		<tr>
 		<tr>
 			<td class="bold">Category</td>
 			<td class="label">
@@ -45,14 +44,14 @@
 		</tr>
 		<tr>
 			<td class="bold">Tag</td>
-			<td class="label"><input type="text" name="tag" size="46px;"/></td>
+			<td class="label"><input type="text" name="tag" size="50px;"/></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td>
 				<span style="float: right;">
 					<input type="submit" class="button" value="Save Article" />
-					<a id="add-article" href="<?php echo site_url('user/manage_article')?>"><button class="button">Cancel</button></a>
+					<input type="button" value="cancel" class="button" onclick="window.location='<?php echo site_url('user/manage_article');?>'">
 				</span>
 			</td>
 		</tr>
