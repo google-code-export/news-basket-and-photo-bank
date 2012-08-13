@@ -1,7 +1,7 @@
 <div class="image-gallery">
 	<h3 class="menu">Image Gallery</h3>
 	<ul>
-		<li><a href="<?php echo site_url('gallery');?>">All</a></li>
+		<li><a href="<?php echo site_url('gallery/tampil_foto');?>">All</a></li>
 		<li><a href="<?php echo site_url('gallery/tampil_wire'); ?>">Wires</a></li>
 		<li><a href="<?php echo site_url('gallery/tampil_publisher'); ?>">Publisher</a></li>
 	</ul>

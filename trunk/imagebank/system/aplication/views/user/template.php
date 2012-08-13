@@ -9,6 +9,8 @@
 
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url() . 'css/template.css'; ?>" />
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url() . 'css/user.css'; ?>" />
+		<script src="<?php echo site_url().'js/bootstrap-alert.js'?>" type="text/javascript"></script>
+<script src="<?php echo site_url().'js/bootstrap-modals.js'?>" type="text/javascript"></script>
 
 	</head>
 
@@ -26,9 +28,7 @@
 
 				<?php $this -> load -> view($main_view); ?>
 			</div>
-			<div class="footer-bar">
-				<?php $this -> load -> view('footer'); ?>
-			</div>
+			
 		</div>
 	</body>
 

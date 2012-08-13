@@ -13,11 +13,15 @@
         <style type="text/css">@import url("<?php echo base_url() . 'css/admin.css'; ?>
 			");
 </style>
-      
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/base/jquery-ui.css" type="text/css" media="all" />
-<link rel="stylesheet" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css" type="text/   css" media="all" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js" type="text/javascript"></script>
+      <style type="text/css">@import url("<?php echo base_url() . 'css/jquery-ui.css'; ?>
+		");
+</style>
+ <style type="text/css" media="all">@import url("<?php echo base_url() . 'css/ui-theme.css'; ?>
+	");
+</style>
+<script src="<?php echo site_url().'js/jquery-1.4.3.js'?>" type="text/javascript"></script>
+<script src="<?php echo site_url().'js/jquery-1.8.6-ui.js'?>" type="text/javascript"></script>
+	
 </head>
 <?php flush(); ?>
 <body>

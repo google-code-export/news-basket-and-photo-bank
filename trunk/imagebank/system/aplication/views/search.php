@@ -1,6 +1,4 @@
-
 <meta charset="UTF-8">
-
 
 <style>
 	/* Autocomplete
@@ -52,7 +50,7 @@
 </style>
 
 <script type="text/javascript">
-		$(this).ready( function() {
+	$(this).ready( function() {
 	$("#id_imagetag").autocomplete({
 	minLength: 3,
 	source:
@@ -85,17 +83,17 @@
 	<ul id="menu_tab">
 		<li id="tab_dropdown">
 			<form name="dropdown_cat" action="http://localhost/imagebank/gallery/getCategories" method="post">
-			<select name="id_categories">
-			<option value ='#' selected="selected">Select Categories</option>	
-			<?php 
-	foreach ($dropdown as $row) {
-		echo "<option value ='$row->id_category'>$row->category_name</option>";
-	}
-	
-	?>
-
-			</select>
-			<button id="submit" class="btn btn-primary" value="go" type="submit" name="submit">go</button>
+				<select name="id_categories">
+					<option value ='#' selected="selected">Select Categories</option>
+					<?php
+					foreach ($dropdown as $row) {
+						echo "<option value ='$row->id_category'>$row->category_name</option>";
+					}
+					?>
+				</select>
+				<button id="submit" class="btn btn-primary" value="go" type="submit" name="submit">
+					go
+				</button>
 			</form>
 		</li>
 		<li id="tab_search">
