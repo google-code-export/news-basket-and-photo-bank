@@ -32,26 +32,27 @@
 .main .table-menu .paging  a{
 	margin-right: 2px;
     text-decoration: none;
-	color: blue;
-	border: 1px solid black;
+	color: black;
+	border: 2px solid #B1B1B1;
 	padding: 5px 10px;
+	background-color: #D6BFBF;
 }
 
 .main .table-menu .paging  a:hover{
 	margin-right: 2px;
     text-decoration: none;
-	color: blue;
-	background-color: #A7C942;
+	color: white;
+	background-color: #808374;
 	padding: 5px 10px;
 }
 
 .main .table-menu .paging  .current-page{
 	margin-right: 2px;
     text-decoration: none;
-	color: black;
+	color: white;
 	font-weight: bold;
-	border: 2px solid #A7C942;
-	background-color: #A7C942;
+	border: 2px solid #B1B1B1;
+	background-color: #808374;
 	padding: 5px 10px;
 }
 
@@ -88,12 +89,12 @@
 
 .add-form {
 	display: none;
-	background-color: #F0F0F0;
+	background-color: #efefef;
 	border: solid 1px rgb(175, 0, 0);
 }
 
 .edit-form {
-	background-color: #F0F0F0;
+	background-color: #efefef;
 	border: solid 1px rgb(175, 0, 0);
 }
 
