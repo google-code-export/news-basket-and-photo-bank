@@ -157,14 +157,14 @@ td.bold{
 .detail-left {
 	position: absolute;
 	padding-top: 2px;
-	width: 500px;
+	width: 650px;
 }
 
 .detail-right {
 	position: absolute;
 	float: left;
 	right: 15px;
-	left: 550px;
+	left: 680px;
 	height: 530px;
 	padding: 0px 10px 0px;
 	overflow-y: auto;

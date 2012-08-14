@@ -9,7 +9,8 @@
 	
 	<style type="text/css">@import url("<?php echo base_url().'css/template.css'; ?>");</style>
 	<style type="text/css">@import url("<?php echo base_url().'css/user.css'; ?>");</style>	
-	<script type="text/javascript" src="<?php echo base_url().'/library/jquery-1.7.2.min.js'; ?>"></script> 
+	<script type="text/javascript" src="<?php echo base_url().'/library/jquery-1.7.2.min.js'; ?>"></script> 	
+	<style type="text/css">@import url("<?php echo base_url().'css/jquery-ui-1.8.22.custom.css'; ?>");</style>
 	<script type="text/javascript">
     window.history.forward();
     function noBack() { window.history.forward(); }
@@ -36,6 +37,7 @@
 	<script type="text/javascript" src="<?php echo base_url().'/library/tablesorter/jquery.tablesorter.min.js'; ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url().'/library/myscript.js'; ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url().'/library/FusionCharts.js';?>"></script>	
+	<script type="text/javascript" src="<?php echo base_url().'/library/jquery-ui-1.8.22.custom.min.js'; ?>"></script>
 	<script type="text/javascript" src="../../library/tinymcpuk-0.3/tiny_mce.js"></script>
 	<script type="text/javascript">
 		tinyMCE.init({

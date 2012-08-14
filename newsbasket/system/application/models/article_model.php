@@ -17,7 +17,7 @@ class Article_model extends Model {
         return $this->db->get()->result();
     }
 	
-		function getAllArticleDel($limit, $offset) {
+	function getAllArticleDel($limit, $offset) {
         $this->db->from($this->table); //tabel article
 		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
 		$article = array('deleted');	
