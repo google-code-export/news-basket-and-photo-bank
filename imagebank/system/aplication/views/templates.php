@@ -19,7 +19,6 @@
 			<?php $this->load->view($main_content); ?>
 		</div>
 		<div class="footer-bar">
-			<?php $this->load->view('footer'); ?>
 		</div>
 	</div>
 </body>
