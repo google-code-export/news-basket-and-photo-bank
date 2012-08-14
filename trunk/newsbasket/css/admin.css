@@ -102,6 +102,18 @@ tr.alternate {
 	background: none repeat scroll 0% 0% rgb(250, 255, 250);
 }
 
+tr.edited {
+	background-color: yellow;
+}
+
+tr.published {
+	background-color: #33D633;
+}
+
+tr.deleted {
+	background-color: #E68080;
+}
+
 td.label{
 	padding-left: 30px;
 	white-space: wrap;
