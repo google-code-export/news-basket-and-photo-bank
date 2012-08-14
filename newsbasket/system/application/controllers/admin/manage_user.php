@@ -14,6 +14,7 @@ class Manage_user extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->unset_search();
 			$this->load_users(0);
 		} 
 		else {
@@ -394,6 +395,13 @@ class Manage_user extends Controller {
 		else {
 			echo "no";  // bukan numerik
 		}
+	}
+	
+	function unset_search() {
+		$session_search = array ('key'=>'', 'authorkey'=>'', 'articlekey'=>'', 'userkey'=>'', 
+								 'adv_fromdate'=>'', 'adv_todate'=>'', 'adv_author'=>'', 
+								 'adv_category'=>'', 'adv_source'=>'', 'adv_flag'=>'');
+		$this->session->unset_userdata($session_search);
 	}
 }
 

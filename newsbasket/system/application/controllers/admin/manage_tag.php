@@ -11,6 +11,7 @@ class Manage_tag extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->unset_search();
 			$this->load_tags();
 		} 
 		else {
@@ -41,6 +42,7 @@ class Manage_tag extends Controller {
 		// Load data dari tabel tag
 		$this->load->model('Tag_model','',TRUE);
 		$tags 		= $this->Tag_model->getAllTag($this->limit, $offset);
+		// echo $this->db->last_query();
 		$num_rows 	= $this->Tag_model->countAll();
 		$data_tag['tag_table'] = $tags;
 		
@@ -180,6 +182,13 @@ class Manage_tag extends Controller {
 			$this->session->sess_destroy();	
 			redirect('login', 'refresh');
 		}  
+	}
+	
+	function unset_search() {
+		$session_search = array ('key'=>'', 'authorkey'=>'', 'articlekey'=>'', 'userkey'=>'', 
+								 'adv_fromdate'=>'', 'adv_todate'=>'', 'adv_author'=>'', 
+								 'adv_category'=>'', 'adv_source'=>'', 'adv_flag'=>'');
+		$this->session->unset_userdata($session_search);
 	}
 }
 

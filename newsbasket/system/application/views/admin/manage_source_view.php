@@ -50,6 +50,11 @@
 			<th class="center">ID Source</th>
 			<th>Source Name</th>
 			<th>Source Type</th>
+			<th class="center">Row</th>
+			<th class="center">Edited</th>
+			<th class="center">Published</th>
+			<th class="center">Deleted</th>
+			<th class="center">Total Article</th>
 			<th class="center" colspan="2">Action</th>
 		</tr>
 		</thead>
@@ -67,6 +72,26 @@
 					'<button>Edit</button>',
 					array('class'=>'btn-edit-source')
 				);
+				$rowLink = anchor(
+					'admin/manage_article/advance_search?from-date=&to-date=&author=&category=all&flag=row_article&source='.$column->id_source.'&order-by=desc&advance-search=Search',
+					$column->row_article
+				);
+				$editedLink = anchor(
+					'admin/manage_article/advance_search?from-date=&to-date=&author=&category=all&flag=edited&source='.$column->id_source.'&order-by=desc&advance-search=Search',
+					$column->edited
+				);
+				$publishedLink = anchor(
+					'admin/manage_article/advance_search?from-date=&to-date=&author=&category=all&flag=published&source='.$column->id_source.'&order-by=desc&advance-search=Search',
+					$column->published
+				);
+				$deletedLink = anchor(
+					'admin/manage_article/advance_search?from-date=&to-date=&author=&category=all&flag=deleted&source='.$column->id_source.'&order-by=desc&advance-search=Search',
+					$column->deleted
+				);
+				$totalLink = anchor(
+					'admin/manage_article/advance_search?from-date=&to-date=&author=&category=all&flag=all&source='.$column->id_source.'&order-by=desc&advance-search=Search',
+					$column->total_article
+				);
 				
 				($no%2 == 1) ? $class_tr='odd' : $class_tr = '';
 				echo "
@@ -74,6 +99,11 @@
 						<td id='id-source' class='center'>$column->id_source</td>
 						<td>$column->source_name</td>
 						<td>$column->source_type</td>
+						<td class='center'>$rowLink</td>
+						<td class='center'>$editedLink</td>
+						<td class='center'>$publishedLink</td>
+						<td class='center'>$deletedLink</td>
+						<td class='center'>$totalLink</td>
 						<td class='center'>$editLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>

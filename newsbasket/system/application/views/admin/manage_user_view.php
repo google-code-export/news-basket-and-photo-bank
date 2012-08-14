@@ -149,8 +149,8 @@
 	?>
 	</div>
 </div>
-<script>
 
+<script>
 //MENGECEK USERNAME YANG ADA
 $(document).ready(function() {
 	$("#username").blur(function() {

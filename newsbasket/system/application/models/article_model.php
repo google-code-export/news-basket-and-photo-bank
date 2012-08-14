@@ -172,6 +172,50 @@ class Article_model extends Model {
 		return $this->db->get($this->table)->num_rows();
     }
 	
+	function sourceInformationByIDDay($id_source) {
+		$this->db->select("DAY(created_on) as day, article.id_source, source.source_name,
+						   SUM(CASE WHEN article_flag = 'row_article' THEN 1 ELSE 0 END) as row_article,
+						   SUM(CASE WHEN article_flag = 'edited' THEN 1 ELSE 0 END) as edited,
+						   SUM(CASE WHEN article_flag = 'published' THEN 1 ELSE 0 END) as published,
+						   SUM(CASE WHEN article_flag = 'deleted' THEN 1 ELSE 0 END) as deleted,
+						   COUNT(article_flag) as total_article");
+		$this->db->where('article.id_source', $id_source);
+		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
+		$this->db->group_by('DAY(created_on), article.id_source');
+		$this->db->order_by('created_on', 'desc');
+		$this->db->limit(1);
+		return $this->db->get($this->table)->result();
+	}
+	function sourceInformationByIDWeek($id_source) {
+		$this->db->select("WEEK(created_on) as week, article.id_source, source.source_name,
+						   SUM(CASE WHEN article_flag = 'row_article' THEN 1 ELSE 0 END) as row_article,
+						   SUM(CASE WHEN article_flag = 'edited' THEN 1 ELSE 0 END) as edited,
+						   SUM(CASE WHEN article_flag = 'published' THEN 1 ELSE 0 END) as published,
+						   SUM(CASE WHEN article_flag = 'deleted' THEN 1 ELSE 0 END) as deleted,
+						   COUNT(article_flag) as total_article");
+		$this->db->where('article.id_source', $id_source);
+		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
+		$this->db->group_by('WEEK(created_on), article.id_source');
+		$this->db->order_by('created_on', 'desc');
+		$this->db->limit(1);
+		return $this->db->get($this->table)->result();
+	}
+	
+	function sourceInformationByIDMonth($id_source) {
+		$this->db->select("MONTH(created_on) as month, article.id_source, source.source_name,
+						   SUM(CASE WHEN article_flag = 'row_article' THEN 1 ELSE 0 END) as row_article,
+						   SUM(CASE WHEN article_flag = 'edited' THEN 1 ELSE 0 END) as edited,
+						   SUM(CASE WHEN article_flag = 'published' THEN 1 ELSE 0 END) as published,
+						   SUM(CASE WHEN article_flag = 'deleted' THEN 1 ELSE 0 END) as deleted,
+						   COUNT(article_flag) as total_article");
+		$this->db->where('article.id_source', $id_source);
+		$this->db->join('source', 'source.id_source = article.id_source'); //join sama tabel source
+		$this->db->group_by('MONTH(created_on), article.id_source');
+		$this->db->order_by('created_on', 'desc');
+		$this->db->limit(1);
+		return $this->db->get($this->table)->result();
+	}
+	
 	function addArticle($new_article){
 		$this->db->insert($this->table, $new_article);
     }
