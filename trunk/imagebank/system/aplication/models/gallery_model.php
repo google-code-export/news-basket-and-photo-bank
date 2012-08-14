@@ -137,7 +137,15 @@ class Gallery_model extends Model {
 
 	function deleteImage($id) {
 		$this -> db -> delete('images', array('id_images' => $id));
+		
 
+	}
+	function deleteTag($id){
+		$this -> db -> delete('imagetag', array('id_image' => $id));
+	}
+	
+	function deleteCategory($id){
+		$this -> db -> delete('imagescategory', array('id_images' => $id));
 	}
 
 	function download($id) {
