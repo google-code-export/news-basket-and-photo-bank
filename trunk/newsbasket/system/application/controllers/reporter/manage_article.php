@@ -4,6 +4,7 @@ class Manage_article extends Controller {
 	
 	//limitasi tabel
 	var $limit = 50;
+	var $limit_search = 20;
 	
 	function Manage_article() {
 		parent::Controller();	
@@ -48,6 +49,7 @@ class Manage_article extends Controller {
 		$data_article['main_view'] 			= 'reporter/manage_article_view';
 		$data_article['form_action']		= site_url('reporter/manage_article/add_article');
 		$data_article['form_action_search']	= site_url('reporter/manage_article/search_article');
+		$data_article['form_action_adv']	= site_url('reporter/manage_article/advance_search');
 		$data_article['form_action_edit']	= site_url('reporter/manage_article/edit_article');
 		
 		$this->load->model('Source_model','',TRUE);
@@ -67,7 +69,24 @@ class Manage_article extends Controller {
 		$articles  	= $this->Article_model->getAllArticleDel($this->limit, $offset);
 		$num_rows 	= $this->Article_model->countAll();
 		$data_article['article_table'] = $articles;
-		$data_article['no'] 		   = $offset + 1; // untuk penomoran tabel
+		
+		// Menu untuk advance search
+		$this->load->model('Category_model','',TRUE);
+		$data_article['categories'] = $this->Category_model->getAllCategories();
+		
+		$this->load->model('Source_model','',TRUE);
+		$data_article['source'] 	= $this->Source_model->getAllSource2();	
+		
+		$data_article['key'] 		= $this->session->userdata('articlekey');
+		$data_article['fromdate'] 	= $this->session->userdata('adv_fromdate');
+		$data_article['todate'] 	= $this->session->userdata('adv_todate');
+		$data_article['author'] 	= $this->session->userdata('adv_author');
+		$data_article['category'] 	= $this->session->userdata('adv_category');
+		$data_article['sel_source'] = $this->session->userdata('adv_source');
+		$data_article['flag'] 		= $this->session->userdata('adv_flag');		
+		
+		$data_article['no'] 		= $offset + 1; // untuk penomoran tabel		
+		$data_article['total']  	= $num_rows;
 		
 		// unlock article yang sudah atau tidak jadi di edit
 		$this->Article_model->unlockArticle($this->session->userdata('id_article'));
@@ -371,42 +390,251 @@ class Manage_article extends Controller {
 	}
 	
 	function search_article($start = 0) {
-		$data_article['page_title']			= 'Search Article |  News Basket';
+		$data_article['page_title']			= 'Search Article | Reporter News Basket';
 		$data_article['main_view'] 			= 'reporter/extra/search_article_view';
 		$data_article['form_action_search']	= site_url('reporter/manage_article/search_article');
+		$data_article['form_action_adv']	= site_url('reporter/manage_article/advance_search');
 		
 		// Siapa yang login
 		$username  = $this->session->userdata('username'); // username dari saat login
 		$data_article['username'] = $username;
 		$data_article['active']   = 'article';
 		
+		// Menu untuk advance search
+		$this->load->model('Category_model','',TRUE);
+		$data_article['categories'] = $this->Category_model->getAllCategories();
+		
+		$this->load->model('Source_model','',TRUE);
+		$data_article['source'] 	= $this->Source_model->getAllSource2();	
+		
+		$data_article['fromdate'] 	= $this->session->userdata('adv_fromdate');
+		$data_article['todate'] 	= $this->session->userdata('adv_todate');
+		$data_article['author'] 	= $this->session->userdata('adv_author');
+		$data_article['category'] 	= $this->session->userdata('adv_category');
+		$data_article['sel_source'] = $this->session->userdata('adv_source');
+		$data_article['flag'] 		= $this->session->userdata('adv_flag');
+		
+		// Kata kunci pencarian
+		$key = $this->input->get('key');
+		if (empty($key)) { // jika kata kunci pencarian tidak ada
+			$key = $this->session->userdata('articlekey'); // ambil dari session
+		}	
+		else {
+			$this->session->set_userdata('articlekey', $key); // set kata kunci pencarian ke dalam session
+		}
+		$data_article['key'] = $key;
+		
 		// Limit & Offset
 		$uri_segment = 4;
 		$offset      = $this->uri->segment($uri_segment);
-
-		$key = $this->input->get('key');
-		$data_article['key'] = $key;
 		
 		$this->load->model('Article_model','',TRUE);
-		$data_article['result'] = $this->Article_model->searchArticle($this->limit, $offset, $key);
+		$data_article['result'] = $this->Article_model->searchArticle($this->limit_search, $offset, $key);
 		$data_article['count']  = $this->Article_model->countSearch($key);
 		
 		// Membuat pagination			
 		$config['base_url']    = site_url('reporter/manage_article/search_article');
 		$config['total_rows']  = $data_article['count'];
-		$config['per_page']    = $this->limit;
+		$config['per_page']    = $this->limit_search;
+		$config['num_links']   = 5;
 		$config['uri_segment'] = $uri_segment;
 		$this->pagination->initialize($config);
 		$data_article['pagination']    = $this->pagination->create_links();
 
-		$data_article['first_result'] = $start + 1;
-		$data_article['last_result']  = min($start + $this->limit, $data_article['count']);
+		$data_article['first_result'] = ($data_article['count'] == 0)? 0 : $start + 1;
+		$data_article['last_result']  = min($start + $this->limit_search, $data_article['count']);
 
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter') {
 			$this->load->view('reporter/template', $data_article);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
 		}
 	}
+	
+	function advance_search($start = 0) {
+		$data_article['page_title']			= 'Search Article | Reporter News Basket';
+		$data_article['main_view'] 			= 'reporter/extra/search_article_view';
+		$data_article['form_action_search']	= site_url('reporter/manage_article/search_article');
+		$data_article['form_action_adv']	= site_url('reporter/manage_article/advance_search');
+		
+		// Siapa yang login
+		$username  = $this->session->userdata('username'); // username dari saat login
+		$data_article['username'] = $username;
+		$data_article['active']   = 'article';
+		
+		// Menu untuk advance search
+		$this->load->model('Category_model','',TRUE);
+		$data_article['categories'] = $this->Category_model->getAllCategories();
+		
+		$this->load->model('Source_model','',TRUE);
+		$data_article['source'] = $this->Source_model->getAllSource2();	
+		
+		// Kata kunci pencarian
+		$key = $this->input->get('key');
+		if (empty($key)) { // jika kata kunci pencarian tidak ada
+			$key = $this->session->userdata('adv_key'); // ambil dari session
+		}
+		else {
+			$this->session->set_userdata('adv_key', $key); // set kata kunci pencarian ke dalam session
+		}
+		$data_article['key'] = $key;
+		
+		//--------- Advance search ----------//
+		// from-date
+		$get_fromdate = $this->input->get('from-date');
+		if(empty($get_fromdate)) {
+			$fromdate 	= $this->session->userdata('adv_fromdate'); // ambil dari session
+			$data_article['fromdate'] = $fromdate;
+		}
+		else if ($get_fromdate == "") { // jika kata kunci pencarian tidak ada
+			$fromdate = "";
+			$data_article['fromdate'] = $fromdate;
+			$this->session->set_userdata('adv_fromdate', $fromdate); // set kata kunci pencarian ke dalam session
+		}
+		else {
+			$fromdate = $get_fromdate;
+			$data_article['fromdate'] = $fromdate;
+			$this->session->set_userdata('adv_fromdate', $fromdate); // set kata kunci pencarian ke dalam session
+		}
+		
+		// to-date
+		$get_todate	= $this->input->get('to-date');
+		if(empty($get_todate)) {
+			$todate 	= $this->session->userdata('adv_todate'); // ambil dari session
+			$data_article['todate'] = $todate;
+		}
+		else if ($get_todate == "") { // jika kata kunci pencarian tidak ada
+			$todate = "";
+			$data_article['todate'] = $todate;
+			$this->session->set_userdata('adv_todate', $todate); // set kata kunci pencarian ke dalam session
+		}
+		else {
+			$todate = $get_todate;
+			$data_article['todate'] = $todate;
+			$this->session->set_userdata('adv_todate', $todate); // set kata kunci pencarian ke dalam session
+		}
+		
+		($fromdate == $todate)? $date = $fromdate : $date = ""; // jika tanggal yang dipilih sama
+		
+		// author
+		$get_author		= $this->input->get('author');
+		if(empty($get_author)) {
+			$author 	= $this->session->userdata('adv_author'); // ambil dari session
+			$data_article['author'] = $author;
+		}
+		else if ($get_author == "") { // jika kata kunci pencarian tidak ada
+			$author = "";
+			$data_article['author'] = $author;
+			$this->session->set_userdata('adv_author', $author); // set kata kunci pencarian ke dalam session
+		}
+		else {
+			$author = $get_author;
+			$data_article['author'] = $author;
+			$this->session->set_userdata('adv_author', $author); // set kata kunci pencarian ke dalam session
+		}
+		
+		// category
+ 		$get_category 	= $this->input->get('category');
+		if(empty($get_category)) {
+			$category 	= $this->session->userdata('adv_category'); // ambil dari session
+			$data_article['category'] = $category;
+		}
+		else if ($get_category == "all") { // jika kata kunci pencarian tidak ada
+			$category = $get_category;
+			$data_article['category'] = $category;
+			$this->session->set_userdata('adv_category', $get_category); // set kata kunci pencarian ke dalam session
+		}
+		else {
+			$category = $get_category;
+			$data_article['category'] = $category;
+			$this->session->set_userdata('adv_category', $category); // set kata kunci pencarian ke dalam session
+		}
+		
+		// source
+		$get_source	= $this->input->get('source');
+		if(empty($get_source)) {
+			$source = $this->session->userdata('adv_source'); // ambil dari session
+			$data_article['sel_source'] = $source;
+		}
+		else if ($get_source == "all") { // jika kata kunci pencarian tidak ada
+			$this->session->set_userdata('adv_source', $get_source); // set kata kunci pencarian ke dalam session
+			$source = $get_source;
+			$data_article['sel_source'] = $source;
+		}
+		else {
+			$source = $get_source;
+			$data_article['sel_source'] = $source;
+			$this->session->set_userdata('adv_source', $source); // set kata kunci pencarian ke dalam session
+		}
+		
+		$get_flag = $this->input->get('flag');
+		if ($get_flag == "all") { // jika all
+			$this->session->set_userdata('adv_flag', $get_flag); // set kata kunci pencarian ke dalam session
+			$flag = $get_flag;
+			$data_article['flag'] = $flag;
+		}
+		else {
+			$flag = $get_flag;
+			$data_article['flag'] = $flag;
+			$this->session->set_userdata('adv_flag', $flag); // set kata kunci pencarian ke dalam session
+		}
+		
+		// order-by
+		$get_order = $this->input->get('order-by');
+		if (empty($get_order)) { // jika kata kunci pencarian tidak ada
+			$order = $this->session->userdata('adv_order'); // ambil dari session
+		}
+		else if($get_order == "desc") {
+			$order = "desc";
+			$this->session->set_userdata('adv_order', $get_order); // set kata kunci pencarian ke dalam session
+		}
+		else {
+			$order = "asc";
+			$this->session->set_userdata('adv_order', $get_order); // set kata kunci pencarian ke dalam session
+		}
+		
+		// Limit & Offset
+		$uri_segment = 4;
+		$offset      = $this->uri->segment($uri_segment);
+		
+		$this->load->model('Article_model','',TRUE);
+		$data_article['result'] = $this->Article_model->advanceSearch($this->limit_search, $offset, $key, $author, $category, $source, $flag, $order, $fromdate, $todate, $date);
+		//echo $this->db->last_query();
+		$data_article['count']  = $this->Article_model->countAdvanceSearch($key, $author, $category, $source, $flag, $order, $fromdate, $todate, $date);		
+		
+		// Membuat pagination			
+		$config['base_url']    = site_url('reporter/manage_article/advance_search');
+		$config['total_rows']  = $data_article['count'];
+		$config['per_page']    = $this->limit_search;
+		$config['num_links']   = 4;
+		$config['uri_segment'] = $uri_segment;
+		$this->pagination->initialize($config);
+		
+		$data_article['pagination']   = $this->pagination->create_links();
+		$data_article['first_result'] = ($data_article['count'] == 0)? 0 : $start + 1;
+		$data_article['last_result']  = min($start + $this->limit_search, $data_article['count']);
+
+		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'reporter') {
+			$this->load->view('reporter/template', $data_article);
+		} 
+		else {
+			?>
+			<script>
+				alert("You don't have privilege to access this page");
+			</script>
+			<?php
+			$this->session->sess_destroy();	
+			redirect('login', 'refresh');
+		}
 	}
+}
 	
 
 /* End of file manage_article.php */
