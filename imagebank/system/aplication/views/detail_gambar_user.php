@@ -65,7 +65,7 @@
                <tr>
                	 <td ><img src="../../images/gallery.png" width="25" height="25" alt="gallery" align="center"><a class="info" href="<?php echo site_url("gallery/tampil_foto"); ?>">Back To gallery</a></td>
                  <td ><img src="../../images/download.png" width="20" height="18" alt="download" align="center"><a class="info"  href="<?php echo site_url("gallery/download/$row->id_images"); ?> ">download</a></td>
-                 <td width="34%"><img src="../../images/edit_image.png" width="20" height="16" alt="edit" align="center"><a class="info" href="<?php echo site_url("gallery/updateImage/$row->id_images"); ?>"> edit properties</td>
+                 <td ><img src="../../images/edit_image.png" width="20" height="16" alt="edit" align="center"><a class="info" href="<?php echo site_url("gallery/updateImage/$row->id_images"); ?>"> edit properties</td>
                  
                </tr>
              </table>
