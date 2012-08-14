@@ -10,6 +10,8 @@ class Gallery extends Controller {
 	function index() {
 		if ($this -> session -> userdata('Login') == TRUE) {
 			$this -> tampil_foto();
+		}else{
+			redirect('login');
 		}
 
 	}
@@ -51,10 +53,12 @@ class Gallery extends Controller {
 		$this -> pagination -> initialize($config);
 		$data['pagination'] = $this -> pagination -> create_links();
 
-		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
+			if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
 			$this -> load -> view('templateSearch', $data);
-		} else {
+		} elseif($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'user'){
 			$this -> load -> view('user/templateSearch', $data);
+		} else{
+			redirect('login');
 		}
 
 	}
@@ -93,8 +97,10 @@ class Gallery extends Controller {
 
 		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
 			$this -> load -> view('template', $data);
-		} else {
+		} elseif($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'user'){
 			$this -> load -> view('user/template', $data);
+		} else{
+			redirect('login');
 		}
 	}
 
@@ -130,10 +136,12 @@ class Gallery extends Controller {
 		$config['uri_segment'] = $uri_segment;
 		$this -> pagination -> initialize($config);
 		$data['pagination'] = $this -> pagination -> create_links();
-		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
+			if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
 			$this -> load -> view('template', $data);
-		} else {
+		} elseif($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'user'){
 			$this -> load -> view('user/template', $data);
+		} else{
+			redirect('login');
 		}
 	}
 
@@ -168,8 +176,12 @@ class Gallery extends Controller {
 			$ctgstr[] = $coloumn -> category_name;
 		}
 		$data['category'] = implode(", ", $ctgstr);
-
-		$this -> load -> view('template', $data);
+		
+			if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
+			$this -> load -> view('template', $data);
+		}  else{
+			redirect('login');
+		}
 
 	}
 
@@ -206,7 +218,11 @@ class Gallery extends Controller {
 		}
 		$data['category'] = implode(", ", $ctgstr);
 
-		$this -> load -> view('user/template', $data);
+		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'user') {
+			$this -> load -> view('user/template', $data);
+		}  else{
+			redirect('login');
+		}
 	}
 
 	function updateImage($id = null) {
@@ -239,10 +255,12 @@ class Gallery extends Controller {
 			//ambil value tag dengan pemisah kata berupa koma plus spasi
 
 			if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
-				$this -> load -> view('template', $data);
-			} else {
-				$this -> load -> view('user/template', $data);
-			}
+			$this -> load -> view('template', $data);
+		} elseif($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'user'){
+			$this -> load -> view('user/template', $data);
+		} else{
+			redirect('login');
+		}
 
 		} else {
 			$this -> load -> model('gallery_model');
@@ -268,7 +286,7 @@ class Gallery extends Controller {
 					//proses simpan ke tabel tag
 				}
 
-				redirect('gallery');
+				redirect('gallery/tampil_foto');
 			}
 
 		}
@@ -283,7 +301,7 @@ class Gallery extends Controller {
 			$name = $row -> image_name;
 			force_download($name, $img);
 		}
-		redirect('gallery');
+		redirect('gallery/tampil_foto');
 
 	}
 
@@ -297,9 +315,11 @@ class Gallery extends Controller {
 
 		}
 		$this -> gallery_model -> deleteImage($id);
+		$this -> gallery_model -> deleteTag($id);
+		$this -> gallery_model -> deleteCategory($id);
 		$this -> session -> set_flashdata('message', 'Succesfully delete image');
 
-		redirect('gallery');
+		redirect('gallery/tampil_foto');
 	}
 
 	function searchImage($start = 0) {
@@ -342,10 +362,12 @@ class Gallery extends Controller {
 		$data['first_result'] = $start + 1;
 		$data['last_result'] = min($start + $limit, $data['count']);
 
-		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
-			$this -> load -> view('templateSearch', $data);
-		} else {
-			$this -> load -> view('user/templateSearch', $data);
+	if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
+			$this -> load -> view('template', $data);
+		} elseif($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'user'){
+			$this -> load -> view('user/template', $data);
+		} else{
+			redirect('login');
 		}
 
 	}
@@ -387,11 +409,12 @@ class Gallery extends Controller {
 		$data['pagination'] = $this -> pagination -> create_links();
 		$this -> pagination -> initialize($config);
 
-		$data['images'] = $this -> gallery_model -> searchCategory($id_categories);
 		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
-			$this -> load -> view('templateSearch', $data);
-		} else {
-			$this -> load -> view('user/templateSearch', $data);
+			$this -> load -> view('template', $data);
+		} elseif($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'user'){
+			$this -> load -> view('user/template', $data);
+		} else{
+			redirect('login');
 		}
 	}
 
