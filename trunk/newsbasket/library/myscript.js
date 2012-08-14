@@ -16,10 +16,10 @@ MyCheckboxes.change(function() {
 $(document).ready(function() { 
 		$("#article").tablesorter({sortList: [[0,0]], headers: {6:{sorter: false}}});
 		$("#author").tablesorter({sortList: [[0,0]], headers: {6:{sorter: false}}});
-		$("#category").tablesorter({sortList: [[0,0]], headers: {3:{sorter: false}}});
-		$("#source").tablesorter({sortList: [[0,0]], headers: {3:{sorter: false}}});
+		$("#category").tablesorter({sortList: [[0,0]], headers: {8:{sorter: false}}});
+		$("#source").tablesorter({sortList: [[0,0]], headers: {8:{sorter: false}}});
 		$("#user").tablesorter({sortList: [[0,0]], headers: {7:{sorter: false}}});
-		$("#tag").tablesorter({sortList: [[0,0]], headers: {3:{sorter: false}}});
+		$("#tag").tablesorter({sortList: [[0,0]], headers: {8:{sorter: false}}});
     } 
 );  
 //VALIDASI FORM TERAKHIR
