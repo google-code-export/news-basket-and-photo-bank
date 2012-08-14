@@ -34,7 +34,7 @@ class Admin extends Controller {
 		//$crud->where('id_user',$username);
 		$crud -> set_theme('datatables');
 		//tema defauult
-		$crud -> columns('id_user', 'name', 'email', 'id_source', 'user_level', 'phone');
+		$crud -> columns('id_user', 'name', 'email', 'id_source', 'user_level', 'phone', 'last_login');
 		//colom yang akan ditampilkan dalam melihat pengaturan
 		$crud -> display_as('id_source', 'source name');
 		// tampilkan sebagai
@@ -60,7 +60,12 @@ class Admin extends Controller {
 		$output['page_title'] = 'Manage Users| Administrator Image Bank ';
 		$output['username'] = $username;
 		$output['h2_title'] = 'Admin > Manage User';
-		$this -> load -> view('admin/template_admin', $output);
+		
+		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
+			$this -> load->view('admin/template_admin',$output);
+		} else {
+			redirect('login');
+		}
 
 	}
 
@@ -96,7 +101,11 @@ class Admin extends Controller {
 		$output['page_title'] = 'Manage Category| Administrator Image Bank ';
 		$output['username'] = $username;
 		$output['h2_title'] = 'Admin > Manage Category';
-		$this -> load -> view('admin/template_admin.php', $output);
+		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
+			$this -> load->view('admin/template_admin',$output);
+		} else {
+			redirect('login');
+		}
 
 	}
 
@@ -111,7 +120,11 @@ class Admin extends Controller {
 		$output['page_title'] = 'Manage Source| Administrator Image Bank ';
 		$output['username'] = $username;
 		$output['h2_title'] = 'Admin > Manage Source';
-		$this -> load -> view('admin/template_admin.php', $output);
+		if ($this -> session -> userdata('login') == TRUE && $this -> session -> userdata('user_level') == 'administrator') {
+			$this -> load->view('admin/template_admin',$output);
+		} else {
+			redirect('login');
+		}
 	}
 
 	//fungsi untuk membaca layout css file dan js file nanti di view
