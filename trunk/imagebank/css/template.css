@@ -4,6 +4,13 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, img, dl, dt, dd, ol, ul, li, table, 
 	border: 0px none;
 }
 
+
+/*----------------buat table manage album------------------*/
+.table-bordered{
+	border: 2px solid;
+	border-color: #CCCCCC;
+}
+
 body {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
 	font-size: 12px;
@@ -36,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
 	text-decoration: none;
-	color: purple;
+	color: black;
 }
 
 a:hover {
@@ -179,12 +186,19 @@ hovergallery img {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-.pagination ul {
+<<<<<<< .mine.pagination ul {
 	margin: 0;
 	padding: 0;
 	text-align: left;
 	font-size: 16px;
-}
+	margin-top: 5px;
+	margin-bottom: 5px;
+=======.pagination ul {
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	font-size: 16px;
+>>>>>>> .theirs}
 
 .pagination li {
 	list-style-type: none;
@@ -342,9 +356,9 @@ hovergallery img {
 }
 h1#site_name {
 	float: left;
-	font-size: 18px;
+	font-size: 21px;
 	padding-left: 5px;
-	padding-top: 2px;
+	padding-top: 7px;
 }
 
 #site_name a {
@@ -407,7 +421,41 @@ form {
 	margin: 5;
 	margin-right: -35px;
 }
-/*-----------------buat td-------------------*/
+<<<<<<< .mine/*-----------------buat td-------------------*/
+.meta{
+	vertical-align: top;
+	padding:10px 20px;
+	font-family:arial,sans-serif;
+	text-align:center;
+}
+
+/*------------------buat table--------------------*/
+.datainfo{
+	border-bottom: 2px solid rgb(221,221,221);
+	width:300px;
+	color:gray;
+	font-weight: normal;
+	text-align: left;
+}
+.action {
+	font-family: "Lucida Sans Unicode", Courier, monospace;
+	height: 60px;
+	position:relative;
+	width: 600px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: auto;
+	padding-bottom: 4px;
+	font-family: arial,sans-serif;
+	color:rgb(51,51,51);
+	font-weight: normal;
+}
+.info{
+	font-family:Arial,sans-serif;
+	color: #339BB9;
+	font-size: 15px;
+}
+=======/*-----------------buat td-------------------*/
 .meta{
 	vertical-align: top;
 	padding:10px 20px;
@@ -439,7 +487,7 @@ form {
 	color: #339BB9;
 	font-size: 15px;
 }
-/*------------------------- navigasi --------------------------*/
+>>>>>>> .theirs/*------------------------- navigasi --------------------------*/
 .navigation {
 	width: 200px;
 	float: left;
@@ -468,7 +516,7 @@ form {
 }
 
 .navigation a {
-	color: purple;
+	color: black;
 	text-decoration: none;
 	margin: 0px;
 	display: block;
@@ -478,10 +526,12 @@ form {
 
 .navigation a:hover {
 	color: white;
+
 }
 
 .navigation li:hover {
 	background: none repeat scroll 0% 0% #1B1B1B;
+
 }
 
 .navigation li.none {
