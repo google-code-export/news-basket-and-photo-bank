@@ -41,25 +41,41 @@
 			</tr>
 			<?php }?>
 		</table>
-		
+	</div>
+	<div class="detail-right">
+		<p class='flip'><strong>Source Information</strong></p>	
 		<br />
-		<p class='flip'><strong>Source Information</strong></p>
-		<br />
-		<p style="margin-left: 5px;">
+		<p style="margin-left: 7px;">
 			News Basket has manage <?php echo $total_source;?> article sources 
 			from <?php echo $total_publisher;?> publisher and <?php echo $total_wires;?> wires.
 		</p>
 		<br>
-		<table style="margin-left: 3px;">
-			<?php foreach ($article_source as $column){?>
-			<tr>	
-				<td class="bold" style="width: 120px;"><?php echo $column->source_name;?></td>
-				<td class="label"><?php echo $column->total_article;?> articles</td>
+		<form action="<?php echo site_url('admin/dashboard/source_information');?>" method="POST">
+			<table style="margin-left: 5px;">
+			<tr>
+				<td><label for="source">See detail</label></td>
+				<td>:</td>
+				<td class="label">
+					<select id="source" name="source">
+						<option value="0">Select source</option>
+					<?php
+					foreach ($source as $column) {
+						if ($column->id_source == $selected_source) 
+							echo "<option value='$column->id_source' SELECTED>$column->source_name</option>";
+						else
+							echo "<option value='$column->id_source'>$column->source_name</option>";
+					}
+					?>
+					</select>
+				</td>
+				<td><input type="submit" name="check" value="Check"/></td>
 			</tr>
-			<?php }?>
-		</table>
+			</table>
+			<div id="source-info" style="margin-left: 7px;">
+				<?php
+					echo !empty($view_information)? $this->load->view($view_information) : ""; 
+				?>
+			</div>
+		</form>
 	</div>
-	<div class="detail-right">
-	</div>
-	
 </div>

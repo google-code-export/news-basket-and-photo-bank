@@ -12,7 +12,8 @@ class Manage_article extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
-			$this->load_article(50);
+			$this->unset_search();
+			$this->load_article();
 		} 
 		else {
 			?>
@@ -43,8 +44,9 @@ class Manage_article extends Controller {
 		$data_article['active']	  = 'article';
 		
 		// Offset
-		$uri_segment = 4;
-		$offset 	 = $this->uri->segment($uri_segment);
+		$uri_segment 	 = 4;
+		$offset 	 	 = $this->uri->segment($uri_segment);
+		//$_POST['offset'] = $offset;
 		
 		$this->load->model('Article_model','',TRUE);
 		$articles  	= $this->Article_model->getAllArticle($this->limit, $offset);
@@ -58,13 +60,7 @@ class Manage_article extends Controller {
 		$this->load->model('Source_model','',TRUE);
 		$data_article['source'] 	= $this->Source_model->getAllSource2();	
 		
-		$data_article['key'] 		= $this->session->userdata('articlekey');
-		$data_article['fromdate'] 	= $this->session->userdata('adv_fromdate');
-		$data_article['todate'] 	= $this->session->userdata('adv_todate');
-		$data_article['author'] 	= $this->session->userdata('adv_author');
-		$data_article['category'] 	= $this->session->userdata('adv_category');
-		$data_article['sel_source'] = $this->session->userdata('adv_source');
-		$data_article['flag'] 		= $this->session->userdata('adv_flag');
+		$data_article['key'] = $data_article['fromdate'] = $data_article['todate'] = $data_article['author'] = $data_article['category'] = $data_article['sel_source'] = $data_article['flag'] = null;
 		
 		// untuk penomoran dan menampilkan hasil pencarian
 		$data_article['start'] 	= $offset + 1; // untuk penomoran tabel
@@ -292,6 +288,8 @@ class Manage_article extends Controller {
 			$id_user  		  = $this->session->userdata('username'); // username dari saat login
 			$id_article_array = $this->input->post('checkbox');
 			$article_flag 	  = $this->input->post('article-flag');
+			//$offset		 	  = $_REQUEST['offset'];
+			echo $offset;
 			$sum 			  = 0;
 			
 			if (!empty($id_article_array)) {
@@ -315,12 +313,12 @@ class Manage_article extends Controller {
 				}
 				$message = $sum.' article flag has been updated!'; 
 				$this->session->set_flashdata('message_success', $message);
-				redirect('admin/manage_article');
+				redirect('admin/manage_article/load_article');
 			}
 			else {
 				$message = 'Update article flag has been failed!'; 
 				$this->session->set_flashdata('message_failed', $message);
-				redirect('admin/manage_article');
+				redirect('admin/manage_article/load_article');
 			}
 		} 
 		else {
@@ -360,14 +358,15 @@ class Manage_article extends Controller {
 		$data_article['flag'] 		= $this->session->userdata('adv_flag');
 		
 		// Kata kunci pencarian
-		$key = $this->input->get('key');
-		if (empty($key)) { // jika kata kunci pencarian tidak ada
+		$get_key = $this->input->get('key');
+		if (empty($get_key)) { // jika kata kunci pencarian tidak ada
 			$key = $this->session->userdata('articlekey'); // ambil dari session
-		}	
+			$data_article['key'] = $key;
+		}
 		else {
+			$data_article['key'] = $key = $get_key;
 			$this->session->set_userdata('articlekey', $key); // set kata kunci pencarian ke dalam session
 		}
-		$data_article['key'] = $key;
 		
 		// Limit & Offset
 		$uri_segment = 4;
@@ -375,6 +374,7 @@ class Manage_article extends Controller {
 		
 		$this->load->model('Article_model','',TRUE);
 		$data_article['result'] = $this->Article_model->searchArticle($this->limit_search, $offset, $key);
+		//echo $this->db->last_query();
 		$data_article['count']  = $this->Article_model->countSearch($key);
 		
 		// Membuat pagination			
@@ -422,26 +422,27 @@ class Manage_article extends Controller {
 		$data_article['source'] = $this->Source_model->getAllSource2();	
 		
 		// Kata kunci pencarian
-		$key = $this->input->get('key');
-		if (empty($key)) { // jika kata kunci pencarian tidak ada
-			$key = $this->session->userdata('adv_key'); // ambil dari session
+		$get_key = $this->input->get('key');
+		if(empty($get_key)) {
+			$key 	= $this->session->userdata('articlekey'); // ambil dari session
+			$data_article['key'] = $key;
 		}
 		else {
-			$this->session->set_userdata('adv_key', $key); // set kata kunci pencarian ke dalam session
+			$key = $get_key;
+			$data_article['key'] = $key;
+			$this->session->set_userdata('articlekey', $key); // set kata kunci pencarian ke dalam session
 		}
-		$data_article['key'] = $key;
 		
 		//--------- Advance search ----------//
 		// from-date
 		$get_fromdate = $this->input->get('from-date');
-		if(empty($get_fromdate)) {
+		if ($get_fromdate == "") { // jika kata kunci pencarian tidak ada
+			$data_article['fromdate'] = $fromdate = "";
+			$this->session->set_userdata('adv_fromdate', $fromdate); // set kata kunci pencarian ke dalam session
+		}
+		else if(empty($get_fromdate)) {
 			$fromdate 	= $this->session->userdata('adv_fromdate'); // ambil dari session
 			$data_article['fromdate'] = $fromdate;
-		}
-		else if ($get_fromdate == "") { // jika kata kunci pencarian tidak ada
-			$fromdate = "";
-			$data_article['fromdate'] = $fromdate;
-			$this->session->set_userdata('adv_fromdate', $fromdate); // set kata kunci pencarian ke dalam session
 		}
 		else {
 			$fromdate = $get_fromdate;
@@ -451,14 +452,13 @@ class Manage_article extends Controller {
 		
 		// to-date
 		$get_todate	= $this->input->get('to-date');
-		if(empty($get_todate)) {
+		if ($get_todate == "") { // jika kata kunci pencarian tidak ada
+			$data_article['todate'] = $todate = "";
+			$this->session->set_userdata('adv_todate', $todate); // set kata kunci pencarian ke dalam session
+		}
+		else if(empty($get_todate)) {
 			$todate 	= $this->session->userdata('adv_todate'); // ambil dari session
 			$data_article['todate'] = $todate;
-		}
-		else if ($get_todate == "") { // jika kata kunci pencarian tidak ada
-			$todate = "";
-			$data_article['todate'] = $todate;
-			$this->session->set_userdata('adv_todate', $todate); // set kata kunci pencarian ke dalam session
 		}
 		else {
 			$todate = $get_todate;
@@ -470,14 +470,13 @@ class Manage_article extends Controller {
 		
 		// author
 		$get_author		= $this->input->get('author');
-		if(empty($get_author)) {
+		if ($get_author == "") { // jika kata kunci pencarian tidak ada
+			$data_article['author'] = $author = "";
+			$this->session->set_userdata('adv_author', $author); // set kata kunci pencarian ke dalam session
+		}
+		else if(empty($get_author)) {
 			$author 	= $this->session->userdata('adv_author'); // ambil dari session
 			$data_article['author'] = $author;
-		}
-		else if ($get_author == "") { // jika kata kunci pencarian tidak ada
-			$author = "";
-			$data_article['author'] = $author;
-			$this->session->set_userdata('adv_author', $author); // set kata kunci pencarian ke dalam session
 		}
 		else {
 			$author = $get_author;
@@ -520,7 +519,11 @@ class Manage_article extends Controller {
 		}
 		
 		$get_flag = $this->input->get('flag');
-		if ($get_flag == "all") { // jika all
+		if(empty($get_flag)) {
+			$flag = $this->session->userdata('adv_flag'); // ambil dari session
+			$data_article['flag'] = $flag;
+		}
+		else if ($get_flag == "all") { // jika all
 			$this->session->set_userdata('adv_flag', $get_flag); // set kata kunci pencarian ke dalam session
 			$flag = $get_flag;
 			$data_article['flag'] = $flag;
@@ -708,6 +711,9 @@ class Manage_article extends Controller {
 				
 				$this->Article_model->addArticle($new_article);
 					
+				// Hapus xml
+				unlink('./xml_wires/Afp/'.$filename);
+					
 				$sum++; // counter
 			}
 			$message = 'Add '. $sum .' new article from AFP successfull!'; 
@@ -767,6 +773,9 @@ class Manage_article extends Controller {
 				
 				$this->Article_model->addArticle($new_article);
 					
+				// Hapus xml
+				unlink('./xml_wires/AsianWire/'.$filename);
+				
 				$sum++; // counter
 			}
 			
@@ -825,6 +834,9 @@ class Manage_article extends Controller {
 				);
 				
 				$this->Article_model->addArticle($new_article);
+					
+				// Hapus xml
+				unlink('./xml_wires/DPA/'.$filename);
 					
 				$sum++;
 			}
@@ -892,6 +904,9 @@ class Manage_article extends Controller {
 				
 				$this->Article_model->addArticle($new_article);
 					
+				// Hapus xml
+				unlink('./xml_wires/NYT/'.$filename);
+					
 				$sum++; // counter
 			}
 			
@@ -908,6 +923,13 @@ class Manage_article extends Controller {
 			$this->session->sess_destroy();	
 			redirect('login', 'refresh');
 		}
+	}
+	
+	function unset_search() {
+		$session_search = array ('key'=>'', 'authorkey'=>'', 'articlekey'=>'', 'userkey'=>'', 
+								 'adv_fromdate'=>'', 'adv_todate'=>'', 'adv_author'=>'', 
+								 'adv_category'=>'', 'adv_source'=>'', 'adv_flag'=>'');
+		$this->session->unset_userdata($session_search);
 	}
 }
 

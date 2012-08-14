@@ -47,6 +47,11 @@
 			<th class="center" >No</th>
 			<th>ID Tag</th>
 			<th>Tag Name</th>
+			<th class="center">Row</th>
+			<th class="center">Edited</th>
+			<th class="center">Published</th>
+			<th class="center">Deleted</th>
+			<th class="center">Total Article</th>
 			<th class="center" colspan="2">Action</th>
 		</tr>
 		</thead>
@@ -72,6 +77,11 @@
 						<td class='center'>$no</td>
 						<td id='id-tag'>$column->id_tag</td>
 						<td>$column->tag_name</td>
+						<td class='center'>$column->row_article</td>
+						<td class='center'>$column->edited</td>
+						<td class='center'>$column->published</td>
+						<td class='center'>$column->deleted</td>
+						<td class='center'>$column->total_article</td>
 						<td class='center'>$editLink</td>
 						<td class='center'>$deleteLink</td>
 					</tr>

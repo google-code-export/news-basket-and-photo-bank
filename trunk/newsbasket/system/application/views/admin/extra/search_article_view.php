@@ -2,7 +2,7 @@
 	<a href="<?php echo site_url('admin/manage_article');?>" style="color: white;">Manage Article</a> > Search Article
 	<?php echo "> keyword '$key' shows result ($first_result - $last_result dari $count)";?>
 </h2>
-<div id="advance-search" class="add-form" style="display: block">
+<div id="advance-search" class="add-form" style="display: hidden">
 	<form id="advance-search" method="GET" action="<?php echo $form_action_adv; ?>">
 		<table class="table-form">
 			<tr>

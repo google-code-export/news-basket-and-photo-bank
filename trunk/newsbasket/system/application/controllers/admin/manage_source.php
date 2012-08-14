@@ -3,7 +3,7 @@
 class Manage_source extends Controller {
 	
 	//limitasi tabel
-	var $limit = 13;
+	var $limit = 20;
 	
 	function Manage_source() {
 		parent::Controller();	
@@ -11,6 +11,7 @@ class Manage_source extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->unset_search();
 			$this->load_sources();
 		} 
 		else {
@@ -41,6 +42,7 @@ class Manage_source extends Controller {
 		// Load data dari tabel source
 		$this->load->model('Source_model','',TRUE);
 		$sources 	= $this->Source_model->getAllSource($this->limit, $offset);
+		//echo $this->db->last_query();
 		$num_rows 	= $this->Source_model->countAll();
 		$data_source['source_table'] = $sources;
 		
@@ -194,6 +196,13 @@ class Manage_source extends Controller {
 			$this->session->sess_destroy();	
 			redirect('login', 'refresh');
 		}  
+	}
+	
+	function unset_search() {
+		$session_search = array ('key'=>'', 'authorkey'=>'', 'articlekey'=>'', 'userkey'=>'', 
+								 'adv_fromdate'=>'', 'adv_todate'=>'', 'adv_author'=>'', 
+								 'adv_category'=>'', 'adv_source'=>'', 'adv_flag'=>'');
+		$this->session->unset_userdata($session_search);
 	}
 }
 

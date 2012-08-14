@@ -10,16 +10,22 @@ class Category_model extends Model {
 	}
 	
 	function getAllCategories() {
-        $this->db->from($this->table); //tabel category
-		$this->db->order_by('id_category');
-        return $this->db->get()->result();
+        $this->db->order_by('id_category');
+        return $this->db->get($this->table)->result();
     }
 	
 	function getAllCategory($limit, $offset) {
-        $this->db->from($this->table); //tabel category
-		$this->db->order_by('id_category');
+        $this->db->select("category.id_category, category_name, , 
+						   SUM(CASE WHEN article_flag = 'row_article' THEN 1 ELSE 0 END) as row_article,
+						   SUM(CASE WHEN article_flag = 'edited' THEN 1 ELSE 0 END) as edited,
+						   SUM(CASE WHEN article_flag = 'published' THEN 1 ELSE 0 END) as published,
+						   SUM(CASE WHEN article_flag = 'deleted' THEN 1 ELSE 0 END) as deleted,
+						   SUM(CASE WHEN article.id_category = category.id_category THEN 1 ELSE 0 END) as total_article");
+		$this->db->join('article', 'category.id_category = article.id_category');
+        $this->db->order_by('id_category');
         $this->db->limit($limit, $offset);
-        return $this->db->get()->result();
+        $this->db->group_by('category.id_category');
+        return $this->db->get($this->table)->result();
     }
 	
 	function countAll() {

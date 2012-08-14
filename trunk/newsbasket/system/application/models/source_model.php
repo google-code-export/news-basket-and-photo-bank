@@ -10,8 +10,16 @@ class Source_model extends Model {
 	}
     
 	function getAllSource($limit, $offset) {
+		$this->db->select("source.id_source, source_name, source_type, 
+						   SUM(CASE WHEN article_flag = 'row_article' THEN 1 ELSE 0 END) as row_article,
+						   SUM(CASE WHEN article_flag = 'edited' THEN 1 ELSE 0 END) as edited,
+						   SUM(CASE WHEN article_flag = 'published' THEN 1 ELSE 0 END) as published,
+						   SUM(CASE WHEN article_flag = 'deleted' THEN 1 ELSE 0 END) as deleted,
+						   COUNT(article_flag) as total_article");
 		$this->db->order_by('id_source');
+		$this->db->join('article', 'source.id_source = article.id_source');
         $this->db->limit($limit, $offset);
+		$this->db->group_by('source.id_source');
         return $this->db->get($this->table)->result();
     }
 	

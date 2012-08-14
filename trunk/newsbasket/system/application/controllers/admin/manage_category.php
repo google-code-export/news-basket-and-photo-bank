@@ -3,7 +3,7 @@
 class Manage_category extends Controller {
 	
 	//limitasi tabel
-	var $limit = 13;
+	var $limit = 20;
 	
 	function Manage_category() {
 		parent::Controller();	
@@ -11,6 +11,7 @@ class Manage_category extends Controller {
 	
 	function index() {
 		if ($this->session->userdata('login') == TRUE && $this->session->userdata('user_level') == 'administrator') {
+			$this->unset_search();
 			$this->load_categories();
 		} 
 		else {
@@ -41,6 +42,7 @@ class Manage_category extends Controller {
 		// Load data dari tabel category
 		$this->load->model('Category_model','',TRUE);
 		$categories = $this->Category_model->getAllCategory($this->limit, $offset);
+		//echo $this->db->last_query();
 		$num_rows 	= $this->Category_model->countAll();
 		$data_category['category_table'] = $categories;
 		
@@ -180,6 +182,13 @@ class Manage_category extends Controller {
 			$this->session->sess_destroy();	
 			redirect('login', 'refresh');
 		}  
+	}
+	
+	function unset_search() {
+		$session_search = array ('key'=>'', 'authorkey'=>'', 'articlekey'=>'', 'userkey'=>'', 
+								 'adv_fromdate'=>'', 'adv_todate'=>'', 'adv_author'=>'', 
+								 'adv_category'=>'', 'adv_source'=>'', 'adv_flag'=>'');
+		$this->session->unset_userdata($session_search);
 	}
 }
 

@@ -37,6 +37,7 @@ class Dashboard extends Controller {
 		$admin['total_publisher'] = $this->Source_model->countSourceByType('publisher');
 		$admin['total_wires']     = $this->Source_model->countSourceByType('wires');
 		$admin['article_source']  = $this->Source_model->countArticleBySource();
+		$admin['source']  		  = $this->Source_model->getAllSource2();
 		
 		$this->load->view('admin/template', $admin);
 	}
@@ -185,6 +186,42 @@ class Dashboard extends Controller {
 		}
 	}
 	
+	function source_information() {
+		$admin['page_title'] 	   = 'Dashboard | Admin Newsbasket';
+		$admin['username']   	   = $this->session->userdata['username'];
+		$admin['main_view']   	   = 'admin/dashboard_view';
+		$admin['active']  	 	   = 'dashboard';
+		$admin['view_information'] = 'admin/detail/source_information_view';
+		
+		$this->load->model('Article_model','',TRUE);
+		$admin['total_article']    = $this->Article_model->countAll();
+		$admin['total_rowarticle'] = $this->Article_model->countArticleByFlag('row_article');
+		$admin['total_edited'] 	   = $this->Article_model->countArticleByFlag('edited');
+		$admin['total_published']  = $this->Article_model->countArticleByFlag('published');
+		$admin['total_deleted']    = $this->Article_model->countArticleByFlag('deleted');
+		
+		$this->load->model('Users_model','',TRUE);
+		$admin['total_user']	   = $this->Users_model->countAll();
+		$admin['users_source']	   = $this->Users_model->countUserBySource();
+		
+		$this->load->model('Source_model','',TRUE);
+		$admin['total_source']    = $this->Source_model->countAll();
+		$admin['total_publisher'] = $this->Source_model->countSourceByType('publisher');
+		$admin['total_wires']     = $this->Source_model->countSourceByType('wires');
+		$admin['article_source']  = $this->Source_model->countArticleBySource();
+		$admin['source']  		  = $this->Source_model->getAllSource2();
+		
+		$id_source = $this->input->post('source');
+		$admin['selected_source'] = $id_source;
+		
+		$this->load->model('Article_model','',TRUE);
+		$admin['resultday']   = $this->Article_model->sourceInformationByIDDay($id_source);
+		$admin['resultweek']  = $this->Article_model->sourceInformationByIDWeek($id_source);
+		$admin['resultmonth'] = $this->Article_model->sourceInformationByIDMonth($id_source);
+		//echo $this->db->last_query();
+		
+		$this->load->view('admin/template', $admin);
+	}
 }
 
 /* End of file dashboard.php */

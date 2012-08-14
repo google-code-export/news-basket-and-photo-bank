@@ -159,7 +159,20 @@
 					array('class'=>'btn-link')
 				);
 				
-				($no%2 == 1) ? $class_tr='odd' : $class_tr = '';
+				switch($column->article_flag) {
+					case 'row_article' :
+						$class_tr = '';
+						break;
+					case 'edited' :
+						$class_tr = 'edited';
+						break;
+					case 'published' :
+						$class_tr = 'published';
+						break;
+					case 'deleted' :
+						$class_tr = 'deleted';
+						break;
+				}
 				echo "
 					<tr class=$class_tr>
 						<td class='center'>$no</td>
