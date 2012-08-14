@@ -1,6 +1,6 @@
 <?php
-  class Album_Model extends Model{
-	function Album(){
+  class Album_model_user extends Model{
+	function Album_model_user(){
 		parent::Model();
 		$this->table_name = 'album';
 	}
@@ -42,7 +42,7 @@
 				$id_user = $this->session->userdata('username');
 				$insertNew = $this->db->insert('album', array('album_name' => $_POST['album_name'], 'id_user' => $id_user, 'description' => $_POST['description']));
 				if ($insertNew) {
-					redirect('album');
+					redirect('album_user');
 				} else {
 					echo("Fail");
 				}
@@ -56,7 +56,7 @@
 			$this->db->where('id_album', $id_album);
 			$insertNew = $this->db->update('album', array('album_name' => $_POST['album_name'], 'description' => $_POST['description']));
 			if ($insertNew) {
-				redirect('album');
+				redirect('album_user');
 			} else {
 				echo("Fail");
 			}
@@ -77,7 +77,7 @@
 							}
 						}
 						$delImg = $this->db->delete('images' , array('id_album' => $deleteRow));
-						redirect('album');
+						redirect('album_user');
 					} else {
 						echo("Fail");
 					}
@@ -91,13 +91,6 @@
 			$this->db->where('id_album', $catID);
 			$this->db->order_by('images.image_name', 'ASC');
 			return $this->db->get()->result();
-			$query = $this->db->get();
-			if ($query->num_rows() > 0) {
-			foreach ($query->result() as $row) {
-				$data[] = $row;
-			}
-			return $data;
-		}
 			
 
 		}
@@ -135,7 +128,7 @@
 			$this->thumbnail = $thumbname;
 			$insertNew = $this->db->insert('images', $this);
 			if ($insertNew) {
-				redirect('album/images/'.$_POST['id']);
+				redirect('album_user/images/'.$_POST['id']);
 			} else {
 				echo("Fail");
 			}
@@ -148,7 +141,7 @@
 			$this->db->where('image_name', $deleteRow);
 			$insertNew = $this->db->delete('images');
 			if ($insertNew) {
-				redirect('album');
+				redirect('album_user');
 			} else {
 				echo("Fail");
 			}
